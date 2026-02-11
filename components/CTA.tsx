@@ -30,7 +30,7 @@ export const CTA: React.FC = () => {
            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center relative z-10">
               <div className="space-y-8">
                  <h2 className="text-4xl md:text-6xl font-bold text-white leading-tight">
-                    Время <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-purple-400">расти</span> и
+                    Время <span className="text-white">расти</span> и<br/>
                     автоматизировать
                  </h2>
                  <p className="text-blue-100/80 text-xl max-w-lg leading-relaxed">
