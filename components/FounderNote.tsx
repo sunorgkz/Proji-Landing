@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ShieldCheck, Award, Briefcase, Quote } from 'lucide-react';
+import serikImage from '../assets/serik.png';
 
 export const FounderNote: React.FC = () => {
   return (
@@ -61,12 +62,8 @@ export const FounderNote: React.FC = () => {
                   <div className="bg-white dark:bg-[#151e32] rounded-[2rem] overflow-hidden relative group">
                      
                      <div className="aspect-[4/3] relative overflow-hidden bg-brand-100 dark:bg-brand-900/20">
-                        {/* 
-                           PLACEHOLDER FOR SERIK'S PHOTO.
-                           Replace the src below with the actual photo file if available locally.
-                        */}
                         <img 
-                          src="/assets/serik.png"
+                          src={serikImage}
                           alt="Серик, Основатель Proji" 
                           className="w-full h-full object-cover transform translate-y-2 group-hover:scale-105 transition-transform duration-700"
                         />
