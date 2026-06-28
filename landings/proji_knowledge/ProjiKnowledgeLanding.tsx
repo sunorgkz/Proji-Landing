@@ -1,5 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { resetDocumentShell } from "../../lib/resetDocumentShell";
+import { applyLandingPageBg } from "../../lib/landingPageBg";
+import { submitDemoRequest } from "../../lib/submitDemoRequest";
+import { trackEvent } from "../../analytics";
 
 const FONTS_URL =
   "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Ubuntu:wght@700&display=swap";
@@ -85,6 +88,7 @@ function useScrollY() {
 function useMouse() {
   const [pos, setPos] = useState({ x: 0.5, y: 0.5 });
   useEffect(() => {
+    if (window.matchMedia("(pointer: coarse)").matches) return;
     const onMove = (e: MouseEvent) => {
       setPos({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight });
     };
@@ -92,6 +96,84 @@ function useMouse() {
     return () => window.removeEventListener("mousemove", onMove);
   }, []);
   return pos;
+}
+
+const NAV_LINKS = [
+  ["Проблема", "#problem"],
+  ["Решение", "#solution"],
+  ["Результаты", "#results"],
+  ["Контакт", "#cta"],
+] as const;
+
+function MobileNav() {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  const close = () => setOpen(false);
+
+  return (
+    <div className="pj-mobile-nav">
+      <button
+        type="button"
+        className="pj-menu-btn"
+        aria-label={open ? "Закрыть меню" : "Открыть меню"}
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+      >
+        <span className={`pj-menu-icon ${open ? "open" : ""}`} />
+      </button>
+      {open && (
+        <div className="pj-mobile-overlay" onClick={close} role="presentation">
+          <div className="pj-mobile-panel" onClick={(e) => e.stopPropagation()}>
+            {NAV_LINKS.map(([label, href]) => (
+              <a key={href} href={href} className="pj-mobile-link" onClick={close}>
+                {label}
+              </a>
+            ))}
+            <a href="#cta" className="pj-btn pj-btn-primary pj-mobile-cta" onClick={close}>
+              Записаться на демо
+            </a>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function HeroMobileCards() {
+  const cards = [
+    { tag: "Контакт", title: "Назгуль К.", sub: "Отдел развития · доб. 4521", c: C.blueBright },
+    { tag: "Регламент", title: "R-245", sub: "Бюджеты 1–10 млн ₸", c: C.violet },
+    { tag: "Опыт", title: "CRM-2023", sub: "Итоги, ошибки, рекомендации", c: C.cyan },
+  ];
+  return (
+    <div className="pj-hero-mobile-cards">
+      {cards.map((c) => (
+        <div key={c.title} className="pj-glass" style={{ padding: "16px 18px", borderRadius: 14 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+            <span style={{ width: 7, height: 7, borderRadius: 7, background: c.c, boxShadow: `0 0 12px ${c.c}` }} />
+            <span className="pj-eyebrow" style={{ color: c.c, fontSize: 9 }}>{c.tag}</span>
+          </div>
+          <div style={{ fontSize: 16, fontWeight: 600, color: C.ink }}>{c.title}</div>
+          <div style={{ color: C.inkSoft, fontSize: 12, marginTop: 4 }}>{c.sub}</div>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 function CountUp({ to, suffix = "", duration = 1600, start }: { to: number; suffix?: string; duration?: number; start: boolean }) {
@@ -145,28 +227,66 @@ function Wordmark({ size = 18, glow = false }: { size?: number; glow?: boolean }
 export default function ProjiKnowledgeLanding() {
   useLayoutEffect(() => {
     resetDocumentShell();
-    document.documentElement.dataset.landing = 'proji_knowledge';
+    applyLandingPageBg("knowledge");
+
     return () => {
       delete document.documentElement.dataset.landing;
+      document.documentElement.style.backgroundColor = "";
+      document.documentElement.style.colorScheme = "";
+      document.body.style.backgroundColor = "";
+      document.body.style.margin = "";
+      document.body.style.overflowX = "";
+      const root = document.getElementById("root");
+      if (root) {
+        root.style.backgroundColor = "";
+        root.style.minHeight = "";
+      }
     };
   }, []);
 
   useLandingFonts();
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [formError, setFormError] = useState("");
   const scrollY = useScrollY();
   const scrolled = scrollY > 12;
   const docH = typeof document !== "undefined" ? document.documentElement.scrollHeight - window.innerHeight : 1;
   const progress = Math.min(1, scrollY / Math.max(1, docH));
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    setFormError("");
+    setSubmitting(true);
+
+    const form = e.currentTarget;
+    const name = (form.elements.namedItem("name") as HTMLInputElement).value;
+    const contact = (form.elements.namedItem("contact") as HTMLInputElement).value;
+
+    try {
+      await submitDemoRequest(name, contact);
+      trackEvent("demo_request_submitted", { landing: "knowledge" });
+      setSubmitted(true);
+    } catch {
+      setFormError("Не удалось отправить заявку. Напишите на serik@sunnet.kz или sund.serik@gmail.com");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
-    <div className="proji-knowledge-root" style={{ fontFamily: "Inter, system-ui, sans-serif", color: C.ink, background: C.bg, position: "relative", overflow: "hidden", minHeight: "100vh" }}>
+    <div className="proji-knowledge-root" style={{ fontFamily: "Inter, system-ui, sans-serif", color: C.ink, background: C.bg, position: "relative", overflowX: "clip", minHeight: "100dvh", width: "100%" }}>
       <style>{`
-        .proji-knowledge-root { scroll-behavior: smooth; }
+        html[data-landing="knowledge"],
+        html[data-landing="knowledge"] body,
+        html[data-landing="knowledge"] #root {
+          margin: 0;
+          padding: 0;
+          background-color: ${C.bg} !important;
+          overflow-x: hidden;
+          min-height: 100%;
+          color-scheme: dark;
+        }
+        .proji-knowledge-root { scroll-behavior: smooth; width: 100%; max-width: 100%; background-color: ${C.bg}; }
         .proji-knowledge-root ::selection { background: ${C.blue}; color: white; }
         .pj-container { max-width: 1240px; margin: 0 auto; padding: 0 32px; position: relative; }
         .pj-eyebrow { font-family: Inter, sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: ${C.blueBright}; }
@@ -179,29 +299,92 @@ export default function ProjiKnowledgeLanding() {
         .pj-btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 26px; border-radius: 999px; font-weight: 500; font-size: 15px; cursor: pointer; border: 1px solid transparent; transition: all .3s cubic-bezier(.2,.8,.2,1); text-decoration: none; font-family: Inter, sans-serif; position: relative; overflow: hidden; }
         .pj-btn-primary { background: linear-gradient(120deg, ${C.blue}, ${C.cyan}); color: white; box-shadow: 0 10px 40px -10px ${C.blue}99, inset 0 1px 0 rgba(255,255,255,.25); }
         .pj-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 60px -10px ${C.blue}cc, inset 0 1px 0 rgba(255,255,255,.35); }
-        .pj-btn-ghost { background: rgba(255,255,255,.04); color: ${C.ink}; border-color: ${C.borderStrong}; backdrop-filter: blur(10px); }
-        .pj-btn-ghost:hover { background: rgba(120,160,255,.1); border-color: ${C.blueBright}; }
+        .pj-btn-ghost { background: rgba(14,20,36,.85); color: ${C.ink}; border-color: ${C.borderStrong}; }
+        .pj-btn-ghost:hover { background: rgba(120,160,255,.15); border-color: ${C.blueBright}; }
         .pj-fade { opacity: 0; transform: translateY(28px); transition: opacity 1s cubic-bezier(.2,.8,.2,1), transform 1s cubic-bezier(.2,.8,.2,1); }
         .pj-fade.in { opacity: 1; transform: none; }
-        .pj-section { padding: 140px 0; position: relative; }
-        .pj-glass { background: linear-gradient(160deg, rgba(120,160,255,.06) 0%, rgba(120,160,255,.02) 100%); border: 1px solid ${C.border}; border-radius: 20px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .pj-section, .pj-hero-section { padding: 140px 0; position: relative; background-color: ${C.bg}; }
+        .pj-glass { background: linear-gradient(160deg, ${C.panel} 0%, ${C.panel2} 100%); border: 1px solid ${C.border}; border-radius: 20px; }
         .pj-card-glow { position: relative; }
         .pj-card-glow::before { content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1px; background: linear-gradient(135deg, ${C.blueBright}55, transparent 40%, transparent 60%, ${C.violet}33); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; opacity: 0; transition: opacity .4s; }
         .pj-card-glow:hover::before { opacity: 1; }
         .pj-input { width: 100%; padding: 18px 0; border: 0; border-bottom: 1px solid ${C.border}; background: transparent; color: ${C.ink}; font-size: 17px; font-family: inherit; outline: none; transition: border-color .3s; }
         .pj-input::placeholder { color: ${C.muted}; }
         .pj-input:focus { border-color: ${C.blueBright}; }
+        .pj-input:disabled { opacity: 0.6; cursor: not-allowed; }
+        .pj-form-error { margin-top: 16px; font-size: 14px; line-height: 1.5; color: ${C.rose}; }
+        .pj-btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none !important; }
         .pj-num { font-family: Inter, sans-serif; font-weight: 200; font-variant-numeric: tabular-nums; letter-spacing: -0.05em; }
         .pj-noise { position: absolute; inset: 0; opacity: .04; pointer-events: none; mix-blend-mode: overlay; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); }
         .pj-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
         .pj-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
         .pj-orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; will-change: transform; }
+        .pj-hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; }
+        .pj-cta-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 80px; align-items: start; }
+        .pj-section-head { display: grid; grid-template-columns: auto 1fr; gap: 80px; align-items: start; }
+        .pj-kpi-scale { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+        .pj-arch-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+        .pj-node-grid { display: grid; grid-template-columns: repeat(16, 1fr); gap: 12px; max-width: 980px; margin: 0 auto; padding: 20px 0; }
+        .pj-hero-mobile-cards { display: none; }
+        .pj-mobile-nav { display: none; }
+        .pj-btn-row { display: flex; gap: 14px; flex-wrap: wrap; }
         @media (max-width: 900px) {
-          .pj-section { padding: 88px 0; }
+          .pj-section { padding: 72px 0; }
           .pj-grid-3, .pj-grid-4 { grid-template-columns: 1fr; }
           .pj-hide-mobile { display: none !important; }
-          .pj-container { padding: 0 22px; }
+          .pj-show-mobile { display: block !important; }
+          .pj-container { padding: 0 20px; }
+          .pj-h1 { font-size: clamp(34px, 9vw, 52px); line-height: 1.06; }
+          .pj-h2 { font-size: clamp(28px, 7vw, 40px); }
+          .pj-body { font-size: 16px; line-height: 1.6; }
+          .pj-hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; margin-top: 40px !important; }
+          .pj-cta-grid { grid-template-columns: 1fr !important; gap: 36px !important; }
+          .pj-section-head { grid-template-columns: 1fr !important; gap: 12px !important; margin-bottom: 40px !important; }
+          .pj-kpi-scale { grid-template-columns: repeat(2, 1fr) !important; border-top: 1px solid ${C.border}; }
+          .pj-kpi-scale > div { border-right: none !important; border-bottom: 1px solid ${C.border}; padding: 28px 18px !important; }
+          .pj-kpi-scale > div:nth-child(2n) { border-right: none; }
+          .pj-kpi-scale > div:nth-last-child(-n+2) { border-bottom: none; }
+          .pj-kpi-scale .pj-num { font-size: 52px !important; }
+          .pj-arch-grid { grid-template-columns: repeat(2, 1fr) !important; }
+          .pj-node-grid { grid-template-columns: repeat(8, 1fr) !important; gap: 8px !important; }
+          .pj-hero-mobile-cards { display: grid !important; gap: 12px; margin-top: 8px; }
+          .pj-hero-section { padding-top: 32px !important; padding-bottom: 80px !important; }
+          .pj-hero-section .pj-eyebrow { font-size: 10px; letter-spacing: 0.14em; }
+          .pj-hero-section .pj-body { font-size: 16px !important; }
+          .pj-mobile-nav { display: block; }
+          .pj-nav-bar { height: 64px !important; }
+          .pj-btn-row { flex-direction: column; }
+          .pj-btn-row .pj-btn { width: 100%; justify-content: center; }
+          .pj-glass.pj-form-card { padding: 28px 22px !important; }
+          .pj-grid-4.pj-results-kpis > div { border-right: none !important; border-bottom: 1px solid ${C.border}; padding: 32px 22px !important; }
+          .pj-grid-4.pj-results-kpis > div:last-child { border-bottom: none; }
+          .pj-grid-4.pj-results-kpis .pj-num { font-size: 56px !important; }
+          .pj-results-quote { font-size: 20px !important; margin-top: 48px !important; padding-left: 20px !important; }
+          .pj-footer-links { width: 100%; flex-wrap: wrap; gap: 16px 20px !important; }
+          .pj-orb { filter: blur(60px); opacity: 0.2 !important; }
         }
+        @media (max-width: 480px) {
+          .pj-container { padding: 0 16px; }
+          .pj-section { padding: 56px 0; }
+          .pj-h1 { font-size: clamp(30px, 8.5vw, 38px); }
+          .pj-node-grid { grid-template-columns: repeat(6, 1fr) !important; }
+          .pj-kpi-scale { grid-template-columns: 1fr !important; }
+          .pj-kpi-scale > div { border-bottom: 1px solid ${C.border} !important; }
+          .pj-kpi-scale > div:last-child { border-bottom: none !important; }
+          .pj-arch-grid { grid-template-columns: 1fr !important; }
+        }
+        .pj-menu-btn { width: 44px; height: 44px; border-radius: 12px; border: 1px solid ${C.borderStrong}; background: rgba(255,255,255,.04); display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .pj-menu-icon, .pj-menu-icon::before, .pj-menu-icon::after { display: block; width: 18px; height: 2px; background: ${C.ink}; border-radius: 2px; transition: transform .25s, opacity .25s; position: relative; }
+        .pj-menu-icon::before, .pj-menu-icon::after { content: ""; position: absolute; left: 0; }
+        .pj-menu-icon::before { top: -6px; }
+        .pj-menu-icon::after { top: 6px; }
+        .pj-menu-icon.open { background: transparent; }
+        .pj-menu-icon.open::before { top: 0; transform: rotate(45deg); }
+        .pj-menu-icon.open::after { top: 0; transform: rotate(-45deg); }
+        .pj-mobile-overlay { position: fixed; inset: 0; z-index: 60; background: rgba(5,7,14,.96); padding: 80px 20px 24px; }
+        .pj-mobile-panel { display: flex; flex-direction: column; gap: 8px; max-width: 400px; margin: 0 auto; }
+        .pj-mobile-link { display: block; padding: 16px 18px; border-radius: 14px; color: ${C.ink}; text-decoration: none; font-size: 17px; font-weight: 500; background: ${C.panel}; border: 1px solid ${C.border}; }
+        .pj-mobile-cta { margin-top: 8px; width: 100%; justify-content: center; }
         @media (prefers-reduced-motion: reduce) {
           .pj-fade { opacity: 1; transform: none; transition: none; }
           .proji-knowledge-root { scroll-behavior: auto; }
@@ -225,24 +408,17 @@ export default function ProjiKnowledgeLanding() {
           position: "sticky",
           top: 0,
           zIndex: 50,
-          background: scrolled ? "rgba(5,7,14,.7)" : "transparent",
-          backdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
-          WebkitBackdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
-          borderBottom: scrolled ? `1px solid ${C.border}` : "1px solid transparent",
-          transition: "all .4s ease",
+          background: scrolled ? "rgba(5,7,14,.96)" : "rgba(5,7,14,.88)",
+          borderBottom: scrolled ? `1px solid ${C.border}` : `1px solid transparent`,
+          transition: "background .4s ease, border-color .4s ease",
         }}
       >
-        <div className="pj-container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 76 }}>
+        <div className="pj-container pj-nav-bar" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 76 }}>
           <a href="#top" style={{ textDecoration: "none" }}>
             <Wordmark glow />
           </a>
           <div className="pj-hide-mobile" style={{ display: "flex", alignItems: "center", gap: 36 }}>
-            {[
-              ["Проблема", "#problem"],
-              ["Решение", "#solution"],
-              ["Результаты", "#results"],
-              ["Контакт", "#cta"],
-            ].map(([label, href]) => (
+            {NAV_LINKS.map(([label, href]) => (
               <a key={href} href={href} style={{ color: C.inkSoft, textDecoration: "none", fontSize: 14, fontWeight: 500, transition: "color .2s" }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = C.blueBright)}
                 onMouseLeave={(e) => (e.currentTarget.style.color = C.inkSoft)}
@@ -254,6 +430,7 @@ export default function ProjiKnowledgeLanding() {
               Записаться на демо
             </a>
           </div>
+          <MobileNav />
         </div>
       </nav>
 
@@ -268,7 +445,7 @@ export default function ProjiKnowledgeLanding() {
       <section id="cta" className="pj-section" style={{ position: "relative", overflow: "hidden" }}>
         <div className="pj-orb" style={{ width: 700, height: 700, background: C.blue, opacity: 0.22, top: -200, left: -200, animation: "pjFloat 14s ease-in-out infinite" }} />
         <div className="pj-orb" style={{ width: 500, height: 500, background: C.violet, opacity: 0.18, bottom: -150, right: -100, animation: "pjFloat2 18s ease-in-out infinite" }} />
-        <div className="pj-container" style={{ display: "grid", gridTemplateColumns: "1.05fr 1fr", gap: 80, alignItems: "start", position: "relative" }}>
+        <div className="pj-container pj-cta-grid" style={{ position: "relative" }}>
           <div>
             <div className="pj-eyebrow">04 · Пилот</div>
             <h2 className="pj-h2" style={{ marginTop: 18 }}>
@@ -291,7 +468,7 @@ export default function ProjiKnowledgeLanding() {
             </ul>
           </div>
 
-          <div className="pj-glass" style={{ padding: 40 }}>
+          <div className="pj-glass pj-form-card" style={{ padding: 40 }}>
             {submitted ? (
               <div style={{ padding: "40px 0" }}>
                 <div style={{ fontSize: 44, fontWeight: 600, letterSpacing: "-0.03em" }} className="pj-grad-text">Спасибо.</div>
@@ -299,14 +476,37 @@ export default function ProjiKnowledgeLanding() {
               </div>
             ) : (
               <form onSubmit={onSubmit}>
-                <input required className="pj-input" placeholder="Ваше имя и должность" />
-                <input required className="pj-input" placeholder="Email или Telegram" style={{ marginTop: 8 }} />
-                <button type="submit" className="pj-btn pj-btn-primary" style={{ marginTop: 36, padding: "18px 32px", fontSize: 16, width: "100%", justifyContent: "center" }}>
-                  Записаться на демо →
+                <input
+                  required
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  disabled={submitting}
+                  className="pj-input"
+                  placeholder="Ваше имя и должность"
+                />
+                <input
+                  required
+                  name="contact"
+                  type="text"
+                  autoComplete="email"
+                  disabled={submitting}
+                  className="pj-input"
+                  placeholder="Email или Telegram"
+                  style={{ marginTop: 8 }}
+                />
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="pj-btn pj-btn-primary"
+                  style={{ marginTop: 36, padding: "18px 32px", fontSize: 16, width: "100%", justifyContent: "center" }}
+                >
+                  {submitting ? "Отправка…" : "Записаться на демо →"}
                 </button>
+                {formError ? <p className="pj-form-error">{formError}</p> : null}
                 <div style={{ fontSize: 13, color: C.muted, marginTop: 24, lineHeight: 1.7 }}>
                   Или напрямую:{" "}
-                  <a href="mailto:serik@sunnet.kz" style={{ color: C.blueBright }}>serik@sunnet.kz</a>
+                  <a href="mailto:sund.serik@gmail.com" style={{ color: C.blueBright }}>sund.serik@gmail.com</a>
                   {" · "}
                   <a href="https://proji.kz" style={{ color: C.blueBright }}>proji.kz</a>
                 </div>
@@ -321,7 +521,7 @@ export default function ProjiKnowledgeLanding() {
         <div className="pj-container">
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 24 }}>
             <Wordmark size={22} />
-            <div style={{ display: "flex", gap: 28, fontSize: 13 }}>
+            <div style={{ display: "flex", gap: 28, fontSize: 13 }} className="pj-footer-links">
               <a href="#problem" style={{ color: C.muted, textDecoration: "none" }}>Проблема</a>
               <a href="#solution" style={{ color: C.muted, textDecoration: "none" }}>Решение</a>
               <a href="#results" style={{ color: C.muted, textDecoration: "none" }}>Результаты</a>
@@ -345,7 +545,7 @@ function HeroSection({ scrollY }: { scrollY: number }) {
   const parY = scrollY * 0.25;
 
   return (
-    <section ref={s.ref} id="top" style={{ position: "relative", paddingTop: 60, paddingBottom: 140, overflow: "hidden" }}>
+    <section ref={s.ref} id="top" className="pj-hero-section" style={{ position: "relative", paddingTop: 60, paddingBottom: 140, overflow: "hidden" }}>
       {/* Background grid */}
       <div
         aria-hidden
@@ -413,17 +613,18 @@ function HeroSection({ scrollY }: { scrollY: number }) {
         </h1>
 
         <div
-          className={`pj-fade ${s.inView ? "in" : ""}`}
-          style={{ display: "grid", gridTemplateColumns: "1.1fr 1fr", gap: 80, marginTop: 64, transitionDelay: ".25s", alignItems: "center" }}
+          className={`pj-fade pj-hero-grid ${s.inView ? "in" : ""}`}
+          style={{ marginTop: 64, transitionDelay: ".25s" }}
         >
           <div>
             <p className="pj-body" style={{ fontSize: 19, maxWidth: 540 }}>
               Нужный контакт. Актуальный регламент. Опыт прошлых проектов. В&nbsp;момент, когда они нужны — без поиска через знакомых.
             </p>
-            <div style={{ display: "flex", gap: 14, marginTop: 40, flexWrap: "wrap" }}>
+            <div className="pj-btn-row" style={{ marginTop: 40 }}>
               <a href="#cta" className="pj-btn pj-btn-primary">Записаться на демо →</a>
               <a href="#solution" className="pj-btn pj-btn-ghost">Смотреть как работает</a>
             </div>
+            <HeroMobileCards />
           </div>
 
           <HeroVisualization mouse={mouse} />
@@ -529,7 +730,7 @@ function ProblemSection() {
   return (
     <section ref={s.ref} id="problem" className="pj-section">
       <div className="pj-container">
-        <div className={`pj-fade ${s.inView ? "in" : ""}`} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 80, alignItems: "start", marginBottom: 80 }}>
+        <div className={`pj-fade pj-section-head ${s.inView ? "in" : ""}`} style={{ marginBottom: 80 }}>
           <div className="pj-eyebrow">01 · Проблема</div>
           <h2 className="pj-h2" style={{ maxWidth: 900 }}>
             Знания в компании уже есть.<br />
@@ -646,7 +847,7 @@ function ScaleSection({ scrollY }: { scrollY: number }) {
     >
       <div className="pj-orb" style={{ width: 800, height: 800, background: C.blue, opacity: 0.12, top: "10%", left: "-10%", animation: "pjFloat 20s ease-in-out infinite" }} />
       <div className="pj-container">
-        <div className={`pj-fade ${s.inView ? "in" : ""}`} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 80, alignItems: "start", marginBottom: 72 }}>
+        <div className={`pj-fade pj-section-head ${s.inView ? "in" : ""}`} style={{ marginBottom: 72 }}>
           <div className="pj-eyebrow">02 · Масштаб</div>
           <div style={{ maxWidth: 900 }}>
             <h2 className="pj-h2">
@@ -660,16 +861,7 @@ function ScaleSection({ scrollY }: { scrollY: number }) {
         </div>
 
         {/* Node grid */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: `repeat(${COLS}, 1fr)`,
-            gap: 12,
-            maxWidth: 980,
-            margin: "0 auto",
-            padding: "20px 0",
-          }}
-        >
+        <div className="pj-node-grid">
           {Array.from({ length: TOTAL }).map((_, i) => {
             const lit = i < litCount;
             const color = nodeColors[i % nodeColors.length];
@@ -694,7 +886,7 @@ function ScaleSection({ scrollY }: { scrollY: number }) {
         </div>
         <style>{`.pj-node:hover > div { transform: scale(1.6); }`}</style>
 
-        <div ref={kpi.ref} style={{ marginTop: 96, display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 0, borderTop: `1px solid ${C.border}` }}>
+        <div ref={kpi.ref} className="pj-kpi-scale" style={{ marginTop: 96, borderTop: `1px solid ${C.border}` }}>
           {[
             { size: "50 чел.", pct: 85, c: C.emerald },
             { size: "500 чел.", pct: 35, c: C.blueBright },
@@ -761,7 +953,7 @@ function SolutionSection() {
   return (
     <section ref={s.ref} id="solution" className="pj-section">
       <div className="pj-container">
-        <div className={`pj-fade ${s.inView ? "in" : ""}`} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 80, alignItems: "start", marginBottom: 72 }}>
+        <div className={`pj-fade pj-section-head ${s.inView ? "in" : ""}`} style={{ marginBottom: 72 }}>
           <div className="pj-eyebrow">03 · Решение</div>
           <div style={{ maxWidth: 920 }}>
             <h2 className="pj-h2">
@@ -813,7 +1005,7 @@ function ArchitectureSection() {
     <section ref={s.ref} className="pj-section" style={{ background: `linear-gradient(180deg, ${C.bg} 0%, ${C.bgSoft} 100%)`, position: "relative", overflow: "hidden" }}>
       <div className="pj-orb" style={{ width: 700, height: 700, background: C.violet, opacity: 0.12, top: "30%", right: "-15%", animation: "pjFloat2 18s ease-in-out infinite" }} />
       <div className="pj-container">
-        <div className={`pj-fade ${s.inView ? "in" : ""}`} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 80, alignItems: "start", marginBottom: 64 }}>
+        <div className={`pj-fade pj-section-head ${s.inView ? "in" : ""}`} style={{ marginBottom: 64 }}>
           <div className="pj-eyebrow">Архитектура</div>
           <h2 className="pj-h2" style={{ maxWidth: 900 }}>
             Подключаем <span className="pj-grad-text">все источники</span> знаний компании.
@@ -821,7 +1013,7 @@ function ArchitectureSection() {
         </div>
 
         <div className={`pj-fade ${s.inView ? "in" : ""}`}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12 }}>
+          <div className="pj-arch-grid">
             {sources.map((src, i) => (
               <div
                 key={src}
@@ -880,7 +1072,7 @@ function ArchitectureSection() {
             ))}
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 12 }}>
+          <div className="pj-arch-grid">
             {outputs.map((o, i) => (
               <div
                 key={o}
@@ -917,7 +1109,7 @@ function ResultsSection() {
   return (
     <section id="results" className="pj-section" style={{ position: "relative", overflow: "hidden" }}>
       <div className="pj-container">
-        <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 80, alignItems: "start", marginBottom: 80 }}>
+        <div className="pj-section-head" style={{ marginBottom: 80 }}>
           <div className="pj-eyebrow">Результаты</div>
           <h2 className="pj-h2" style={{ maxWidth: 900 }}>
             Эффект <span className="pj-grad-text">растёт</span> вместе с&nbsp;компанией.
@@ -925,7 +1117,7 @@ function ResultsSection() {
         </div>
 
         <div ref={s.ref} className="pj-glass" style={{ padding: 0, overflow: "hidden", borderRadius: 24 }}>
-          <div className="pj-grid-4" style={{ gap: 0 }}>
+          <div className="pj-grid-4 pj-results-kpis" style={{ gap: 0 }}>
             {kpis.map((k, i) => (
               <div
                 key={k.label}
@@ -947,6 +1139,7 @@ function ResultsSection() {
         </div>
 
         <blockquote
+          className="pj-results-quote"
           style={{
             margin: "80px 0 0 auto",
             maxWidth: 860,

@@ -26,7 +26,7 @@ export const landings: LandingEntry[] = [
     component: lazy(() => import('./main/MainLanding')),
   },
   {
-    slug: 'proji_knowledge',
+    slug: 'knowledge',
     title: 'proji studio — AI-рекомендатель корпоративных знаний',
     component: lazy(() => import('./proji_knowledge/ProjiKnowledgeLanding')),
   },

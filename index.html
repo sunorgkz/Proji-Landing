@@ -4,8 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Proji</title>
+    <style>
+      html, body, #root { margin: 0; padding: 0; min-height: 100%; }
+    </style>
+    <script>
+      (function () {
+        var path = location.pathname.replace(/\/+$/, "");
+        if (path === "/knowledge") {
+          var bg = "#05070E";
+          document.documentElement.style.backgroundColor = bg;
+          document.documentElement.dataset.landing = "knowledge";
+          document.documentElement.style.colorScheme = "dark";
+        }
+      })();
+    </script>
   </head>
   <body>
+    <script>
+      (function () {
+        if (document.documentElement.dataset.landing === "knowledge") {
+          var bg = "#05070E";
+          document.body.style.backgroundColor = bg;
+          var root = document.getElementById("root");
+          if (root) root.style.backgroundColor = bg;
+        }
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>
