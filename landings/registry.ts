@@ -35,6 +35,11 @@ export const landings: LandingEntry[] = [
     title: 'proji — AI с абсолютной памятью для ваших проектов',
     component: lazy(() => import('./secondbrain/SecondBrainLanding')),
   },
+  {
+    slug: 'chrome-extension',
+    title: 'proji chrome extension — живёт в каждой вкладке',
+    component: lazy(() => import('./chrome_extension/ChromeExtensionLanding')),
+  },
 ];
 
 const bySlug = new Map(landings.map(entry => [entry.slug, entry]));
