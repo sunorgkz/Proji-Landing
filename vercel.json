@@ -7,6 +7,7 @@
     { "source": "/sunnet/:path*", "destination": "/sunnet/:path*" },
     { "source": "/platform/:path*", "destination": "/platform/:path*" },
     { "source": "/crm/:path*", "destination": "/crm/:path*" },
+    { "source": "/team-ai/:path*", "destination": "/team-ai/:path*" },
     { "source": "/downloads/:path*", "destination": "/downloads/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]

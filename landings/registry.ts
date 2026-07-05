@@ -55,6 +55,11 @@ export const landings: LandingEntry[] = [
     title: 'PROJI — AI Sales Operating System',
     component: lazy(() => import('./crm/CrmLanding')),
   },
+  {
+    slug: 'team-ai',
+    title: 'proGPT — Team AI collaboration platform',
+    component: lazy(() => import('./team_ai/TeamAiLanding')),
+  },
 ];
 
 const bySlug = new Map(landings.map(entry => [entry.slug, entry]));
