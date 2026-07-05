@@ -50,6 +50,11 @@ export const landings: LandingEntry[] = [
     title: 'Proji AI | Organizational Intelligence Platform',
     component: lazy(() => import('./platform/PlatformLanding')),
   },
+  {
+    slug: 'crm',
+    title: 'PROJI — AI Sales Operating System',
+    component: lazy(() => import('./crm/CrmLanding')),
+  },
 ];
 
 const bySlug = new Map(landings.map(entry => [entry.slug, entry]));

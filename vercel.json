@@ -6,6 +6,7 @@
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/sunnet/:path*", "destination": "/sunnet/:path*" },
     { "source": "/platform/:path*", "destination": "/platform/:path*" },
+    { "source": "/crm/:path*", "destination": "/crm/:path*" },
     { "source": "/downloads/:path*", "destination": "/downloads/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
