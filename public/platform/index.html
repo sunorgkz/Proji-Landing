@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proji AI | Organizational Intelligence Platform</title>
+    <meta name="description" content="Proji — единая AI-платформа для управления бизнесом. Превращает хаос в слаженную работу команды. Казахстан.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Animated BG Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <a href="#" class="logo">
+                <div class="logo-dot"></div>
+                <span>proji<span class="logo-accent">.kz</span></span>
+            </a>
+            <nav class="nav">
+                <a href="#why">Почему Proji</a>
+                <a href="#how">Как работает</a>
+                <a href="#results">Результаты</a>
+                <a href="#contact" class="nav-cta">Записаться на аудит →</a>
+            </nav>
+            <button class="burger" id="burger">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="#why">Почему Proji</a>
+        <a href="#how">Как работает</a>
+        <a href="#results">Результаты</a>
+        <a href="#contact">Записаться на аудит</a>
+    </div>
+
+    <main>
+        <!-- ─── HERO ─────────────────────────────── -->
+        <section class="hero" id="home">
+            <div class="container hero-inner">
+                <div class="hero-label">
+                    <span class="pulse-dot"></span>
+                    Organizational Intelligence System
+                </div>
+                <h1>
+                    Ваш бизнес.<br>
+                    <span class="grad-text">Живой. Умный.</span><br>
+                    Управляемый.
+                </h1>
+                <p class="hero-desc">
+                    Proji — это не CRM и не чат-бот.<br>
+                    Это интеллектуальный мозг компании, который помнит всё,<br>
+                    координирует всех и даёт руководителю полную картину в реальном времени.
+                </p>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn-main">Получить бесплатный аудит</a>
+                    <a href="#how" class="btn-ghost">Как это работает ↓</a>
+                </div>
+                <div class="hero-trust">
+                    <span>✓ Интеграция за 2 недели</span>
+                    <span>✓ Без смены текущих систем</span>
+                    <span>✓ Размещение в РК</span>
+                </div>
+            </div>
+
+            <!-- Floating Metrics -->
+            <div class="float-card float-1">
+                <div class="float-num">28×</div>
+                <div class="float-txt">ускорение инвентаризации</div>
+            </div>
+            <div class="float-card float-2">
+                <div class="float-num">98%</div>
+                <div class="float-txt">соблюдение сроков</div>
+            </div>
+            <div class="float-card float-3">
+                <div class="float-num">4 мес</div>
+                <div class="float-txt">полная окупаемость</div>
+            </div>
+        </section>
+
+        <!-- ─── WHY ──────────────────────────────── -->
+        <section class="section why" id="why">
+            <div class="container">
+                <div class="tag">ПРОБЛЕМА</div>
+                <h2>Знакомо?</h2>
+                <p class="section-sub">Каждая компания сталкивается с одними и теми же потерями</p>
+
+                <div class="pain-grid">
+                    <div class="pain-card">
+                        <div class="pain-icon">💬</div>
+                        <h3>Решения тонут в чатах</h3>
+                        <p>Договорились в WhatsApp, но через неделю никто не помнит кто, что и кому обещал.</p>
+                    </div>
+                    <div class="pain-card">
+                        <div class="pain-icon">🧩</div>
+                        <h3>Отделы работают вслепую</h3>
+                        <p>Склад не знает, что нужно закупкам. Финансы не видят прогресса проекта. Всё — вручную.</p>
+                    </div>
+                    <div class="pain-card">
+                        <div class="pain-icon">🔍</div>
+                        <h3>Уходит человек — уходят знания</h3>
+                        <p>Ключевой сотрудник увольняется, и всё, что он знал о процессах, уходит вместе с ним.</p>
+                    </div>
+                    <div class="pain-card">
+                        <div class="pain-icon">📊</div>
+                        <h3>Управление «на ощущениях»</h3>
+                        <p>CEO принимает стратегические решения без актуальных данных, потому что их не видно в одном месте.</p>
+                    </div>
+                </div>
+
+                <div class="vs-banner">
+                    <div class="vs-left">
+                        <div class="vs-title danger">Без Proji</div>
+                        <ul>
+                            <li>Микроменеджмент и контроль «вручную»</li>
+                            <li>Изолированные боты без контекста</li>
+                            <li>Потеря знаний при смене кадров</li>
+                            <li>Отчётность занимает дни</li>
+                        </ul>
+                    </div>
+                    <div class="vs-middle">VS</div>
+                    <div class="vs-right">
+                        <div class="vs-title success">С Proji</div>
+                        <ul>
+                            <li>AI-координация без участия CEO</li>
+                            <li>Единый мозг с памятью и контекстом</li>
+                            <li>Institutional memory — знания не теряются</li>
+                            <li>Дашборд в реальном времени</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── HOW IT WORKS ─────────────────────── -->
+        <section class="section how" id="how">
+            <div class="container">
+                <div class="tag">КАК РАБОТАЕТ</div>
+                <h2>Технология <span class="grad-text">AIFlow</span></h2>
+                <p class="section-sub">Одно сообщение в мессенджере превращается в структурированные задачи для всей команды</p>
+
+                <div class="flow-demo">
+                    <div class="flow-in">
+                        <div class="flow-in-tag">ВХОД: WhatsApp сообщение от CEO</div>
+                        <div class="whatsapp-bubble">
+                            <div class="wa-header">
+                                <div class="wa-avatar">CEO</div>
+                                <div class="wa-meta"><strong>Серик</strong> · 10:42</div>
+                            </div>
+                            <p>«Срочно проверьте остатки металла на складе под ТОО Альфа, если не хватает — пусть закупки выставят счет. И напомните юристам согласовать спецификацию к пятнице. Всё держать на контроле!»</p>
+                        </div>
+                    </div>
+
+                    <div class="flow-process">
+                        <div class="flow-process-inner">
+                            <div class="ai-badge">🧠 Proji AI</div>
+                            <p>Анализирует контекст,<br>извлекает задачи,<br>назначает исполнителей</p>
+                            <div class="process-time">≈ 1 сек</div>
+                        </div>
+                    </div>
+
+                    <div class="flow-out">
+                        <div class="flow-out-tag">ВЫХОД: 3 задачи созданы автоматически</div>
+                        <div class="task-list">
+                            <div class="task-row">
+                                <span class="dept dept-green">СКЛАД</span>
+                                <div class="task-body">
+                                    <strong>Проверка остатков металла</strong>
+                                    <p>Сопоставить с ТЗ по ТОО "Альфа"</p>
+                                </div>
+                            </div>
+                            <div class="task-row">
+                                <span class="dept dept-yellow">ЗАКУПКИ</span>
+                                <div class="task-body">
+                                    <strong>Счёт на металл при дефиците</strong>
+                                    <p>Оформить при выявлении нехватки</p>
+                                </div>
+                            </div>
+                            <div class="task-row">
+                                <span class="dept dept-blue">ЮРИСТЫ</span>
+                                <div class="task-body">
+                                    <strong>Согласование спецификации</strong>
+                                    <p>Дедлайн: Пятница</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features row -->
+                <div class="features-row">
+                    <div class="feat">
+                        <div class="feat-icon">🧠</div>
+                        <h4>Intelligence Core</h4>
+                        <p>Единая база знаний, задач, финансов и людей. ИИ видит картину целиком.</p>
+                    </div>
+                    <div class="feat">
+                        <div class="feat-icon">🔄</div>
+                        <h4>AI Memory</h4>
+                        <p>Вся история переписки, решений и документов сохраняется и связывается автоматически.</p>
+                    </div>
+                    <div class="feat">
+                        <div class="feat-icon">🔌</div>
+                        <h4>Интеграции</h4>
+                        <p>Подключается к вашим 1C, CRM, мессенджерам. Ничего не нужно менять.</p>
+                    </div>
+                    <div class="feat">
+                        <div class="feat-icon">📡</div>
+                        <h4>Сквозной мониторинг</h4>
+                        <p>CEO видит статус каждого проекта без звонков и планёрок.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── RESULTS ───────────────────────────── -->
+        <section class="section results" id="results">
+            <div class="container">
+                <div class="tag">РЕЗУЛЬТАТЫ</div>
+                <h2>Реальные кейсы в Казахстане</h2>
+                <p class="section-sub">Компании уже работают с Proji и видят измеримый эффект</p>
+
+                <div class="cases-grid">
+                    <div class="case">
+                        <div class="case-industry">🪑 Производство</div>
+                        <h3>Мебельная фабрика</h3>
+                        <p>Оцифровка загрузки оборудования и управление заказами. Теперь ведут 5 крупных заказов вместо прежних 2 — без расширения штата.</p>
+                        <div class="case-metrics">
+                            <div class="metric">
+                                <div class="metric-n">98%</div>
+                                <div class="metric-l">соблюдение сроков</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-n">+150%</div>
+                                <div class="metric-l">рост пропускной способности</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case case-featured">
+                        <div class="case-industry">💊 Фармацевтика</div>
+                        <h3>Аптечная сеть</h3>
+                        <p>Мобильное приложение с ИИ-распознаванием остатков. Инвентаризация, которая занимала 2 недели, теперь делается за 4 часа.</p>
+                        <div class="case-metrics">
+                            <div class="metric">
+                                <div class="metric-n">28×</div>
+                                <div class="metric-l">ускорение инвентаризации</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-n">4 ч</div>
+                                <div class="metric-l">вместо 2-х недель</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case">
+                        <div class="case-industry">🚚 Логистика</div>
+                        <h3>Доставка грузов</h3>
+                        <p>ИИ-приём заказов из WhatsApp, автоматический расчёт маршрутов и координация водителей без диспетчера.</p>
+                        <div class="case-metrics">
+                            <div class="metric">
+                                <div class="metric-n">4 мес</div>
+                                <div class="metric-l">до полной окупаемости</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-n">−45%</div>
+                                <div class="metric-l">снижение ручной рутины</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── CTA / CONTACT ────────────────────── -->
+        <section class="section contact" id="contact">
+            <div class="container">
+                <div class="cta-block">
+                    <div class="cta-left">
+                        <div class="tag">СЛЕДУЮЩИЙ ШАГ</div>
+                        <h2>30-минутный<br>бизнес-аудит<br><span class="grad-text">бесплатно</span></h2>
+                        <p>Мы покажем, где ИИ сэкономит вам время и деньги прямо в вашей компании. Без обязательств.</p>
+                        <div class="audit-items">
+                            <div class="audit-item">
+                                <span class="ai-num">01</span>
+                                <div>
+                                    <strong>Анализ ИТ-контура</strong>
+                                    <p>Построим карту ваших текущих систем</p>
+                                </div>
+                            </div>
+                            <div class="audit-item">
+                                <span class="ai-num">02</span>
+                                <div>
+                                    <strong>Поиск узких мест</strong>
+                                    <p>Определим скрытые потери в процессах</p>
+                                </div>
+                            </div>
+                            <div class="audit-item">
+                                <span class="ai-num">03</span>
+                                <div>
+                                    <strong>3 сценария внедрения</strong>
+                                    <p>Как окупить Proji за 3 месяца</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cta-right">
+                        <div class="expert-card">
+                            <div class="expert-avatar">СС</div>
+                            <div class="expert-info">
+                                <h3>Серик Сундетов</h3>
+                                <p>CEO · Sunnet Business Technologies</p>
+                                <p class="expert-exp">15 лет автоматизации бизнеса в РК</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-methods">
+                            <a href="mailto:serik@sunnet.kz" class="contact-btn">
+                                <span class="c-icon">✉</span>
+                                <div>
+                                    <div class="c-label">Email</div>
+                                    <div class="c-val">serik@sunnet.kz</div>
+                                </div>
+                            </a>
+                            <a href="tel:+77079635533" class="contact-btn">
+                                <span class="c-icon">📞</span>
+                                <div>
+                                    <div class="c-label">Телефон</div>
+                                    <div class="c-val">+7 (707) 963 55 33</div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <a href="mailto:serik@sunnet.kz" class="btn-main full-w">
+                            Записаться на бесплатный аудит →
+                        </a>
+
+                        <p class="cta-note">100% конфиденциально. Данные хранятся на серверах в РК.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <a href="#" class="logo">
+                <div class="logo-dot"></div>
+                <span>proji<span class="logo-accent">.kz</span></span>
+            </a>
+            <p class="footer-desc">Организационный интеллект для бизнеса Казахстана.<br>Разработано Sunnet Business Technologies.</p>
+            <p class="footer-copy">© 2026 Sunnet Business Technologies. Все права защищены.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

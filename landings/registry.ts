@@ -40,6 +40,16 @@ export const landings: LandingEntry[] = [
     title: 'proji chrome extension — живёт в каждой вкладке',
     component: lazy(() => import('./chrome_extension/ChromeExtensionLanding')),
   },
+  {
+    slug: 'sunnet',
+    title: 'Proji | Организационный Интеллект',
+    component: lazy(() => import('./sunnet/SunnetLanding')),
+  },
+  {
+    slug: 'platform',
+    title: 'Proji AI | Organizational Intelligence Platform',
+    component: lazy(() => import('./platform/PlatformLanding')),
+  },
 ];
 
 const bySlug = new Map(landings.map(entry => [entry.slug, entry]));
