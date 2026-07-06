@@ -75,6 +75,11 @@ export const landings: LandingEntry[] = [
     title: 'Proji — Intelligent decision support system',
     component: lazy(() => import('./knowledge_vault/KnowledgeVaultLanding')),
   },
+  {
+    slug: 'knowledge-twin',
+    title: 'PROJI Knowledge Twin — Digital memory for your company',
+    component: lazy(() => import('./knowledge_twin/KnowledgeTwinLanding')),
+  },
 ];
 
 const bySlug = new Map(landings.map(entry => [entry.slug, entry]));

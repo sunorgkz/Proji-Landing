@@ -39,7 +39,7 @@ function collectAssetNames(html) {
   return [...names];
 }
 
-export async function setupLovableLanding({ sourceUrl, slug }) {
+export export async function setupLovableLanding({ sourceUrl, slug }) {
   const baseUrl = sourceUrl.replace(/\/$/, '');
   const prefix = `/${slug}`;
   const dir = join(import.meta.dirname, '..', 'public', slug);
@@ -82,9 +82,17 @@ const configs = [
     sourceUrl: 'https://knowledge-vault-synth.lovable.app',
     slug: 'knowledge-vault',
   },
+  {
+    sourceUrl: 'https://core-mind-vault.lovable.app',
+    slug: 'knowledge-twin',
+  },
 ];
 
-for (const config of configs) {
-  console.log(`\nSetting up ${config.slug}...`);
-  await setupLovableLanding(config);
+const isMain = process.argv[1]?.endsWith('setup-lovable-landing.mjs');
+
+if (isMain) {
+  for (const config of configs) {
+    console.log(`\nSetting up ${config.slug}...`);
+    await setupLovableLanding(config);
+  }
 }

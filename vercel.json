@@ -11,6 +11,7 @@
     { "source": "/os-engine/:path*", "destination": "/os-engine/:path*" },
     { "source": "/digital-team/:path*", "destination": "/digital-team/:path*" },
     { "source": "/knowledge-vault/:path*", "destination": "/knowledge-vault/:path*" },
+    { "source": "/knowledge-twin/:path*", "destination": "/knowledge-twin/:path*" },
     { "source": "/downloads/:path*", "destination": "/downloads/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
