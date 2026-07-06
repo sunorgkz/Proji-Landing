@@ -1,8 +1,13 @@
 import { mkdirSync, readFileSync, writeFileSync, readdirSync } from 'fs';
-import { join, basename } from 'path';
+import { join } from 'path';
 
-const STYLE =
+const STATIC_STYLE =
   '<style id="proji-static-fix">section.opacity-0.translate-y-6,.opacity-0.translate-y-6,.reveal:not(.visible){opacity:1!important;transform:none!important}</style>';
+
+function routerShim(slug) {
+  const base = `/${slug}`;
+  return `<script id="${slug}-path-shim">(function(){var B="${base}";function m(p){if(p===B||p===B+"/"||p===B+"/index.html")return"/";if(p.indexOf(B+"/")===0){var s=p.slice(B.length)||"/";return s==="/index.html"?"/":s||"/";}return p;}try{var d=Object.getOwnPropertyDescriptor(Location.prototype,"pathname");if(d&&d.get){var g=d.get.bind(window.location);Object.defineProperty(window.location,"pathname",{get:function(){return m(g());},configurable:true});}}catch(e){}})();</script>`;
+}
 
 async function download(url, dest) {
   const res = await fetch(url);
@@ -17,17 +22,33 @@ function rewritePaths(content, prefix) {
     .replace(/import\("\/assets\//g, `import("${prefix}/assets/`);
 }
 
+function stripAnalytics(html) {
+  return html
+    .replace(/<script defer src="\/~flock.js"[^>]*><\/script>/g, '')
+    .replace(/<script defer src="\/__l5e\/events.js"[^>]*><\/script>/g, '');
+}
+
 function applyStaticFix(html, assetPrefix) {
+  html = stripAnalytics(html);
+  html = html.replace(/<style id="proji-static-fix">[\s\S]*?<\/style>/g, '');
   if (!html.includes('proji-static-fix')) {
-    html = html.replace('<head>', `<head>${STYLE}`);
+    html = html.replace('<head>', `<head>${STATIC_STYLE}`);
   }
-  html = html.replace(/<script defer src="\/~flock.js"[^>]*><\/script>/g, '');
-  html = html.replace(/<script defer src="\/__l5e\/events.js"[^>]*><\/script>/g, '');
   html = html.replace(
     new RegExp(`<script type="module" async="">import\\("${assetPrefix.replace(/\//g, '\\/')}[^"]+"\\)<\\/script>`, 'g'),
     '',
   );
   html = html.replace(/<script class="\$tsr" id="\$tsr-stream-barrier">[\s\S]*?<\/script>/g, '');
+  return html;
+}
+
+function applyInteractiveFix(html, slug) {
+  html = stripAnalytics(html);
+  html = html.replace(/<style id="proji-static-fix">[\s\S]*?<\/style>/g, '');
+  const shim = routerShim(slug);
+  if (!html.includes(`${slug}-path-shim`)) {
+    html = html.replace('<head>', `<head>${shim}`);
+  }
   return html;
 }
 
@@ -39,7 +60,7 @@ function collectAssetNames(html) {
   return [...names];
 }
 
-export export async function setupLovableLanding({ sourceUrl, slug }) {
+export async function setupLovableLanding({ sourceUrl, slug, interactive = false }) {
   const baseUrl = sourceUrl.replace(/\/$/, '');
   const prefix = `/${slug}`;
   const dir = join(import.meta.dirname, '..', 'public', slug);
@@ -55,7 +76,9 @@ export export async function setupLovableLanding({ sourceUrl, slug }) {
   }
 
   let html = rewritePaths(htmlRaw, prefix);
-  html = applyStaticFix(html, `${prefix}/assets/`);
+  html = interactive
+    ? applyInteractiveFix(html, slug)
+    : applyStaticFix(html, `${prefix}/assets/`);
   writeFileSync(join(dir, 'index.html'), html);
 
   for (const file of readdirSync(assetsDir)) {
@@ -66,32 +89,22 @@ export export async function setupLovableLanding({ sourceUrl, slug }) {
     if (next !== js) writeFileSync(path, next);
   }
 
-  console.log(`Setup complete: ${slug} (${assetNames.length} assets)`);
+  console.log(`Setup complete: ${slug} (${assetNames.length} assets, ${interactive ? 'interactive' : 'static'})`);
 }
 
 const configs = [
-  {
-    sourceUrl: 'https://proji-os-engine.lovable.app',
-    slug: 'os-engine',
-  },
-  {
-    sourceUrl: 'https://digital-team-builders.lovable.app',
-    slug: 'digital-team',
-  },
-  {
-    sourceUrl: 'https://knowledge-vault-synth.lovable.app',
-    slug: 'knowledge-vault',
-  },
-  {
-    sourceUrl: 'https://core-mind-vault.lovable.app',
-    slug: 'knowledge-twin',
-  },
+  { sourceUrl: 'https://proji-os-engine.lovable.app', slug: 'os-engine', interactive: true },
+  { sourceUrl: 'https://digital-team-builders.lovable.app', slug: 'digital-team' },
+  { sourceUrl: 'https://knowledge-vault-synth.lovable.app', slug: 'knowledge-vault' },
+  { sourceUrl: 'https://core-mind-vault.lovable.app', slug: 'knowledge-twin' },
 ];
 
 const isMain = process.argv[1]?.endsWith('setup-lovable-landing.mjs');
 
 if (isMain) {
-  for (const config of configs) {
+  const only = process.argv[2];
+  const selected = only ? configs.filter(c => c.slug === only) : configs;
+  for (const config of selected) {
     console.log(`\nSetting up ${config.slug}...`);
     await setupLovableLanding(config);
   }
