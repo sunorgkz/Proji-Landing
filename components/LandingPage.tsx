@@ -2,6 +2,7 @@ import React, { Suspense, useEffect, useLayoutEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getLanding } from '../landings/registry';
 import { applyLandingPageBg, LANDING_PAGE_BG } from '../lib/landingPageBg';
+import { isStaticPublicLanding, staticPublicPath } from '../lib/staticPublicLandings';
 import { NotFound } from './NotFound';
 
 const PageLoader = ({ background }: { background: string }) => (
@@ -39,10 +40,19 @@ export const LandingPage: React.FC<LandingPageProps> = ({ slug: slugProp }) => {
 
   const entry = getLanding(slug);
   const pageBg = LANDING_PAGE_BG[slug] ?? '#fff';
+  const isStaticPublic = isStaticPublicLanding(slug);
 
   useLayoutEffect(() => {
     applyLandingPageBg(slug);
   }, [slug]);
+
+  useLayoutEffect(() => {
+    if (!entry || !isStaticPublic) return;
+    const root = document.getElementById('root');
+    if (root?.childElementCount) {
+      window.location.replace(staticPublicPath(slug));
+    }
+  }, [entry, isStaticPublic, slug]);
 
   useEffect(() => {
     document.title = entry?.title ?? 'Proji';
@@ -50,6 +60,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ slug: slugProp }) => {
 
   if (!entry) {
     return <NotFound />;
+  }
+
+  if (isStaticPublic) {
+    return <PageLoader background={pageBg} />;
   }
 
   const Component = entry.component;

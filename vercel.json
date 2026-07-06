@@ -1,6 +1,20 @@
 {
   "redirects": [
-    { "source": "/proji_knowledge", "destination": "/knowledge", "permanent": true }
+    { "source": "/proji_knowledge", "destination": "/knowledge", "permanent": true },
+    { "source": "/sunnet", "destination": "/sunnet/", "permanent": false },
+    { "source": "/platform", "destination": "/platform/", "permanent": false },
+    { "source": "/crm", "destination": "/crm/", "permanent": false },
+    { "source": "/team-ai", "destination": "/team-ai/", "permanent": false },
+    { "source": "/os-engine", "destination": "/os-engine/", "permanent": false },
+    { "source": "/digital-team", "destination": "/digital-team/", "permanent": false },
+    { "source": "/knowledge-vault", "destination": "/knowledge-vault/", "permanent": false },
+    { "source": "/knowledge-twin", "destination": "/knowledge-twin/", "permanent": false },
+    { "source": "/insight-hub", "destination": "/insight-hub/", "permanent": false },
+    { "source": "/context-flow", "destination": "/context-flow/", "permanent": false },
+    { "source": "/flow-forge", "destination": "/flow-forge/", "permanent": false },
+    { "source": "/team-ai-collab", "destination": "/team-ai-collab/", "permanent": false },
+    { "source": "/pro-ai-council", "destination": "/pro-ai-council/", "permanent": false },
+    { "source": "/talent-manager", "destination": "/talent-manager/", "permanent": false }
   ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
@@ -17,6 +31,7 @@
     { "source": "/flow-forge/:path*", "destination": "/flow-forge/:path*" },
     { "source": "/team-ai-collab/:path*", "destination": "/team-ai-collab/:path*" },
     { "source": "/pro-ai-council/:path*", "destination": "/pro-ai-council/:path*" },
+    { "source": "/talent-manager/:path*", "destination": "/talent-manager/:path*" },
     { "source": "/downloads/:path*", "destination": "/downloads/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]

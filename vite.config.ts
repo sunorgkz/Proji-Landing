@@ -1,10 +1,45 @@
 import path from 'path';
-import { defineConfig } from 'vite';
+import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
+const STATIC_LANDING_SLUGS = [
+  'sunnet',
+  'platform',
+  'crm',
+  'team-ai',
+  'os-engine',
+  'digital-team',
+  'knowledge-vault',
+  'knowledge-twin',
+  'insight-hub',
+  'context-flow',
+  'flow-forge',
+  'team-ai-collab',
+  'pro-ai-council',
+  'talent-manager',
+];
+
+function staticLandingDevPlugin(): Plugin {
+  return {
+    name: 'static-landing-dev',
+    configureServer(server) {
+      server.middlewares.use((req, _res, next) => {
+        const [pathname, search = ''] = (req.url ?? '').split('?');
+        for (const slug of STATIC_LANDING_SLUGS) {
+          if (pathname === `/${slug}` || pathname === `/${slug}/`) {
+            req.url = `/${slug}/index.html${search ? `?${search}` : ''}`;
+            break;
+          }
+        }
+        next();
+      });
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), staticLandingDevPlugin()],
   server: {
     port: 3000,
     host: '0.0.0.0',

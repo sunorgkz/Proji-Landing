@@ -115,6 +115,7 @@ const configs = [
   { sourceUrl: 'https://proji-flow-forge.lovable.app', slug: 'flow-forge', interactive: true },
   { sourceUrl: 'https://team-ai-collab.lovable.app', slug: 'team-ai-collab', interactive: true },
   { sourceUrl: 'https://pro-ai-council.lovable.app', slug: 'pro-ai-council', interactive: true },
+  { sourceUrl: 'https://talent-manager.lovable.app', slug: 'talent-manager', interactive: true },
 ];
 
 const isMain = process.argv[1]?.endsWith('setup-lovable-landing.mjs');

@@ -105,6 +105,11 @@ export const landings: LandingEntry[] = [
     title: 'proGPT — Совет из лучших AI для вашей работы',
     component: lazy(() => import('./pro_ai_council/ProAiCouncilLanding')),
   },
+  {
+    slug: 'talent-manager',
+    title: "10x Talent's Evolution — Talent-first recruiting",
+    component: lazy(() => import('./talent_manager/TalentManagerLanding')),
+  },
 ];
 
 const bySlug = new Map(landings.map(entry => [entry.slug, entry]));
