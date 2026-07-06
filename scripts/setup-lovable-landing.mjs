@@ -1,5 +1,6 @@
 import { mkdirSync, readFileSync, writeFileSync, readdirSync } from 'fs';
 import { join } from 'path';
+import { patchToStaticSsr, patchViteSpa } from './patch-lovable-static.mjs';
 
 const STATIC_STYLE =
   '<style id="proji-static-fix">section.opacity-0.translate-y-6,.opacity-0.translate-y-6,.reveal:not(.visible){opacity:1!important;transform:none!important}</style>';
@@ -101,6 +102,15 @@ export async function setupLovableLanding({ sourceUrl, slug, interactive = false
   writeFileSync(join(dir, 'index.html'), html);
 
   rewriteAssetFiles(assetsDir, prefix);
+
+  const finalHtml = readFileSync(join(dir, 'index.html'), 'utf8');
+  if (finalHtml.includes('$tsr-stream-barrier')) {
+    writeFileSync(join(dir, 'index.html'), patchToStaticSsr(finalHtml, slug));
+    console.log(`  applied static SSR patch (no hydration)`);
+  } else if (finalHtml.includes('id="root"') && !finalHtml.includes('<!--$-->')) {
+    writeFileSync(join(dir, 'index.html'), patchViteSpa(finalHtml));
+    console.log(`  applied Vite SPA patch`);
+  }
 
   console.log(`Setup complete: ${slug} (${assetNames.length} assets, ${interactive ? 'interactive' : 'static'})`);
 }
