@@ -60,6 +60,21 @@ export const landings: LandingEntry[] = [
     title: 'proGPT — Team AI collaboration platform',
     component: lazy(() => import('./team_ai/TeamAiLanding')),
   },
+  {
+    slug: 'os-engine',
+    title: 'PROJI — AI Operating System for Business',
+    component: lazy(() => import('./os_engine/OsEngineLanding')),
+  },
+  {
+    slug: 'digital-team',
+    title: 'PROJI AI — Цифровые сотрудники для вашего бизнеса',
+    component: lazy(() => import('./digital_team/DigitalTeamLanding')),
+  },
+  {
+    slug: 'knowledge-vault',
+    title: 'Proji — Intelligent decision support system',
+    component: lazy(() => import('./knowledge_vault/KnowledgeVaultLanding')),
+  },
 ];
 
 const bySlug = new Map(landings.map(entry => [entry.slug, entry]));
