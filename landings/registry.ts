@@ -80,6 +80,11 @@ export const landings: LandingEntry[] = [
     title: 'PROJI Knowledge Twin — Digital memory for your company',
     component: lazy(() => import('./knowledge_twin/KnowledgeTwinLanding')),
   },
+  {
+    slug: 'insight-hub',
+    title: 'Proji — Корпоративная экосистема фокуса',
+    component: lazy(() => import('./insight_hub/InsightHubLanding')),
+  },
 ];
 
 const bySlug = new Map(landings.map(entry => [entry.slug, entry]));

@@ -97,6 +97,7 @@ const configs = [
   { sourceUrl: 'https://digital-team-builders.lovable.app', slug: 'digital-team' },
   { sourceUrl: 'https://knowledge-vault-synth.lovable.app', slug: 'knowledge-vault' },
   { sourceUrl: 'https://core-mind-vault.lovable.app', slug: 'knowledge-twin' },
+  { sourceUrl: 'https://proji-insight-hub.lovable.app', slug: 'insight-hub', interactive: true },
 ];
 
 const isMain = process.argv[1]?.endsWith('setup-lovable-landing.mjs');
