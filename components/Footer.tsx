@@ -25,10 +25,31 @@ export const Footer: React.FC = () => {
           <div className="col-span-1 md:col-span-2">
              <h4 className="text-white font-semibold mb-6">Продукт</h4>
              <ul className="space-y-4 text-gray-400">
-                <li><a href="#" className="hover:text-brand-400 transition-colors">Цифровые сотрудники</a></li>
-                <li><a href="#" className="hover:text-brand-400 transition-colors">ProGPT</a></li>
-                <li><a href="#" className="hover:text-brand-400 transition-colors">ИИ CRM</a></li>
-                <li><a href="#" className="hover:text-brand-400 transition-colors">Ген.сайт</a></li>
+                <li>
+                  <a
+                    href="https://proji.kz"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-brand-400 transition-colors"
+                  >
+                    Цифровые сотрудники
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://progpt.kz"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-brand-400 transition-colors"
+                  >
+                    ProGPT
+                  </a>
+                </li>
+                <li>
+                  <a href="/crm" className="hover:text-brand-400 transition-colors">
+                    ИИ CRM
+                  </a>
+                </li>
              </ul>
           </div>
         </div>

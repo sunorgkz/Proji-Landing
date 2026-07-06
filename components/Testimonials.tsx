@@ -44,7 +44,7 @@ const reviews = [
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop"
   },
   {
-    text: "Мы проверяем по 5 гипотез в день с помощью Ген.сайта. Скорость маркетинга выросла в 10 раз.",
+    text: "ProGPT помогает команде принимать решения в разы быстрее. Это как совет директоров на каждый рабочий день.",
     author: "Елена К.",
     role: "Маркетинг директор",
     image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop"

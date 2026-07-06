@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Bot, Users, CheckSquare, BrainCircuit, BarChart3, MessageSquare, Database, Zap } from 'lucide-react';
+import { Bot, Users, CheckSquare, BrainCircuit, BarChart3, MessageSquare, Database } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Feature } from '../types';
 
@@ -45,13 +45,6 @@ const features: Feature[] = [
     title: 'База Знаний',
     description: 'Централизованное хранилище опыта компании, доступное сотрудникам за секунды.',
     icon: <Database className="w-6 h-6" />,
-  },
-  {
-    id: 'gensite',
-    title: 'Ген.сайт',
-    description: 'Проверка маркетинговой гипотезы до 1 минуты. Создание лендингов на лету.',
-    icon: <Zap className="w-6 h-6 text-yellow-400" />,
-    highlight: 'Скорость < 1 мин'
   },
 ];
 
