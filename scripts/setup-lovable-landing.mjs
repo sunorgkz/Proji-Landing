@@ -19,7 +19,14 @@ function rewritePaths(content, prefix) {
   return content
     .replace(/"\/assets\//g, `"${prefix}/assets/`)
     .replace(/'\/assets\//g, `'${prefix}/assets/`)
+    .replace(/url\(\/assets\//g, `url(${prefix}/assets/`)
     .replace(/import\("\/assets\//g, `import("${prefix}/assets/`);
+}
+
+function applyEmailFix(html) {
+  return html
+    .replace(/mailto:hello@proji\.app/gi, 'mailto:sund.serik@gmail.com')
+    .replace(/hello@proji\.app/gi, 'sund.serik@gmail.com');
 }
 
 function stripAnalytics(html) {
@@ -60,6 +67,17 @@ function collectAssetNames(html) {
   return [...names];
 }
 
+function rewriteAssetFiles(assetsDir, prefix) {
+  for (const file of readdirSync(assetsDir)) {
+    const path = join(assetsDir, file);
+    if (file.endsWith('.js') || file.endsWith('.css')) {
+      let content = readFileSync(path, 'utf8');
+      const next = rewritePaths(content, prefix);
+      if (next !== content) writeFileSync(path, next);
+    }
+  }
+}
+
 export async function setupLovableLanding({ sourceUrl, slug, interactive = false }) {
   const baseUrl = sourceUrl.replace(/\/$/, '');
   const prefix = `/${slug}`;
@@ -76,28 +94,27 @@ export async function setupLovableLanding({ sourceUrl, slug, interactive = false
   }
 
   let html = rewritePaths(htmlRaw, prefix);
+  html = applyEmailFix(html);
   html = interactive
     ? applyInteractiveFix(html, slug)
     : applyStaticFix(html, `${prefix}/assets/`);
   writeFileSync(join(dir, 'index.html'), html);
 
-  for (const file of readdirSync(assetsDir)) {
-    if (!file.endsWith('.js')) continue;
-    const path = join(assetsDir, file);
-    let js = readFileSync(path, 'utf8');
-    const next = rewritePaths(js, prefix);
-    if (next !== js) writeFileSync(path, next);
-  }
+  rewriteAssetFiles(assetsDir, prefix);
 
   console.log(`Setup complete: ${slug} (${assetNames.length} assets, ${interactive ? 'interactive' : 'static'})`);
 }
 
 const configs = [
   { sourceUrl: 'https://proji-os-engine.lovable.app', slug: 'os-engine', interactive: true },
-  { sourceUrl: 'https://digital-team-builders.lovable.app', slug: 'digital-team' },
-  { sourceUrl: 'https://knowledge-vault-synth.lovable.app', slug: 'knowledge-vault' },
-  { sourceUrl: 'https://core-mind-vault.lovable.app', slug: 'knowledge-twin' },
+  { sourceUrl: 'https://digital-team-builders.lovable.app', slug: 'digital-team', interactive: true },
+  { sourceUrl: 'https://knowledge-vault-synth.lovable.app', slug: 'knowledge-vault', interactive: true },
+  { sourceUrl: 'https://core-mind-vault.lovable.app', slug: 'knowledge-twin', interactive: true },
   { sourceUrl: 'https://proji-insight-hub.lovable.app', slug: 'insight-hub', interactive: true },
+  { sourceUrl: 'https://proji-context-flow.lovable.app', slug: 'context-flow', interactive: true },
+  { sourceUrl: 'https://proji-flow-forge.lovable.app', slug: 'flow-forge', interactive: true },
+  { sourceUrl: 'https://team-ai-collab.lovable.app', slug: 'team-ai-collab', interactive: true },
+  { sourceUrl: 'https://pro-ai-council.lovable.app', slug: 'pro-ai-council', interactive: true },
 ];
 
 const isMain = process.argv[1]?.endsWith('setup-lovable-landing.mjs');

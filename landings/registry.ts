@@ -85,6 +85,26 @@ export const landings: LandingEntry[] = [
     title: 'Proji — Корпоративная экосистема фокуса',
     component: lazy(() => import('./insight_hub/InsightHubLanding')),
   },
+  {
+    slug: 'context-flow',
+    title: 'Proji — Business Context Engine',
+    component: lazy(() => import('./context_flow/ContextFlowLanding')),
+  },
+  {
+    slug: 'flow-forge',
+    title: 'Proji — Background AI Producer',
+    component: lazy(() => import('./flow_forge/FlowForgeLanding')),
+  },
+  {
+    slug: 'team-ai-collab',
+    title: 'proGPT — Collaborative AI workspace for teams',
+    component: lazy(() => import('./team_ai_collab/TeamAiCollabLanding')),
+  },
+  {
+    slug: 'pro-ai-council',
+    title: 'proGPT — Совет из лучших AI для вашей работы',
+    component: lazy(() => import('./pro_ai_council/ProAiCouncilLanding')),
+  },
 ];
 
 const bySlug = new Map(landings.map(entry => [entry.slug, entry]));

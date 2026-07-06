@@ -13,6 +13,10 @@
     { "source": "/knowledge-vault/:path*", "destination": "/knowledge-vault/:path*" },
     { "source": "/knowledge-twin/:path*", "destination": "/knowledge-twin/:path*" },
     { "source": "/insight-hub/:path*", "destination": "/insight-hub/:path*" },
+    { "source": "/context-flow/:path*", "destination": "/context-flow/:path*" },
+    { "source": "/flow-forge/:path*", "destination": "/flow-forge/:path*" },
+    { "source": "/team-ai-collab/:path*", "destination": "/team-ai-collab/:path*" },
+    { "source": "/pro-ai-council/:path*", "destination": "/pro-ai-council/:path*" },
     { "source": "/downloads/:path*", "destination": "/downloads/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]

@@ -1,0 +1,29 @@
+import { useLayoutEffect } from "react";
+import { resetDocumentShell } from "../../lib/resetDocumentShell";
+
+const STATIC_PATH = "/pro-ai-council/";
+const TITLE = "proGPT — Совет из лучших AI для вашей работы";
+
+export default function ProAiCouncilLanding() {
+  useLayoutEffect(() => {
+    resetDocumentShell();
+    document.title = TITLE;
+    document.documentElement.dataset.landing = "pro-ai-council";
+    document.body.style.margin = "0";
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      delete document.documentElement.dataset.landing;
+      document.body.style.margin = "";
+      document.body.style.overflow = "";
+    };
+  }, []);
+
+  return (
+    <iframe
+      title={TITLE}
+      src={STATIC_PATH}
+      style={{ width: "100%", height: "100dvh", border: 0, display: "block" }}
+    />
+  );
+}
