@@ -1,8 +1,11 @@
 import { readFileSync, writeFileSync, readdirSync, existsSync } from 'fs';
 import { join } from 'path';
 
-const STATIC_STYLE =
-  '<style id="proji-static-fix">section.opacity-0.translate-y-6,.opacity-0.translate-y-6,.reveal:not(.visible){opacity:1!important;transform:none!important}</style>';
+const STATIC_STYLE = `<style id="proji-static-fix">
+html,body{opacity:1!important;visibility:visible!important}
+.opacity-0,section.opacity-0,.reveal:not(.visible),[class*="opacity-0"]{opacity:1!important;transform:none!important;visibility:visible!important}
+section.opacity-0.translate-y-6,.opacity-0.translate-y-6,.anim-fade-up{opacity:1!important;transform:none!important;animation:none!important}
+</style>`;
 
 const TANSTACK_SLUGS = [
   'insight-hub',
@@ -25,20 +28,23 @@ function stripAnalytics(html) {
 
 /** Freeze SSR HTML: remove TanStack hydration scripts that cause white screen on subpaths. */
 export function patchToStaticSsr(html, slug) {
-  const prefix = `/${slug}`;
   html = stripAnalytics(html);
   html = html.replace(/<style id="proji-static-fix">[\s\S]*?<\/style>/g, '');
   if (!html.includes('proji-static-fix')) {
     html = html.replace('<head>', `<head>${STATIC_STYLE}`);
   }
+  html = html.replace(/<script id="[^"]*-path-shim">[\s\S]*?<\/script>/g, '');
   html = html.replace(/<script class="\$tsr" id="\$tsr-stream-barrier">[\s\S]*?<\/script>/g, '');
-  html = html.replace(/<script type="module" async="">import\([^)]+\)<\/script>/g, '');
-  html = html.replace(/<script type="module" crossorigin src="[^"]+"><\/script>/g, '');
+  html = html.replace(/<script type="module"[^>]*>[\s\S]*?<\/script>/gi, '');
+  html = html.replace(/<link rel="modulepreload"[^>]*>/g, '');
   html = html.replace(
-    /<script>\(function\(t\)\{let s[\s\S]*?document\.currentScript\.remove\(\)<\/script>/g,
+    /<script>\(function\([^)]*\)\{[\s\S]*?document\.currentScript\.remove\(\)<\/script>/g,
     '',
   );
-  html = html.replace(new RegExp(`${prefix.replace(/\//g, '\\/')}-path-shim`, 'g'), 'proji-static-path-shim-disabled');
+  html = html.replace(
+    /<script>\(function\(a,f\)\{[\s\S]*?document\.currentScript\.remove\(\)<\/script>/g,
+    '',
+  );
   return html;
 }
 

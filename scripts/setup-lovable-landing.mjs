@@ -2,8 +2,11 @@ import { mkdirSync, readFileSync, writeFileSync, readdirSync } from 'fs';
 import { join } from 'path';
 import { patchToStaticSsr, patchViteSpa } from './patch-lovable-static.mjs';
 
-const STATIC_STYLE =
-  '<style id="proji-static-fix">section.opacity-0.translate-y-6,.opacity-0.translate-y-6,.reveal:not(.visible){opacity:1!important;transform:none!important}</style>';
+const STATIC_STYLE = `<style id="proji-static-fix">
+html,body{opacity:1!important;visibility:visible!important}
+.opacity-0,section.opacity-0,.reveal:not(.visible),[class*="opacity-0"]{opacity:1!important;transform:none!important;visibility:visible!important}
+section.opacity-0.translate-y-6,.opacity-0.translate-y-6,.anim-fade-up{opacity:1!important;transform:none!important;animation:none!important}
+</style>`;
 
 function routerShim(slug) {
   const base = `/${slug}`;
@@ -42,11 +45,18 @@ function applyStaticFix(html, assetPrefix) {
   if (!html.includes('proji-static-fix')) {
     html = html.replace('<head>', `<head>${STATIC_STYLE}`);
   }
+  html = html.replace(/<script id="[^"]*-path-shim">[\s\S]*?<\/script>/g, '');
+  html = html.replace(/<script class="\$tsr" id="\$tsr-stream-barrier">[\s\S]*?<\/script>/g, '');
+  html = html.replace(/<script type="module"[^>]*>[\s\S]*?<\/script>/gi, '');
+  html = html.replace(/<link rel="modulepreload"[^>]*>/g, '');
   html = html.replace(
-    new RegExp(`<script type="module" async="">import\\("${assetPrefix.replace(/\//g, '\\/')}[^"]+"\\)<\\/script>`, 'g'),
+    /<script>\(function\([^)]*\)\{[\s\S]*?document\.currentScript\.remove\(\)<\/script>/g,
     '',
   );
-  html = html.replace(/<script class="\$tsr" id="\$tsr-stream-barrier">[\s\S]*?<\/script>/g, '');
+  html = html.replace(
+    /<script>\(function\(a,f\)\{[\s\S]*?document\.currentScript\.remove\(\)<\/script>/g,
+    '',
+  );
   return html;
 }
 

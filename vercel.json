@@ -34,5 +34,13 @@
     { "source": "/talent-manager/:path*", "destination": "/talent-manager/:path*" },
     { "source": "/downloads/:path*", "destination": "/downloads/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(insight-hub|context-flow|team-ai-collab|pro-ai-council|talent-manager|os-engine|digital-team|knowledge-vault|knowledge-twin|flow-forge|team-ai|crm)/index.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, must-revalidate" }
+      ]
+    }
   ]
 }
