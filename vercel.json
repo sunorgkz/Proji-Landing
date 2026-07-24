@@ -5,7 +5,6 @@
     { "source": "/platform", "destination": "/platform/", "permanent": false },
     { "source": "/crm", "destination": "/crm/", "permanent": false },
     { "source": "/team-ai", "destination": "/team-ai/", "permanent": false },
-    { "source": "/os-engine", "destination": "/os-engine/", "permanent": false },
     { "source": "/digital-team", "destination": "/digital-team/", "permanent": false },
     { "source": "/knowledge-vault", "destination": "/knowledge-vault/", "permanent": false },
     { "source": "/knowledge-twin", "destination": "/knowledge-twin/", "permanent": false },
@@ -13,8 +12,7 @@
     { "source": "/context-flow", "destination": "/context-flow/", "permanent": false },
     { "source": "/flow-forge", "destination": "/flow-forge/", "permanent": false },
     { "source": "/team-ai-collab", "destination": "/team-ai-collab/", "permanent": false },
-    { "source": "/pro-ai-council", "destination": "/pro-ai-council/", "permanent": false },
-    { "source": "/talent-manager", "destination": "/talent-manager/", "permanent": false }
+    { "source": "/pro-ai-council", "destination": "/pro-ai-council/", "permanent": false }
   ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
@@ -22,7 +20,6 @@
     { "source": "/platform/:path*", "destination": "/platform/:path*" },
     { "source": "/crm/:path*", "destination": "/crm/:path*" },
     { "source": "/team-ai/:path*", "destination": "/team-ai/:path*" },
-    { "source": "/os-engine/:path*", "destination": "/os-engine/:path*" },
     { "source": "/digital-team/:path*", "destination": "/digital-team/:path*" },
     { "source": "/knowledge-vault/:path*", "destination": "/knowledge-vault/:path*" },
     { "source": "/knowledge-twin/:path*", "destination": "/knowledge-twin/:path*" },
@@ -31,13 +28,12 @@
     { "source": "/flow-forge/:path*", "destination": "/flow-forge/:path*" },
     { "source": "/team-ai-collab/:path*", "destination": "/team-ai-collab/:path*" },
     { "source": "/pro-ai-council/:path*", "destination": "/pro-ai-council/:path*" },
-    { "source": "/talent-manager/:path*", "destination": "/talent-manager/:path*" },
     { "source": "/downloads/:path*", "destination": "/downloads/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "headers": [
     {
-      "source": "/(insight-hub|context-flow|team-ai-collab|pro-ai-council|talent-manager|os-engine|digital-team|knowledge-vault|knowledge-twin|flow-forge|team-ai|crm)/index.html",
+      "source": "/(insight-hub|context-flow|team-ai-collab|pro-ai-council|digital-team|knowledge-vault|knowledge-twin|flow-forge|team-ai|crm)/index.html",
       "headers": [
         { "key": "Cache-Control", "value": "no-cache, must-revalidate" }
       ]

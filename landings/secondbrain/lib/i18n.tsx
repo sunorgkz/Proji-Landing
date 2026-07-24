@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { getLang, setLang as persistLang } from "../../../lib/projiPrefs";
 
 export type Lang = "ru" | "en" | "ar" | "kk";
 
@@ -166,14 +167,16 @@ export const translations: Translations = {
 type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (k: string) => string };
 const I18nContext = createContext<Ctx | null>(null);
 
-const LANG_KEY = "secondbrain-lang";
+function asLang(value: string): Lang {
+  return value in translations ? (value as Lang) : "ru";
+}
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("ru");
+  const [lang, setLangState] = useState<Lang>(() => asLang(getLang("ru")));
 
   useEffect(() => {
-    const saved = (localStorage.getItem(LANG_KEY) as Lang | null) ?? null;
-    if (saved && translations[saved]) setLangState(saved);
+    const saved = asLang(getLang("ru"));
+    if (translations[saved]) setLangState(saved);
   }, []);
 
   useEffect(() => {
@@ -184,7 +187,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   const setLang = (l: Lang) => {
     setLangState(l);
-    localStorage.setItem(LANG_KEY, l);
+    persistLang(l);
   };
 
   const t = (k: string) => translations[lang][k] ?? translations.en[k] ?? k;

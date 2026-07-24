@@ -8,7 +8,6 @@ const STATIC_LANDING_SLUGS = [
   'platform',
   'crm',
   'team-ai',
-  'os-engine',
   'digital-team',
   'knowledge-vault',
   'knowledge-twin',
@@ -17,7 +16,6 @@ const STATIC_LANDING_SLUGS = [
   'flow-forge',
   'team-ai-collab',
   'pro-ai-council',
-  'talent-manager',
 ];
 
 function staticLandingDevPlugin(): Plugin {

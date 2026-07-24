@@ -2,7 +2,7 @@ import { useLayoutEffect } from "react";
 import { resetDocumentShell } from "../../lib/resetDocumentShell";
 
 const STATIC_PATH = "/context-flow/";
-const TITLE = "Proji — Business Context Engine";
+const TITLE = "Proji — Умная память переписок";
 
 export default function ContextFlowLanding() {
   useLayoutEffect(() => {

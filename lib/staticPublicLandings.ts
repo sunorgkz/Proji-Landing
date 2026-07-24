@@ -4,7 +4,6 @@ export const STATIC_PUBLIC_LANDINGS = new Set([
   'platform',
   'crm',
   'team-ai',
-  'os-engine',
   'digital-team',
   'knowledge-vault',
   'knowledge-twin',
@@ -13,7 +12,6 @@ export const STATIC_PUBLIC_LANDINGS = new Set([
   'flow-forge',
   'team-ai-collab',
   'pro-ai-council',
-  'talent-manager',
 ]);
 
 export function isStaticPublicLanding(slug: string): boolean {

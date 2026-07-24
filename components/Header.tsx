@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X, Sun, Moon, LayoutGrid } from 'lucide-react';
 import { Button } from './ui/Button';
 
 interface HeaderProps {
@@ -35,6 +35,11 @@ export const Header: React.FC<HeaderProps> = ({ toggleTheme, isDark, onNavigate,
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleCatalogNav = () => {
+    setIsMobileMenuOpen(false);
+    window.location.href = '/services';
+  };
+
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -53,6 +58,10 @@ export const Header: React.FC<HeaderProps> = ({ toggleTheme, isDark, onNavigate,
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             <button onClick={() => handleNav('features')} className={navLinkClass('features')}>Возможности</button>
+            <button onClick={handleCatalogNav} className={`${navLinkClass('catalog')} inline-flex items-center gap-1.5`}>
+              <LayoutGrid className="w-4 h-4" />
+              Продукты
+            </button>
             <button onClick={() => handleNav('about')} className={navLinkClass('about')}>О нас</button>
             
             {/* Theme Toggle */}
@@ -86,6 +95,10 @@ export const Header: React.FC<HeaderProps> = ({ toggleTheme, isDark, onNavigate,
       {isMobileMenuOpen && (
         <div className="absolute top-full left-0 w-full bg-white dark:bg-[#0f172a] border-b border-slate-200 dark:border-white/10 md:hidden p-4 flex flex-col gap-4 shadow-xl">
            <button onClick={() => handleNav('features')} className="text-left text-slate-600 dark:text-gray-300 hover:text-brand-600 dark:hover:text-white py-2">Возможности</button>
+           <button onClick={handleCatalogNav} className="text-left text-slate-600 dark:text-gray-300 hover:text-brand-600 dark:hover:text-white py-2 inline-flex items-center gap-1.5">
+             <LayoutGrid className="w-4 h-4" />
+             Продукты
+           </button>
            <button onClick={() => handleNav('about')} className="text-left text-slate-600 dark:text-gray-300 hover:text-brand-600 dark:hover:text-white py-2">О нас</button>
         </div>
       )}

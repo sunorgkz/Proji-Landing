@@ -1,10 +1,9 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { dict, isRTL, type Lang } from "./i18n";
+import { getLang, getTheme, setLang as persistLang, setTheme as persistTheme, resolveTheme } from "../../../lib/projiPrefs";
 
 type Theme = "light" | "dark";
 const LANDING_ID = "chrome-extension";
-const LANG_KEY = "chrome_extension_lang";
-const THEME_KEY = "chrome_extension_theme";
 
 type Ctx = {
   lang: Lang;
@@ -16,28 +15,30 @@ type Ctx = {
 
 const AppCtx = createContext<Ctx | null>(null);
 
+function asLang(value: string): Lang {
+  return value === "en" || value === "kk" || value === "ar" || value === "ru" ? value : "ru";
+}
+
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("ru");
-  const [theme, setThemeState] = useState<Theme>("light");
+  const [lang, setLangState] = useState<Lang>(() => asLang(getLang("ru")));
+  const [theme, setThemeState] = useState<Theme>(() => resolveTheme(getTheme()));
 
   useEffect(() => {
-    const l = (localStorage.getItem(LANG_KEY) as Lang | null) ?? "ru";
-    const t = (localStorage.getItem(THEME_KEY) as Theme | null) ?? "light";
-    setLangState(l);
-    setThemeState(t);
+    setLangState(asLang(getLang("ru")));
+    setThemeState(resolveTheme(getTheme()));
   }, []);
 
   useEffect(() => {
     if (document.documentElement.dataset.landing !== LANDING_ID) return;
     document.documentElement.dir = isRTL(lang) ? "rtl" : "ltr";
     document.documentElement.lang = lang;
-    localStorage.setItem(LANG_KEY, lang);
+    persistLang(lang);
   }, [lang]);
 
   useEffect(() => {
     if (document.documentElement.dataset.landing !== LANDING_ID) return;
     document.documentElement.classList.toggle("dark", theme === "dark");
-    localStorage.setItem(THEME_KEY, theme);
+    persistTheme(theme);
   }, [theme]);
 
   return (

@@ -2,7 +2,7 @@ import { useLayoutEffect } from "react";
 import { resetDocumentShell } from "../../lib/resetDocumentShell";
 
 const STATIC_PATH = "/team-ai/";
-const TITLE = "proGPT — Team AI collaboration platform";
+const TITLE = "proGPT — Командный ИИ для совместной работы";
 
 export default function TeamAiLanding() {
   useLayoutEffect(() => {

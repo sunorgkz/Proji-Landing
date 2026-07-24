@@ -2,6 +2,7 @@ import React, { Suspense, useEffect, useLayoutEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getLanding } from '../landings/registry';
 import { applyLandingPageBg, LANDING_PAGE_BG } from '../lib/landingPageBg';
+import { getTheme, resolveTheme, syncPrefsFromStorage } from '../lib/projiPrefs';
 import { isStaticPublicLanding, staticPublicPath } from '../lib/staticPublicLandings';
 import { NotFound } from './NotFound';
 
@@ -39,19 +40,20 @@ export const LandingPage: React.FC<LandingPageProps> = ({ slug: slugProp }) => {
   const slug = slugProp ?? slugParam ?? '';
 
   const entry = getLanding(slug);
-  const pageBg = LANDING_PAGE_BG[slug] ?? '#fff';
+  const resolved = resolveTheme(getTheme());
+  const pageBg = LANDING_PAGE_BG[slug]
+    ? (resolved === 'light' ? LANDING_PAGE_BG[slug].light : LANDING_PAGE_BG[slug].dark)
+    : (resolved === 'light' ? '#f8fafc' : '#0f172a');
   const isStaticPublic = isStaticPublicLanding(slug);
 
   useLayoutEffect(() => {
+    syncPrefsFromStorage();
     applyLandingPageBg(slug);
   }, [slug]);
 
   useLayoutEffect(() => {
     if (!entry || !isStaticPublic) return;
-    const root = document.getElementById('root');
-    if (root?.childElementCount) {
-      window.location.replace(staticPublicPath(slug));
-    }
+    window.location.replace(staticPublicPath(slug));
   }, [entry, isStaticPublic, slug]);
 
   useEffect(() => {

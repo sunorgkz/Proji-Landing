@@ -2,7 +2,7 @@ import { useLayoutEffect } from "react";
 import { resetDocumentShell } from "../../lib/resetDocumentShell";
 
 const STATIC_PATH = "/platform/index.html";
-const TITLE = "Proji AI | Organizational Intelligence Platform";
+const TITLE = "Proji AI | Мозг компании";
 
 export default function PlatformLanding() {
   useLayoutEffect(() => {

@@ -26,6 +26,11 @@ export const landings: LandingEntry[] = [
     component: lazy(() => import('./main/MainLanding')),
   },
   {
+    slug: 'services',
+    title: 'Proji — Сервисы и продукты',
+    component: lazy(() => import('./services/ServicesLanding')),
+  },
+  {
     slug: 'knowledge',
     title: 'proji studio — AI-рекомендатель корпоративных знаний',
     component: lazy(() => import('./proji_knowledge/ProjiKnowledgeLanding')),
@@ -47,22 +52,22 @@ export const landings: LandingEntry[] = [
   },
   {
     slug: 'platform',
-    title: 'Proji AI | Organizational Intelligence Platform',
+    title: 'Proji AI | Мозг компании',
     component: lazy(() => import('./platform/PlatformLanding')),
   },
   {
     slug: 'crm',
-    title: 'PROJI — AI Sales Operating System',
+    title: 'PROJI — Умный учёт клиентов',
     component: lazy(() => import('./crm/CrmLanding')),
   },
   {
     slug: 'team-ai',
-    title: 'proGPT — Team AI collaboration platform',
+    title: 'proGPT — Командный ИИ для совместной работы',
     component: lazy(() => import('./team_ai/TeamAiLanding')),
   },
   {
     slug: 'os-engine',
-    title: 'PROJI — AI Operating System for Business',
+    title: 'PROJI — Операционная система для бизнеса',
     component: lazy(() => import('./os_engine/OsEngineLanding')),
   },
   {
@@ -71,13 +76,18 @@ export const landings: LandingEntry[] = [
     component: lazy(() => import('./digital_team/DigitalTeamLanding')),
   },
   {
+    slug: 'ai-agents',
+    title: 'PROJI — AI-агенты для бизнеса',
+    component: lazy(() => import('./ai_agents/AiAgentsLanding')),
+  },
+  {
     slug: 'knowledge-vault',
-    title: 'Proji — Intelligent decision support system',
+    title: 'Proji — Интеллектуальная система поддержки решений',
     component: lazy(() => import('./knowledge_vault/KnowledgeVaultLanding')),
   },
   {
     slug: 'knowledge-twin',
-    title: 'PROJI Knowledge Twin — Digital memory for your company',
+    title: 'PROJI — Цифровой двойник знаний компании',
     component: lazy(() => import('./knowledge_twin/KnowledgeTwinLanding')),
   },
   {
@@ -87,17 +97,17 @@ export const landings: LandingEntry[] = [
   },
   {
     slug: 'context-flow',
-    title: 'Proji — Business Context Engine',
+    title: 'Proji — Умная память переписок',
     component: lazy(() => import('./context_flow/ContextFlowLanding')),
   },
   {
     slug: 'flow-forge',
-    title: 'Proji — Background AI Producer',
+    title: 'Proji — Фоновый AI-продюсер',
     component: lazy(() => import('./flow_forge/FlowForgeLanding')),
   },
   {
     slug: 'team-ai-collab',
-    title: 'proGPT — Collaborative AI workspace for teams',
+    title: 'proGPT — Совместное пространство с ИИ для команд',
     component: lazy(() => import('./team_ai_collab/TeamAiCollabLanding')),
   },
   {
@@ -107,8 +117,13 @@ export const landings: LandingEntry[] = [
   },
   {
     slug: 'talent-manager',
-    title: "10x Talent's Evolution — Talent-first recruiting",
+    title: 'PROJI — Эволюция найма талантов',
     component: lazy(() => import('./talent_manager/TalentManagerLanding')),
+  },
+  {
+    slug: 'antigravity',
+    title: 'Бизнес в космосе — Антигравити',
+    component: lazy(() => import('./antigravity/AntigravityLanding')),
   },
 ];
 

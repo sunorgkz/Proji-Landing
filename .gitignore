@@ -27,3 +27,6 @@ dist-ssr
 landings/Proji Knowledge AI/
 landings/Proji_ Your Project's Second Brain/
 landings/Proji_ Your Smart Extension/
+
+.vercel
+.env*

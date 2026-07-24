@@ -2,6 +2,7 @@ import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Header } from '../../components/Header';
 import { Hero } from '../../components/Hero';
 import { Features } from '../../components/Features';
+import { Catalog } from '../../components/Catalog';
 import { HowItWorks } from '../../components/HowItWorks';
 import { Testimonials } from '../../components/Testimonials';
 import { CTA } from '../../components/CTA';
@@ -9,19 +10,29 @@ import { Footer } from '../../components/Footer';
 import { About } from '../../components/About';
 import { FounderNote } from '../../components/FounderNote';
 import { resetDocumentShell } from '../../lib/resetDocumentShell';
+import {
+  getTheme,
+  setTheme as persistTheme,
+  resolveTheme,
+  syncPrefsFromStorage,
+  THEME_KEY,
+  LANG_KEY,
+  type ProjiResolvedTheme,
+} from '../../lib/projiPrefs';
 import './main.css';
 
-const THEME_KEY = 'main-landing-theme';
 const FONTS_URL =
   'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap';
 
 export default function MainLanding() {
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  const [theme, setTheme] = useState<ProjiResolvedTheme>(() => resolveTheme(getTheme()));
   const [currentPage, setCurrentPage] = useState('home');
 
   useLayoutEffect(() => {
     resetDocumentShell();
     document.documentElement.dataset.landing = 'main';
+    const { resolved } = syncPrefsFromStorage();
+    setTheme(resolved);
     return () => {
       delete document.documentElement.dataset.landing;
     };
@@ -39,22 +50,24 @@ export default function MainLanding() {
   }, []);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem(THEME_KEY) as 'light' | 'dark' | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setTheme('dark');
-    }
-  }, []);
-
-  useEffect(() => {
     const root = document.querySelector('.main-landing-root');
     root?.classList.toggle('dark', theme === 'dark');
-    localStorage.setItem(THEME_KEY, theme);
+    document.documentElement.classList.toggle('dark', theme === 'dark');
   }, [theme]);
 
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key !== THEME_KEY && e.key !== LANG_KEY && e.key !== null) return;
+      setTheme(resolveTheme(getTheme()));
+    };
+    window.addEventListener('storage', onStorage);
+    return () => window.removeEventListener('storage', onStorage);
+  }, []);
+
   const toggleTheme = () => {
-    setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
+    const next: ProjiResolvedTheme = theme === 'dark' ? 'light' : 'dark';
+    persistTheme(next);
+    setTheme(next);
   };
 
   const renderContent = () => {
@@ -75,6 +88,7 @@ export default function MainLanding() {
         return (
           <>
             <Hero />
+            <Catalog />
             <Features />
             <HowItWorks />
             <FounderNote />

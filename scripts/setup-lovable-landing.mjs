@@ -1,17 +1,10 @@
-import { mkdirSync, readFileSync, writeFileSync, readdirSync } from 'fs';
+import { mkdirSync, readFileSync, writeFileSync, readdirSync, existsSync } from 'fs';
 import { join } from 'path';
-import { patchToStaticSsr, patchViteSpa } from './patch-lovable-static.mjs';
-
-const STATIC_STYLE = `<style id="proji-static-fix">
-html,body{opacity:1!important;visibility:visible!important}
-.opacity-0,section.opacity-0,.reveal:not(.visible),[class*="opacity-0"]{opacity:1!important;transform:none!important;visibility:visible!important}
-section.opacity-0.translate-y-6,.opacity-0.translate-y-6,.anim-fade-up{opacity:1!important;transform:none!important;animation:none!important}
-</style>`;
-
-function routerShim(slug) {
-  const base = `/${slug}`;
-  return `<script id="${slug}-path-shim">(function(){var B="${base}";function m(p){if(p===B||p===B+"/"||p===B+"/index.html")return"/";if(p.indexOf(B+"/")===0){var s=p.slice(B.length)||"/";return s==="/index.html"?"/":s||"/";}return p;}try{var d=Object.getOwnPropertyDescriptor(Location.prototype,"pathname");if(d&&d.get){var g=d.get.bind(window.location);Object.defineProperty(window.location,"pathname",{get:function(){return m(g());},configurable:true});}}catch(e){}})();</script>`;
-}
+import {
+  patchToStaticSsr,
+  patchViteSpa,
+  patchViteRouterBasename,
+} from './patch-lovable-static.mjs';
 
 async function download(url, dest) {
   const res = await fetch(url);
@@ -33,47 +26,25 @@ function applyEmailFix(html) {
     .replace(/hello@proji\.app/gi, 'sund.serik@gmail.com');
 }
 
-function stripAnalytics(html) {
-  return html
-    .replace(/<script defer src="\/~flock.js"[^>]*><\/script>/g, '')
-    .replace(/<script defer src="\/__l5e\/events.js"[^>]*><\/script>/g, '');
-}
-
-function applyStaticFix(html, assetPrefix) {
-  html = stripAnalytics(html);
-  html = html.replace(/<style id="proji-static-fix">[\s\S]*?<\/style>/g, '');
-  if (!html.includes('proji-static-fix')) {
-    html = html.replace('<head>', `<head>${STATIC_STYLE}`);
-  }
-  html = html.replace(/<script id="[^"]*-path-shim">[\s\S]*?<\/script>/g, '');
-  html = html.replace(/<script class="\$tsr" id="\$tsr-stream-barrier">[\s\S]*?<\/script>/g, '');
-  html = html.replace(/<script type="module"[^>]*>[\s\S]*?<\/script>/gi, '');
-  html = html.replace(/<link rel="modulepreload"[^>]*>/g, '');
-  html = html.replace(
-    /<script>\(function\([^)]*\)\{[\s\S]*?document\.currentScript\.remove\(\)<\/script>/g,
-    '',
-  );
-  html = html.replace(
-    /<script>\(function\(a,f\)\{[\s\S]*?document\.currentScript\.remove\(\)<\/script>/g,
-    '',
-  );
-  return html;
-}
-
-function applyInteractiveFix(html, slug) {
-  html = stripAnalytics(html);
-  html = html.replace(/<style id="proji-static-fix">[\s\S]*?<\/style>/g, '');
-  const shim = routerShim(slug);
-  if (!html.includes(`${slug}-path-shim`)) {
-    html = html.replace('<head>', `<head>${shim}`);
-  }
-  return html;
-}
-
-function collectAssetNames(html) {
+function collectAssetNamesFromText(text) {
   const names = new Set();
-  for (const m of html.matchAll(/\/assets\/([A-Za-z0-9._-]+)/g)) {
+  for (const m of text.matchAll(/\/assets\/([A-Za-z0-9._-]+)/g)) {
     names.add(m[1]);
+  }
+  return names;
+}
+
+function collectAssetNames(dir, html) {
+  const names = collectAssetNamesFromText(html);
+  const assetsDir = join(dir, 'assets');
+  if (existsSync(assetsDir)) {
+    for (const file of readdirSync(assetsDir)) {
+      if (file.endsWith('.js') || file.endsWith('.css')) {
+        for (const name of collectAssetNamesFromText(readFileSync(join(assetsDir, file), 'utf8'))) {
+          names.add(name);
+        }
+      }
+    }
   }
   return [...names];
 }
@@ -89,6 +60,14 @@ function rewriteAssetFiles(assetsDir, prefix) {
   }
 }
 
+function patchViteAssetBasenames(assetsDir, slug) {
+  for (const file of readdirSync(assetsDir)) {
+    if (!file.endsWith('.js')) continue;
+    const path = join(assetsDir, file);
+    writeFileSync(path, patchViteRouterBasename(readFileSync(path, 'utf8'), slug));
+  }
+}
+
 export async function setupLovableLanding({ sourceUrl, slug, interactive = false }) {
   const baseUrl = sourceUrl.replace(/\/$/, '');
   const prefix = `/${slug}`;
@@ -96,19 +75,23 @@ export async function setupLovableLanding({ sourceUrl, slug, interactive = false
   const assetsDir = join(dir, 'assets');
   mkdirSync(assetsDir, { recursive: true });
 
-  const htmlRaw = await fetch(`${baseUrl}/`).then(r => r.text());
-  const assetNames = collectAssetNames(htmlRaw);
+  const htmlRaw = await fetch(`${baseUrl}/`).then((r) => r.text());
+  let pending = collectAssetNamesFromText(htmlRaw);
+  const downloaded = new Set();
 
-  for (const name of assetNames) {
-    await download(`${baseUrl}/assets/${name}`, join(assetsDir, name));
-    console.log(`  downloaded assets/${name}`);
+  while (pending.length > 0) {
+    const batch = pending.filter((name) => !downloaded.has(name));
+    if (batch.length === 0) break;
+    for (const name of batch) {
+      await download(`${baseUrl}/assets/${name}`, join(assetsDir, name));
+      downloaded.add(name);
+      console.log(`  downloaded assets/${name}`);
+    }
+    pending = collectAssetNames(dir, htmlRaw).filter((name) => !downloaded.has(name));
   }
 
   let html = rewritePaths(htmlRaw, prefix);
   html = applyEmailFix(html);
-  html = interactive
-    ? applyInteractiveFix(html, slug)
-    : applyStaticFix(html, `${prefix}/assets/`);
   writeFileSync(join(dir, 'index.html'), html);
 
   rewriteAssetFiles(assetsDir, prefix);
@@ -116,17 +99,18 @@ export async function setupLovableLanding({ sourceUrl, slug, interactive = false
   const finalHtml = readFileSync(join(dir, 'index.html'), 'utf8');
   if (finalHtml.includes('$tsr-stream-barrier')) {
     writeFileSync(join(dir, 'index.html'), patchToStaticSsr(finalHtml, slug));
-    console.log(`  applied static SSR patch (no hydration)`);
+    console.log('  applied static SSR patch (no hydration)');
   } else if (finalHtml.includes('id="root"') && !finalHtml.includes('<!--$-->')) {
-    writeFileSync(join(dir, 'index.html'), patchViteSpa(finalHtml));
-    console.log(`  applied Vite SPA patch`);
+    writeFileSync(join(dir, 'index.html'), patchViteSpa(finalHtml, slug));
+    patchViteAssetBasenames(assetsDir, slug);
+    console.log('  applied Vite SPA patch (basename routing)');
   }
 
-  console.log(`Setup complete: ${slug} (${assetNames.length} assets, ${interactive ? 'interactive' : 'static'})`);
+  console.log(`Setup complete: ${slug} (${downloaded.size} assets, ${interactive ? 'interactive' : 'static'})`);
 }
 
 const configs = [
-  { sourceUrl: 'https://proji-os-engine.lovable.app', slug: 'os-engine', interactive: true },
+  // os-engine removed: rebuilt as native React landing (landings/os_engine/)
   { sourceUrl: 'https://digital-team-builders.lovable.app', slug: 'digital-team', interactive: true },
   { sourceUrl: 'https://knowledge-vault-synth.lovable.app', slug: 'knowledge-vault', interactive: true },
   { sourceUrl: 'https://core-mind-vault.lovable.app', slug: 'knowledge-twin', interactive: true },
@@ -135,14 +119,13 @@ const configs = [
   { sourceUrl: 'https://proji-flow-forge.lovable.app', slug: 'flow-forge', interactive: true },
   { sourceUrl: 'https://team-ai-collab.lovable.app', slug: 'team-ai-collab', interactive: true },
   { sourceUrl: 'https://pro-ai-council.lovable.app', slug: 'pro-ai-council', interactive: true },
-  { sourceUrl: 'https://talent-manager.lovable.app', slug: 'talent-manager', interactive: true },
 ];
 
 const isMain = process.argv[1]?.endsWith('setup-lovable-landing.mjs');
 
 if (isMain) {
   const only = process.argv[2];
-  const selected = only ? configs.filter(c => c.slug === only) : configs;
+  const selected = only ? configs.filter((c) => c.slug === only) : configs;
   for (const config of selected) {
     console.log(`\nSetting up ${config.slug}...`);
     await setupLovableLanding(config);

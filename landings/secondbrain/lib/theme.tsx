@@ -1,27 +1,25 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { getTheme, setTheme as persistTheme, resolveTheme, type ProjiTheme } from "../../../lib/projiPrefs";
 
-export type Theme = "light" | "dark" | "system";
+export type Theme = ProjiTheme;
 type Ctx = { theme: Theme; resolved: "light" | "dark"; setTheme: (t: Theme) => void };
 const ThemeContext = createContext<Ctx | null>(null);
-
-const THEME_KEY = "secondbrain-theme";
 
 function applyTheme(theme: Theme): "light" | "dark" {
   const html = document.documentElement;
   if (html.dataset.landing !== "secondbrain") return "light";
 
-  const sysDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const resolved: "light" | "dark" = theme === "system" ? (sysDark ? "dark" : "light") : theme;
+  const resolved = resolveTheme(theme);
   html.classList.toggle("dark", resolved === "dark");
   return resolved;
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("system");
-  const [resolved, setResolved] = useState<"light" | "dark">("light");
+  const [theme, setThemeState] = useState<Theme>(() => getTheme());
+  const [resolved, setResolved] = useState<"light" | "dark">(() => resolveTheme(getTheme()));
 
   useEffect(() => {
-    const saved = (localStorage.getItem(THEME_KEY) as Theme | null) ?? "system";
+    const saved = getTheme();
     setThemeState(saved);
     setResolved(applyTheme(saved));
   }, []);
@@ -36,7 +34,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   const setTheme = (t: Theme) => {
     setThemeState(t);
-    localStorage.setItem(THEME_KEY, t);
+    persistTheme(t);
     setResolved(applyTheme(t));
   };
 

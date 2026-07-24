@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { resetDocumentShell } from "../../lib/resetDocumentShell";
 import { applyLandingPageBg } from "../../lib/landingPageBg";
+import { getTheme, resolveTheme, type ProjiResolvedTheme } from "../../lib/projiPrefs";
 import { submitDemoRequest } from "../../lib/submitDemoRequest";
 import { trackEvent } from "../../analytics";
 
@@ -20,7 +21,7 @@ function useLandingFonts() {
   }, []);
 }
 
-const C = {
+const C_DARK = {
   bg: "#05070E",
   bgSoft: "#0A0F1F",
   panel: "#0E1424",
@@ -40,6 +41,30 @@ const C = {
   amber: "#FBBF24",
   rose: "#FB7185",
 };
+
+const C_LIGHT = {
+  bg: "#F4F7FC",
+  bgSoft: "#E8EEF8",
+  panel: "#FFFFFF",
+  panel2: "#F0F4FB",
+  border: "rgba(59,100,200,.14)",
+  borderStrong: "rgba(59,100,200,.28)",
+  ink: "#0F172A",
+  inkSoft: "#475569",
+  muted: "#64748B",
+  slate: "#94A3B8",
+  blue: "#2563EB",
+  blueBright: "#3B82F6",
+  cyan: "#0891B2",
+  violet: "#7C3AED",
+  pink: "#DB2777",
+  emerald: "#059669",
+  amber: "#D97706",
+  rose: "#E11D48",
+};
+
+/** Mutable shared palette — helpers read this; theme swap reassigns in place. */
+const C = { ...C_DARK };
 
 const tooltipPool = [
   "Назгуль К. — пилотные проекты",
@@ -225,11 +250,17 @@ function Wordmark({ size = 18, glow = false }: { size?: number; glow?: boolean }
 }
 
 export default function ProjiKnowledgeLanding() {
+  const [theme, setTheme] = useState<ProjiResolvedTheme>(() => resolveTheme(getTheme()));
+
   useLayoutEffect(() => {
     resetDocumentShell();
-    applyLandingPageBg("knowledge");
+    const resolved = resolveTheme(getTheme());
+    Object.assign(C, resolved === "light" ? C_LIGHT : C_DARK);
+    setTheme(resolved);
+    applyLandingPageBg("knowledge", resolved);
 
     return () => {
+      Object.assign(C, C_DARK);
       delete document.documentElement.dataset.landing;
       document.documentElement.style.backgroundColor = "";
       document.documentElement.style.colorScheme = "";
@@ -284,7 +315,7 @@ export default function ProjiKnowledgeLanding() {
           background-color: ${C.bg} !important;
           overflow-x: hidden;
           min-height: 100%;
-          color-scheme: dark;
+          color-scheme: ${theme};
         }
         .proji-knowledge-root { scroll-behavior: smooth; width: 100%; max-width: 100%; background-color: ${C.bg}; }
         .proji-knowledge-root ::selection { background: ${C.blue}; color: white; }
@@ -294,12 +325,12 @@ export default function ProjiKnowledgeLanding() {
         .pj-h2 { font-family: Inter, sans-serif; font-weight: 600; font-size: clamp(32px, 4.4vw, 56px); line-height: 1.08; letter-spacing: -0.03em; margin: 0; }
         .pj-h3 { font-family: Inter, sans-serif; font-size: 17px; font-weight: 600; margin: 0; letter-spacing: -0.005em; }
         .pj-body { font-size: 17px; line-height: 1.65; color: ${C.inkSoft}; font-weight: 400; }
-        .pj-grad-text { background: linear-gradient(120deg, #fff 0%, ${C.blueBright} 50%, ${C.cyan} 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .pj-grad-text { background: linear-gradient(120deg, ${theme === "light" ? C.ink : "#fff"} 0%, ${C.blueBright} 50%, ${C.cyan} 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
         .pj-grad-text-2 { background: linear-gradient(120deg, ${C.violet} 0%, ${C.blue} 50%, ${C.cyan} 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
         .pj-btn { display: inline-flex; align-items: center; gap: 10px; padding: 15px 26px; border-radius: 999px; font-weight: 500; font-size: 15px; cursor: pointer; border: 1px solid transparent; transition: all .3s cubic-bezier(.2,.8,.2,1); text-decoration: none; font-family: Inter, sans-serif; position: relative; overflow: hidden; }
         .pj-btn-primary { background: linear-gradient(120deg, ${C.blue}, ${C.cyan}); color: white; box-shadow: 0 10px 40px -10px ${C.blue}99, inset 0 1px 0 rgba(255,255,255,.25); }
         .pj-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 60px -10px ${C.blue}cc, inset 0 1px 0 rgba(255,255,255,.35); }
-        .pj-btn-ghost { background: rgba(14,20,36,.85); color: ${C.ink}; border-color: ${C.borderStrong}; }
+        .pj-btn-ghost { background: ${theme === "light" ? "rgba(255,255,255,.9)" : "rgba(14,20,36,.85)"}; color: ${C.ink}; border-color: ${C.borderStrong}; }
         .pj-btn-ghost:hover { background: rgba(120,160,255,.15); border-color: ${C.blueBright}; }
         .pj-fade { opacity: 0; transform: translateY(28px); transition: opacity 1s cubic-bezier(.2,.8,.2,1), transform 1s cubic-bezier(.2,.8,.2,1); }
         .pj-fade.in { opacity: 1; transform: none; }

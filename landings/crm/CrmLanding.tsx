@@ -2,7 +2,7 @@ import { useLayoutEffect } from "react";
 import { resetDocumentShell } from "../../lib/resetDocumentShell";
 
 const STATIC_PATH = "/crm/";
-const TITLE = "PROJI — AI Sales Operating System";
+const TITLE = "PROJI — Умный учёт клиентов";
 
 export default function CrmLanding() {
   useLayoutEffect(() => {

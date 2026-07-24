@@ -4,6 +4,7 @@ import { TrendingUp, PieChart, ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const CTA: React.FC = () => {
+  /** CTA → WhatsApp chat +77766006636 */
   const handleWhatsApp = (message: string) => {
     const phone = '77766006636';
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
