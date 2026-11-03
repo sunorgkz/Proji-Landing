@@ -1,0 +1,52 @@
+name: Deploy landing (AWS)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-landing
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Build
+        run: |
+          npm ci
+          npm run build
+        env:
+          VITE_AMPLITUDE_API_KEY: ${{ vars.VITE_AMPLITUDE_API_KEY }}
+
+      - name: Upload to server
+        env:
+          HOST: ${{ secrets.AWS_PROD_LANDING_HOST }}
+          PORT: ${{ secrets.AWS_PROD_LANDING_PORT }}
+          DEPLOY_USER: ${{ secrets.AWS_PROD_LANDING_USER }}
+          HOST_FPR: SHA256:UzjQcN+vSkx6ka47Ob7gYJGXNea4Un99U7tDXpx+YYw  # отпечаток ключа хоста, публичный (как в других workflow)
+          SSH_KEY: ${{ secrets.AWS_PROD_LANDING_SSH_KEY }}
+        run: |
+          set -euo pipefail
+          install -m 700 -d ~/.ssh
+          umask 077
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
+          ssh-keyscan -p "$PORT" -t ed25519 "$HOST" > ~/.ssh/known_hosts 2>/dev/null
+          FP=$(ssh-keygen -lf ~/.ssh/known_hosts | awk '{print $2}')
+          if [ "$FP" != "$HOST_FPR" ]; then echo "Host key mismatch"; exit 1; fi
+          test -s dist/index.html
+          rsync -rlt --delete --chmod=D755,F644 \
+            -e "ssh -i ~/.ssh/deploy_key -p $PORT -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$HOME/.ssh/known_hosts" \
+            dist/ "$DEPLOY_USER@$HOST:./"
+          rm -f ~/.ssh/deploy_key
