@@ -32,7 +32,7 @@ export const Hero: React.FC = () => {
 
   const handleStartFree = () => {
     trackEvent('cta_start_free_click');
-    window.location.href = 'https://proji.kz';
+    window.location.href = 'https://proji.org/login';
   };
 
   const handleWhatsApp = (message: string) => {
@@ -163,7 +163,7 @@ export const Hero: React.FC = () => {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center xl:justify-start">
-              <Button onClick={handleStartFree} variant="primary" size="lg" withArrow className="h-14 px-8 text-lg" data-cta-dest="https://proji.kz">
+              <Button onClick={handleStartFree} variant="primary" size="lg" withArrow className="h-14 px-8 text-lg" data-cta-dest="https://proji.org/login">
                 Начать бесплатно
               </Button>
               <Button onClick={() => handleWhatsApp("Здравствуйте, хочу получить консультацию")} variant="outline" size="lg" className="h-14 px-8 text-lg" data-cta-dest="whatsapp:+77766006636">
