@@ -14,8 +14,8 @@ import aqtobeHubLogo from '../../assets/sunnet/aqtobe-hub-logo.png';
 import pressOtyrar from '../../assets/sunnet/press-otyrar.jpg';
 import pressBluescreen from '../../assets/sunnet/press-bluescreen.jpg';
 import pressTheTech from '../../assets/sunnet/press-thetech.jpg';
-import pressOspanov from '../../assets/sunnet/press-ospanov.jpg';
-import pressDevfest from '../../assets/sunnet/press-devfest.jpg';
+import pressEbrdYouth from '../../assets/sunnet/press-ebrd-youth.jpg';
+import pressInterview from '../../assets/sunnet/press-bluescreen-interview.jpg';
 import '../manager/manager.css';
 import '../kit/kit.css';
 import './sunnet.css';
@@ -23,8 +23,9 @@ import './sunnet.css';
 /**
  * /sunnet-business — страница о компании Sunnet Business Technologies.
  * Только проверяемые факты: открытые источники (раздел «О нас пишут», ссылки ниже) и тексты самой команды,
- * которые уже стоят на сайте (/sunnet, главная). ЕБРР, Freedom Broker и Tamos Education — со слов владельца,
- * в открытых источниках на 11.11.2026 не найдены: без цифр и подробностей.
+ * которые уже стоят на сайте (/sunnet, главная). ЕБРР — center-at.kz: Серик среди экспертов курса программы ЕБРР «Молодёжь в бизнесе».
+ * Freedom Broker и Tamos Education — со слов владельца, в открытых источниках на 11.11.2026 не найдены: без цифр и подробностей.
+ * DevFest Aktobe 2022 не упоминаем: владелец его не делал.
  * Логотипы: Tamos — с tamos-education.kz (перекрашен в белый), GDG — с gdg.community.dev, Aqtobe Hub — вырезан с официального баннера хаба
  * на astanahub.com, клубы ЮНЕСКО — с unescoclubs.kz, «Sun» — повторяет знак с sun.org.kz (шрифт Pacifico, жёлтый #ffc233).
  * Клуб ЮНЕСКО — со слов владельца, в открытых источниках связь не найдена: без подробностей.
@@ -58,14 +59,14 @@ const SunLogo: React.FC = () => (
 );
 
 const COMMUNITY: [string, string][] = [
-  ['Google Developer Group', 'Серик Сундетов — организатор GDG Aktobe. Сообщество проводит DevFest: 21 декабря 2022 года и 26–27 сентября 2025 года, а 10 марта 2023 года — встречу Women Techmakers «DARE To BE».'],
+  ['Google Developer Group', 'Серик Сундетов — организатор Google Developer Group Aktobe, сообщества разработчиков.'],
   ['Aqtobe Hub', 'Серик — региональный менеджер Aqtobe Hub. Первый стартап-инкубатор хаба шёл три месяца: создано 13 стартапов, 5 из них начали продажи. Каждую неделю в хабе проходит тематический воркшоп.'],
   ['Фонд устойчивого развития «Sun»', 'Фонд под руководством Серика поддержал первый инкубатор Aqtobe Hub вместе с медицинским университетом имени Марата Оспанова.'],
   ['Клуб ЮНЕСКО', 'Участвуем в работе клуба ЮНЕСКО.'],
 ];
 
 const TRUST = [
-  { src: europeanBank, name: 'ЕБРР', text: 'Эксперты программы Европейского банка реконструкции и развития', light: false },
+  { src: europeanBank, name: 'ЕБРР', text: 'Эксперт программы ЕБРР «Молодёжь в бизнесе»', light: false },
   { src: freedomBroker, name: 'Freedom Broker', text: 'Образовательный проект для Freedom Broker', light: false },
   { src: googleDev, name: 'Google Developer Groups', text: 'Ведём сообщество GDG Aktobe', light: false },
   { src: tamosLogo, name: 'Tamos Education', text: 'Образовательный проект для школы Tamos Education', light: false },
@@ -76,8 +77,8 @@ const PRESS: { src: string; date: string; title: string; href: string; img: stri
   { src: 'OTYRAR', date: '21 августа 2026', title: 'Цифровые решения для Шымкента представили на Smart City Hackathon 2026 — о Proji и Серике Сундетове', href: 'https://otyrar.kz/2026/08/czifrovye-resheniya-dlya-shymkenta-predstavili-na-smart-city-hackathon-2026/', img: pressOtyrar },
   { src: 'The Tech', date: '12 апреля 2025', title: 'Aqtobe Hub выпустил первую волну стартапов', href: 'https://the-tech.kz/aqtobe-hub-vypustil-pervuyu-volnu-startapov/', img: pressTheTech },
   { src: 'Bluescreen', date: '11 апреля 2025', title: 'В Aqtobe Hub завершилась первая акселерационная программа', href: 'https://bluescreen.kz/v-aqtobe-hub-zaviershilas-piervaia-aksielieratsionnaia-proghramma/', img: pressBluescreen },
-  { src: 'ЗКМУ имени Марата Оспанова', date: '', title: 'Startup School: сотрудничество с Сериком Сундетовым и Aqtobe Hub', href: 'https://ospanov.university/departs/nauka/start/start-ru.html', img: pressOspanov },
-  { src: 'Google Developer Groups', date: '21 декабря 2022', title: 'DevFest Aktobe 2022', href: 'https://gdg.community.dev/events/details/google-gdg-aktobe-presents-devfest-aktobe-2022-1/', img: pressDevfest },
+  { src: 'Center AT · ЕБРР и Arnur Credit', date: '', title: 'Курс программы ЕБРР «Молодёжь в бизнесе»: Серик Сундетов среди экспертов', href: 'https://center-at.kz/molodezh-v-biznese', img: pressEbrdYouth },
+  { src: 'BlueScreen', date: '24 октября 2023', title: 'Стартап для экспертов: эксклюзивное интервью с Сериком Сундетовым об Experts platform', href: 'https://t.me/bluescreenkz/9807', img: pressInterview },
 ];
 
 const Page: React.FC<{ lang: Lang }> = ({ lang }) => (
@@ -177,7 +178,7 @@ const ld = () => ({
   email: 'serik@sunnet.kz',
   telephone: '+77079635533',
   founder: { '@type': 'Person', name: 'Серик Сундетов' },
-  sameAs: [...PRESS.map(p => p.href), 'https://gdg.community.dev/gdg-aktobe/'],
+  sameAs: [...PRESS.map(p => p.href), 'https://gdg.community.dev/gdg-aktobe/', 'https://ospanov.university/departs/nauka/start/start-ru.html'],
 });
 
 export default function SunnetCompanyLanding() {

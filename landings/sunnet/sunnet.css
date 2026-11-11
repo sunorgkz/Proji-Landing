@@ -56,3 +56,5 @@
 }
 @keyframes sn-sun { 50% { transform: scale(1.12); opacity: 0.3; } }
 .sn-press-logo .bd-sk { width: 46%; height: auto; }
+/* у вертикального кадра из интервью показываем верх, где лицо */
+.sn-press img[src*='bluescreen-interview'] { object-position: center 20%; }
