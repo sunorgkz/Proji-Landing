@@ -1,20 +1,19 @@
 /* /sunnet-business — страница о компании. Вид по BRANDBOOK.md: тёмно-синий фон, мятный акцент, тихое движение. */
 .sn-note { margin-top: 120px; }
-.sn-hero { text-align: center; padding-bottom: 40px; }
-.sn-hero .ai-lead { margin-inline: auto; max-width: 46ch; }
-.sn-hero .ai-actions { justify-content: center; }
-.sn-kicker { color: var(--mint); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; font-size: 13px; margin-bottom: 18px; }
-.sn-stats { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin: 48px auto 8px; max-width: 900px; }
-.sn-stats li { flex: 1 1 220px; padding: 22px 20px; border: 1px solid var(--glass-line); border-radius: var(--r-lg); background: rgb(255 255 255 / 0.04); }
-.sn-stats b { display: block; font-size: clamp(2.2rem, 1.6rem + 2vw, 3.2rem); line-height: 1; letter-spacing: -0.04em; background: var(--grad-mint); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.sn-stats span { display: block; margin-top: 8px; color: var(--muted); font-size: 15px; }
+.sn-hero-pic .bd-sk { width: 100%; height: auto; }
 
 .sn-trust { margin-top: 28px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 .sn-trust li { padding: 24px; border: 1px solid var(--glass-line); border-radius: var(--r-lg); background: rgb(255 255 255 / 0.04); display: flex; flex-direction: column; gap: 16px; }
 .sn-trust img { height: 64px; width: auto; max-width: 100%; object-fit: contain; object-position: left center; filter: grayscale(1) brightness(2.2); opacity: 0.9; }
-.sn-word { height: 64px; display: flex; align-items: center; font-weight: 700; font-size: 20px; letter-spacing: -0.02em; }
+/* цветной логотип на белом фоне (Tamos) — в белой плашке, без перекраски */
+.sn-trust img.is-light { filter: none; opacity: 1; background: #fff; border-radius: 12px; padding: 6px 10px; box-sizing: border-box; }
 .sn-trust p { color: var(--muted); font-size: 15px; line-height: 1.5; }
 
+/* логотипы GDG и Aqtobe Hub в списке «Мы вкладываемся в людей»: колонка шире, чем у рисунков */
+#people .kt-list li { grid-template-columns: 150px 1fr; }
+.kt-list img.sn-logo { display: block; width: 150px; height: auto; max-height: 72px; object-fit: contain; object-position: left center; }
+.sn-split { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(24px, 5vw, 72px); align-items: center; }
+.sn-split .mg-card .bd-sk { width: 100%; height: auto; }
 .sn-text { margin-top: 18px; max-width: 64ch; font-size: 18px; line-height: 1.65; color: #d5def0; }
 
 .sn-founder { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(24px, 5vw, 72px); align-items: center; }
@@ -22,9 +21,14 @@
 .sn-role { margin-top: 8px; color: var(--mint); font-weight: 600; }
 .sn-founder blockquote { margin-top: 24px; font-size: clamp(1.2rem, 1rem + 1vw, 1.6rem); line-height: 1.35; font-weight: 600; max-width: 40ch; }
 
-.sn-press { margin-top: 24px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-.sn-press a { display: flex; flex-direction: column; gap: 6px; height: 100%; padding: 20px 22px; border: 1px solid var(--glass-line); border-radius: var(--r-md); background: rgb(255 255 255 / 0.03); color: var(--ink); text-decoration: none; transition: border-color 0.2s, background 0.2s; }
+.sn-press { margin-top: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.sn-press a { display: flex; flex-direction: column; gap: 6px; height: 100%; padding: 0 0 20px; overflow: hidden; border: 1px solid var(--glass-line); border-radius: var(--r-md); background: rgb(255 255 255 / 0.03); color: var(--ink); text-decoration: none; transition: border-color 0.2s, background 0.2s; }
 .sn-press a:hover { border-color: var(--mint); background: rgb(94 236 196 / 0.06); }
+.sn-press a > img, .sn-press-logo { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; margin-bottom: 10px; transition: transform 0.4s; }
+.sn-press-logo { display: grid; place-items: center; background: radial-gradient(60% 80% at 50% 50%, rgb(42 91 215 / 0.35), transparent 70%); }
+.sn-press-logo img { width: 70%; height: auto; }
+.sn-press a:hover > img { transform: scale(1.03); }
+.sn-press .sn-src, .sn-press .sn-title { padding-inline: 20px; }
 .sn-src { color: var(--mint); font-size: 13px; font-weight: 600; letter-spacing: 0.04em; }
 .sn-title { font-size: 17px; line-height: 1.4; }
 
@@ -37,7 +41,7 @@
 @media (max-width: 900px) {
   .sn-trust { grid-template-columns: repeat(2, 1fr); }
   .sn-press { grid-template-columns: 1fr; }
-  .sn-founder { grid-template-columns: 1fr; }
+  .sn-founder, .sn-split { grid-template-columns: 1fr; }
 }
 @media (max-width: 520px) {
   .sn-trust { grid-template-columns: 1fr; }

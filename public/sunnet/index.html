@@ -3,7 +3,7 @@
 <head><script id="proji-prefs-sync">(function(){try{var TK=["proji.theme","proji-theme","proji_theme","theme","main-landing-theme","chrome_extension_theme","secondbrain-theme"];var LK=["proji.lang","proji-lang","proji_lang","lang","chrome_extension_lang","secondbrain-lang"];function r(a){for(var i=0;i<a.length;i++){var v=localStorage.getItem(a[i]);if(v)return v}return null}function w(a,v){for(var i=0;i<a.length;i++)try{localStorage.setItem(a[i],v)}catch(e){}}var t=r(TK)||"dark";if(t!=="light"&&t!=="dark"&&t!=="system")t="dark";w(TK,t);var resolved=t==="system"?(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):t;document.documentElement.classList.toggle("dark",resolved==="dark");document.documentElement.dataset.theme=resolved;var l=r(LK)||"ru";w(LK,l);document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr"}catch(e){}})();</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proji | Организационный Интеллект</title>
+    <title>Company Brain | Proji</title>
     <meta name="description" content="Мозг вашего бизнеса. AI-координация команды, проектов и решений на основе единой памяти дел.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,8 +31,29 @@
         <section class="hero" id="home">
             <div class="hero-bg"><span class="hero-blob"></span><span class="hero-blob is-mint"></span></div>
             <div class="container hero-content">
-                <div class="hero-brain" aria-hidden="true">🧠</div>
-                <div class="badge">COMPANY BRAIN</div>
+                <svg class="hero-brain" viewBox="0 0 144 112" width="132" height="103" aria-hidden="true" focusable="false">
+                    <!-- ИЛЛЮСТРАЦИЯ: мозг из линий; левая половина — извилины, правая — схема с узлами -->
+                    <g class="br-line">
+                        <path pathLength="1" d="M68 14C56 5 38 8 32 20C20 20 11 32 15 44C7 53 9 69 22 73C22 87 36 96 49 91C57 99 68 96 68 86Z"/>
+                        <path pathLength="1" d="M76 14C88 5 106 8 112 20C124 20 133 32 129 44C137 53 135 69 122 73C122 87 108 96 95 91C87 99 76 96 76 86Z"/>
+                        <path pathLength="1" d="M32 20C41 26 45 34 41 43"/>
+                        <path pathLength="1" d="M15 44C26 45 34 51 36 60"/>
+                        <path pathLength="1" d="M22 73C32 70 41 74 45 83"/>
+                        <path pathLength="1" d="M53 26C60 35 60 49 51 57C46 62 47 70 55 74"/>
+                    </g>
+                    <g class="br-chip">
+                        <path pathLength="1" d="M112 20L100 31L100 44"/>
+                        <path pathLength="1" d="M129 44L114 52L95 52"/>
+                        <path pathLength="1" d="M122 73L108 66L108 80"/>
+                        <path pathLength="1" d="M86 22L86 38L94 38"/>
+                        <path pathLength="1" d="M95 91L95 76L84 70"/>
+                    </g>
+                    <g class="br-dots">
+                        <circle cx="100" cy="44" r="3.4"/><circle cx="95" cy="52" r="3.4"/><circle cx="108" cy="80" r="3.4"/><circle cx="94" cy="38" r="3.4"/><circle cx="84" cy="70" r="3.4"/>
+                    </g>
+                    <path class="br-spark" pathLength="1" d="M129 44L114 52L95 52"/>
+                </svg>
+                <div class="badge">ORGANIZATIONAL INTELLIGENCE SYSTEM</div>
                 <h1>Мозг вашего бизнеса</h1>
                 <p class="subtitle">AI-координация команды, проектов и решений на основе единой памяти дел.</p>
                 <div class="hero-quote">
