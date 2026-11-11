@@ -367,7 +367,7 @@ export const ProjiHome: React.FC = () => {
                 Получить консультацию <ArrowRight size={16} aria-hidden />
               </button>
             </div>
-            <p className="ph-trust">15+ лет опыта и 300+ проектов в Sunnet BT. Начать можно бесплатно.</p>
+            <p className="ph-trust">15+ лет опыта и 300+ проектов в <Link to="/sunnet-business" className="ph-sn-link">Sunnet BT</Link>. Начать можно бесплатно.</p>
             <Greeting />
           </div>
           <HeroPhone />
@@ -456,7 +456,7 @@ export const ProjiHome: React.FC = () => {
             <blockquote>
               Мы делали Proji не как очередной инструмент, а как систему, в которой мечтали бы работать сами. Без хаоса, без бюрократии.
             </blockquote>
-            <p className="ph-founder-name">Серик, CEO Sunnet и Proji</p>
+            <p className="ph-founder-name">Серик, CEO <Link to="/sunnet-business" className="ph-sn-link">Sunnet</Link> и Proji</p>
           </div>
         </div>
       </section>
@@ -474,7 +474,7 @@ export const ProjiHome: React.FC = () => {
           ))}
           <div className="ph-tile ph-tile-stat ph-reveal">
             <strong>15+</strong>
-            <span>лет внедряем IT-решения в Sunnet BT</span>
+            <span>лет внедряем IT-решения в <Link to="/sunnet-business" className="ph-sn-link">Sunnet BT</Link></span>
           </div>
           <div className="ph-tile ph-tile-stat ph-reveal">
             <strong>300+</strong>

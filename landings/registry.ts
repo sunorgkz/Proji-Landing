@@ -217,6 +217,11 @@ export const landings: LandingEntry[] = [
     component: lazy(() => import('./kit/TourLanding')),
   },
   {
+    slug: 'sunnet-business',
+    title: 'Sunnet Business Technologies — команда, которая создала Proji',
+    component: lazy(() => import('./sunnet/SunnetCompanyLanding')),
+  },
+  {
     slug: 'privacy',
     title: 'proji — политика конфиденциальности',
     component: lazy(() => import('./privacy/PrivacyLanding')),

@@ -338,3 +338,7 @@
 .ph-sketch .bd-sk { max-height: 84px; }
 .ph-sketch-wide { margin-top: 28px; max-width: 520px; }
 .ph-product-left .ph-sketch { margin-bottom: 14px; }
+
+/* ссылки на страницу компании /sunnet-business */
+.ph-sn-link { color: inherit; text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); text-underline-offset: 3px; }
+.ph-sn-link:hover { color: var(--mint, #5eecc4); }
