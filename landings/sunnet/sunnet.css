@@ -11,6 +11,7 @@
 
 /* логотипы GDG и Aqtobe Hub в списке «Мы вкладываемся в людей»: колонка шире, чем у рисунков */
 #people .kt-list li { grid-template-columns: 150px 1fr; }
+.kt-list svg.sn-sun { display: block; width: 150px; height: 72px; overflow: visible; }
 .kt-list img.sn-logo { display: block; width: 150px; height: auto; max-height: 72px; object-fit: contain; object-position: left center; }
 .sn-split { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(24px, 5vw, 72px); align-items: center; }
 .sn-split .mg-card .bd-sk { width: 100%; height: auto; }
@@ -46,3 +47,12 @@
 @media (max-width: 520px) {
   .sn-trust { grid-template-columns: 1fr; }
 }
+
+/* знак фонда «Sun» */
+.sn-sun text { font-family: 'Pacifico', cursive; font-size: 34px; }
+.sn-sun-glow { fill: #ffc233; opacity: 0.18; transform-box: fill-box; transform-origin: center; }
+@media (prefers-reduced-motion: no-preference) {
+  .sn-sun-glow { animation: sn-sun 6s ease-in-out infinite; }
+}
+@keyframes sn-sun { 50% { transform: scale(1.12); opacity: 0.3; } }
+.sn-press-logo .bd-sk { width: 46%; height: auto; }

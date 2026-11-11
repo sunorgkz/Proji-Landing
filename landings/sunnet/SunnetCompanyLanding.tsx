@@ -1,15 +1,15 @@
 import React from 'react';
 import type { Lang } from '../board/copy';
 import { AiShell } from '../ai/Shell';
-import { SketchBolt, SketchFile, SketchPin, SketchStack, SketchTarget } from '../ai/Sketches';
+import { SketchBolt, SketchStack, SketchTarget } from '../ai/Sketches';
 import { SketchChat, SketchHero } from '../board/Sketches';
 import { PicList, Sec } from '../kit/Kit';
 import serikImage from '../../assets/serik.png';
 import europeanBank from '../../assets/european_bank.png';
 import freedomBroker from '../../assets/Freedom_broker.png';
 import googleDev from '../../assets/Google_dev.png';
-import tamosLogo from '../../assets/sunnet/tamos-logo.jpg';
-import gdgLogo from '../../assets/sunnet/gdg-logo-white.png';
+import tamosLogo from '../../assets/sunnet/tamos-logo-white.png';
+import unescoLogo from '../../assets/sunnet/unesco-clubs-logo.png';
 import aqtobeHubLogo from '../../assets/sunnet/aqtobe-hub-logo.png';
 import pressOtyrar from '../../assets/sunnet/press-otyrar.jpg';
 import pressBluescreen from '../../assets/sunnet/press-bluescreen.jpg';
@@ -25,7 +25,9 @@ import './sunnet.css';
  * Только проверяемые факты: открытые источники (раздел «О нас пишут», ссылки ниже) и тексты самой команды,
  * которые уже стоят на сайте (/sunnet, главная). ЕБРР, Freedom Broker и Tamos Education — со слов владельца,
  * в открытых источниках на 11.11.2026 не найдены: без цифр и подробностей.
- * Логотипы: Tamos — с tamos-education.kz, GDG — с gdg.community.dev, Aqtobe Hub — вырезан с официального баннера хаба на astanahub.com.
+ * Логотипы: Tamos — с tamos-education.kz (перекрашен в белый), GDG — с gdg.community.dev, Aqtobe Hub — вырезан с официального баннера хаба
+ * на astanahub.com, клубы ЮНЕСКО — с unescoclubs.kz, «Sun» — повторяет знак с sun.org.kz (шрифт Pacifico, жёлтый #ffc233).
+ * Клуб ЮНЕСКО — со слов владельца, в открытых источниках связь не найдена: без подробностей.
  * Фото в «О нас пишут» — превью самих публикаций (og:image), у каждой карточки ссылка на источник.
  * Пока только на русском: для kk, en и ar показываем русский текст с пометкой.
  */
@@ -46,27 +48,36 @@ const WORK: [string, string][] = [
 /* логотип вместо рисунка: у GDG и Aqtobe Hub есть свои знаки */
 const logo = (src: string, alt: string): React.FC => () => <img className="sn-logo" src={src} alt={alt} loading="lazy" />;
 
+/* знак фонда «Sun»: жёлтое солнце и надпись Sun, как на sun.org.kz */
+const SunLogo: React.FC = () => (
+  <svg className="sn-logo sn-sun" viewBox="0 0 150 72" role="img" aria-label="Фонд «Sun»">
+    <circle className="sn-sun-glow" cx="26" cy="36" r="25" />
+    <circle cx="26" cy="36" r="14" fill="#ffc233" />
+    <text x="58" y="50" fill="#ffc233">Sun</text>
+  </svg>
+);
+
 const COMMUNITY: [string, string][] = [
   ['Google Developer Group', 'Серик Сундетов — организатор GDG Aktobe. Сообщество проводит DevFest: 21 декабря 2022 года и 26–27 сентября 2025 года, а 10 марта 2023 года — встречу Women Techmakers «DARE To BE».'],
   ['Aqtobe Hub', 'Серик — региональный менеджер Aqtobe Hub. Первый стартап-инкубатор хаба шёл три месяца: создано 13 стартапов, 5 из них начали продажи. Каждую неделю в хабе проходит тематический воркшоп.'],
   ['Фонд устойчивого развития «Sun»', 'Фонд под руководством Серика поддержал первый инкубатор Aqtobe Hub вместе с медицинским университетом имени Марата Оспанова.'],
-  ['Университет имени Оспанова', 'С 2023 года университет сотрудничает с Сериком: стартап-школа стала частью студенческой жизни.'],
+  ['Клуб ЮНЕСКО', 'Участвуем в работе клуба ЮНЕСКО.'],
 ];
 
 const TRUST = [
   { src: europeanBank, name: 'ЕБРР', text: 'Эксперты программы Европейского банка реконструкции и развития', light: false },
   { src: freedomBroker, name: 'Freedom Broker', text: 'Образовательный проект для Freedom Broker', light: false },
   { src: googleDev, name: 'Google Developer Groups', text: 'Ведём сообщество GDG Aktobe', light: false },
-  { src: tamosLogo, name: 'Tamos Education', text: 'Образовательный проект для школы Tamos Education', light: true },
+  { src: tamosLogo, name: 'Tamos Education', text: 'Образовательный проект для школы Tamos Education', light: false },
 ];
 
 const PRESS: { src: string; date: string; title: string; href: string; img: string }[] = [
+  { src: 'Baq.kz', date: '28 марта 2026', title: 'Финал Digital Qazaqstan Battle: Proji — в числе финалистов национального стартап-батла', href: 'https://rus.baq.kz/final-digital-qazaqstan-battle-opredeleny-pobediteli-natsionalnogo-startap-batla-320020276/', img: '' },
   { src: 'OTYRAR', date: '21 августа 2026', title: 'Цифровые решения для Шымкента представили на Smart City Hackathon 2026 — о Proji и Серике Сундетове', href: 'https://otyrar.kz/2026/08/czifrovye-resheniya-dlya-shymkenta-predstavili-na-smart-city-hackathon-2026/', img: pressOtyrar },
   { src: 'The Tech', date: '12 апреля 2025', title: 'Aqtobe Hub выпустил первую волну стартапов', href: 'https://the-tech.kz/aqtobe-hub-vypustil-pervuyu-volnu-startapov/', img: pressTheTech },
   { src: 'Bluescreen', date: '11 апреля 2025', title: 'В Aqtobe Hub завершилась первая акселерационная программа', href: 'https://bluescreen.kz/v-aqtobe-hub-zaviershilas-piervaia-aksielieratsionnaia-proghramma/', img: pressBluescreen },
   { src: 'ЗКМУ имени Марата Оспанова', date: '', title: 'Startup School: сотрудничество с Сериком Сундетовым и Aqtobe Hub', href: 'https://ospanov.university/departs/nauka/start/start-ru.html', img: pressOspanov },
   { src: 'Google Developer Groups', date: '21 декабря 2022', title: 'DevFest Aktobe 2022', href: 'https://gdg.community.dev/events/details/google-gdg-aktobe-presents-devfest-aktobe-2022-1/', img: pressDevfest },
-  { src: 'Google Developer Groups', date: '', title: 'GDG Aktobe: организаторы и события сообщества', href: 'https://gdg.community.dev/gdg-aktobe/', img: '' },
 ];
 
 const Page: React.FC<{ lang: Lang }> = ({ lang }) => (
@@ -102,7 +113,7 @@ const Page: React.FC<{ lang: Lang }> = ({ lang }) => (
       </Sec>
 
       <Sec id="people" h="Мы вкладываемся в людей" lead="Разработчики, студенты и стартапы.">
-        <PicList items={COMMUNITY} pics={[logo(googleDev, 'Google Developer Groups'), logo(aqtobeHubLogo, 'Aqtobe Hub'), SketchPin, SketchFile]} />
+        <PicList items={COMMUNITY} pics={[logo(googleDev, 'Google Developer Groups'), logo(aqtobeHubLogo, 'Aqtobe Hub'), SunLogo, logo(unescoLogo, 'Клубы ЮНЕСКО')]} />
       </Sec>
 
       <section className="kt-sec ai-in sn-split" aria-labelledby="sn-hack-h">
@@ -127,7 +138,7 @@ const Page: React.FC<{ lang: Lang }> = ({ lang }) => (
           {PRESS.map(p => (
             <li key={p.href}>
               <a href={p.href} target="_blank" rel="noopener noreferrer">
-                {p.img ? <img src={p.img} alt="" loading="lazy" /> : <span className="sn-press-logo"><img src={gdgLogo} alt="" loading="lazy" /></span>}
+                {p.img ? <img src={p.img} alt="" loading="lazy" /> : <span className="sn-press-logo"><SketchTarget /></span>}
                 <span className="sn-src">{p.src}{p.date && ` · ${p.date}`}</span>
                 <span className="sn-title">{p.title}</span>
               </a>
@@ -166,7 +177,7 @@ const ld = () => ({
   email: 'serik@sunnet.kz',
   telephone: '+77079635533',
   founder: { '@type': 'Person', name: 'Серик Сундетов' },
-  sameAs: PRESS.map(p => p.href),
+  sameAs: [...PRESS.map(p => p.href), 'https://gdg.community.dev/gdg-aktobe/'],
 });
 
 export default function SunnetCompanyLanding() {
