@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { trackEvent } from '../../analytics';
 import type { Lang } from '../board/copy';
 import { CoverQuiz } from './Covers';
-import { End, Hero, Sec, Try, landing, type Base, type L4 } from './Kit';
+import { End, Hero, LeadForm, Sec, Try, landing, type Base, type L4 } from './Kit';
 
 /** /quiz — лендинг-диагностика: 7 вопросов «да/нет», результат и что с ним делать. Ничего не отправляется, кроме события quiz_done. */
 
@@ -160,6 +160,7 @@ const Page: React.FC<{ c: C; lang: Lang }> = ({ c, lang }) => {
                 <div className="kt-meter" aria-hidden><i style={{ width: `${Math.max(8, (yes / c.quiz.qs.length) * 100)}%` }} /></div>
                 <p>{c.results[level][1]}</p>
                 <div className="ai-actions"><Try slug={SLUG} place="result" lang={lang} /></div>
+                <LeadForm slug={SLUG} lang={lang} detail={`тест: ${yes} из ${c.quiz.qs.length} «да»`} />
               </>
             )}
           </div>

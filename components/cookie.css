@@ -1,0 +1,13 @@
+/* Баннер согласия на cookie: общий для всех лендингов (главная и новые). */
+.ph-cookie {
+  position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 90; max-width: 560px; padding: 20px;
+  border-radius: 12px; background: #1f1f1f; color: #f1f5f9; font-size: 1rem; line-height: 1.5; display: grid; gap: 16px;
+}
+.ph-cookie a { color: inherit; text-decoration: underline; text-underline-offset: 4px; }
+.ph-cookie-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.ph-cookie button {
+  min-height: 44px; padding: 0 20px; border-radius: 8px; font: inherit; font-weight: 600; cursor: pointer;
+  border: 1px solid #f1f5f9; background: transparent; color: #f1f5f9;
+}
+.ph-cookie button.is-primary { background: #f1f5f9; color: #131209; }
+.ph-cookie button:focus-visible { outline: 3px solid #38bdf8; outline-offset: 2px; }

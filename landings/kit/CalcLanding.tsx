@@ -3,7 +3,7 @@ import { trackEvent } from '../../analytics';
 import type { Lang } from '../board/copy';
 import { SketchClock, SketchSun, SketchTask } from '../board/Sketches';
 import { CoverCalc } from './Covers';
-import { End, Hero, PicList, Sec, landing, type Base, type L4 } from './Kit';
+import { End, Hero, LeadForm, PicList, Sec, landing, type Base, type L4 } from './Kit';
 
 /**
  * /calc — лендинг-калькулятор: посетитель сам считает, сколько часов в месяц уходит на сбор статусов.
@@ -158,6 +158,7 @@ const Page: React.FC<{ c: C; lang: Lang }> = ({ c, lang }) => {
             <b>{c.calc.result}</b>
             <p>{c.calc.days(fmt.format(Math.round((hours / 8) * 10) / 10))}</p>
             <p>{c.calc.note}</p>
+            <LeadForm slug={SLUG} lang={lang} detail={`калькулятор: ${people} чел., ${hours} ч/мес`} />
           </div>
         </div>
       </Sec>

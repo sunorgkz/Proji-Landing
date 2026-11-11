@@ -78,6 +78,13 @@
 .kt-chat .ai-a { animation-delay: 0.25s; }
 .kt-ok { color: var(--mint); font-weight: 600; }
 
+/* мягкая конверсия: оставить контакт */
+.kt-lead { margin-top: 28px; padding-top: 24px; border-block-start: 1px solid var(--glass-line); display: grid; gap: 10px; }
+.kt-lead form { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.kt-lead input { flex: 1 1 200px; min-height: 48px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--glass-line); background: rgb(255 255 255 / 0.04); color: var(--ink); font: 500 15px/1 var(--font); }
+.kt-lead input::placeholder { color: var(--muted); }
+.kt-lead input:focus-visible { outline: 2px solid var(--mint); outline-offset: 2px; }
+
 /* /go: один экран */
 .kt-go .ai-hero.is-split { min-height: 86svh; }
 .kt-bullets { margin-top: 22px; display: grid; gap: 8px; color: var(--muted); }

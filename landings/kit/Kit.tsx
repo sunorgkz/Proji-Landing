@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { trackEvent } from '../../analytics';
+import { submitDemoRequest } from '../../lib/submitDemoRequest';
 import { COPY as BOARD, type Lang } from '../board/copy';
 import { AiShell, Cta } from '../ai/Shell';
 import '../manager/manager.css';
@@ -68,6 +70,48 @@ export const End: React.FC<{ slug: string; lang: Lang; h: string; variant?: stri
     <div className="ai-actions"><Try slug={slug} place="final" lang={lang} variant={variant} /></div>
   </section>
 );
+
+/* мягкая конверсия: кто не готов регистрироваться, оставляет контакт; заявка уходит туда же, куда заявки с главной */
+const LEAD: L4<{ h: string; p: string; name: string; contact: string; send: string; ok: string; err: string; note: string }> = {
+  ru: { h: 'Хотите разбор для вашей команды?', p: 'Оставьте контакт, и команда Proji напишет вам и покажет, как это будет работать у вас.', name: 'Имя', contact: 'Почта, телефон или Telegram', send: 'Отправить', ok: 'Спасибо! Мы скоро напишем.', err: 'Не получилось отправить. Попробуйте ещё раз.', note: 'Контакт нужен только для ответа на эту заявку.' },
+  kk: { h: 'Командаңызға талдау керек пе?', p: 'Байланысыңызды қалдырыңыз, Proji командасы сізге жазып, бұл сізде қалай жұмыс істейтінін көрсетеді.', name: 'Аты', contact: 'Пошта, телефон немесе Telegram', send: 'Жіберу', ok: 'Рақмет! Жақында жазамыз.', err: 'Жіберу мүмкін болмады. Қайталап көріңіз.', note: 'Байланыс тек осы өтінімге жауап беру үшін керек.' },
+  en: { h: 'Want a walkthrough for your team?', p: 'Leave a contact and the Proji team will write to you and show how it would work for you.', name: 'Name', contact: 'Email, phone or Telegram', send: 'Send', ok: 'Thank you! We will be in touch soon.', err: 'Could not send. Please try again.', note: 'We use the contact only to reply to this request.' },
+  ar: { h: 'هل تريد شرحًا لفريقك؟', p: 'اترك وسيلة تواصل وسيكتب لك فريق Proji ويعرض كيف سيعمل لديك.', name: 'الاسم', contact: 'البريد أو الهاتف أو تيليغرام', send: 'إرسال', ok: 'شكرًا! سنتواصل معك قريبًا.', err: 'تعذّر الإرسال. حاول مرة أخرى.', note: 'نستخدم وسيلة التواصل للرد على هذا الطلب فقط.' },
+};
+
+export const LeadForm: React.FC<{ slug: string; lang: Lang; detail: string }> = ({ slug, lang, detail }) => {
+  const t = LEAD[lang];
+  const [state, setState] = useState<'idle' | 'busy' | 'ok' | 'err'>('idle');
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const f = new FormData(e.currentTarget);
+    setState('busy');
+    try {
+      await submitDemoRequest(String(f.get('name') ?? ''), `${f.get('contact') ?? ''} (${detail}, ${lang})`, `Заявка с лендинга /${slug}`);
+      setState('ok');
+      trackEvent('lead_submit', { landing: slug, lang });
+    } catch {
+      setState('err');
+    }
+  };
+  return (
+    <div className="kt-lead">
+      <h3>{t.h}</h3>
+      <p className="kt-muted">{t.p}</p>
+      {state === 'ok' ? (
+        <p className="kt-ok" role="status">✓ {t.ok}</p>
+      ) : (
+        <form onSubmit={submit}>
+          <input name="name" required autoComplete="name" placeholder={t.name} aria-label={t.name} />
+          <input name="contact" required autoComplete="email" placeholder={t.contact} aria-label={t.contact} />
+          <button type="submit" className="bd-btn is-small" disabled={state === 'busy'}>{t.send}</button>
+        </form>
+      )}
+      {state === 'err' && <p role="alert">{t.err}</p>}
+      <small className="kt-muted">{t.note}</small>
+    </div>
+  );
+};
 
 const TRY: L4<string> = { ru: 'Попробовать', kk: 'Байқап көру', en: 'Try it', ar: 'جرّب الآن' };
 
