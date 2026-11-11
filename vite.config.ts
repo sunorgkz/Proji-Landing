@@ -61,11 +61,11 @@ function readPages() {
  * - robots.txt — всегда;
  * - свой HTML для каждого React-лендинга (dist/<slug>/index.html): заголовок, описание, превью для мессенджеров
  *   и текст h1 + описание внутри #root, чтобы поисковик без JS видел, о чём страница;
- * - sitemap.xml, llms.txt, canonical и hreflang — только когда задан адрес сайта: SITE_URL=https://… npm run build.
- *   Домен не выдумываем.
+ * - sitemap.xml, llms.txt, canonical и hreflang — для https://landing.proji.org; другой адрес: SITE_URL=https://… npm run build,
+ *   пустой SITE_URL= отключает их.
  */
 function seoFilesPlugin(): Plugin {
-  const site = (process.env.SITE_URL ?? '').replace(/\/+$/, '');
+  const site = (process.env.SITE_URL ?? 'https://landing.proji.org').replace(/\/+$/, '');
   const url = (slug: string) => `${site}/${slug}`;
   const NL = '\n';
   return {

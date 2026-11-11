@@ -36,6 +36,7 @@ const initialTheme = (): Theme => {
   }
   return window.matchMedia?.('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
 };
+const PRIVACY_LABEL: Record<Lang, string> = { ru: 'Политика конфиденциальности', kk: 'Құпиялылық саясаты', en: 'Privacy policy', ar: 'سياسة الخصوصية' };
 const KB_LABEL: Record<Lang, string> = { ru: 'База знаний', kk: 'Білім базасы', en: 'Knowledge base', ar: 'قاعدة المعرفة' };
 
 export const Cta: React.FC<{ slug: string; place: string; label: string; lang: Lang; variant?: string }> = ({ slug, place, label, lang, variant }) => (
@@ -177,6 +178,7 @@ export const AiShell: React.FC<{
         <span>{b.foot.address}</span>
         <a href={KB_URL}>{KB_LABEL[lang]}</a>
         <a href={LOGIN_URL}>{b.foot.login}</a>
+        <a href="/privacy">{PRIVACY_LABEL[lang]}</a>
         {themed && (
           <div className="ai-theme" role="group" aria-label={THEME_LABEL[lang][0]}>
             {(['dark', 'light'] as const).map((t, i) => (

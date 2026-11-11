@@ -53,7 +53,7 @@ export const NotFound: React.FC = () => {
         <p className="not-found-code">404</p>
         <h1 className="not-found-title">Страница не найдена</h1>
         <p className="not-found-text">
-          Такого лендинга нет на landing.proji.kz.
+          Такого лендинга нет на landing.proji.org.
           <br />
           Перенаправим на главную через{' '}
           <span className="not-found-count">{secondsLeft}</span> сек.

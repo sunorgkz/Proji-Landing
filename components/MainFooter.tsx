@@ -41,7 +41,7 @@ export const MainFooter: React.FC = () => {
             <li><Link to="/">Главная</Link></li>
             <li><Link to="/services">Все продукты</Link></li>
             <li><Link to="/tariffs">Тарифы</Link></li>
-            <li><a href="/legal/politika-konfidencialnosti.pdf">Политика конфиденциальности</a></li>
+            <li><a href="/privacy">Политика конфиденциальности</a></li>
             <li><a href="/legal/publichnaya-oferta.pdf">Условия использования (публичная оферта)</a></li>
           </ul>
         </nav>

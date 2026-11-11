@@ -1,7 +1,7 @@
 /* Баннер согласия на cookie: общий для всех лендингов (главная и новые). */
 .ph-cookie {
   position: fixed; left: 16px; right: 16px; bottom: 16px; z-index: 90; max-width: 560px; padding: 20px;
-  border-radius: 12px; background: #1f1f1f; color: #f1f5f9; font-size: 1rem; line-height: 1.5; display: grid; gap: 16px;
+  border-radius: 12px; background: #1f1f1f; color: #f1f5f9; font-family: Inter, system-ui, sans-serif; font-size: 1rem; line-height: 1.5; display: grid; gap: 16px;
 }
 .ph-cookie a { color: inherit; text-decoration: underline; text-underline-offset: 4px; }
 .ph-cookie-actions { display: flex; flex-wrap: wrap; gap: 8px; }

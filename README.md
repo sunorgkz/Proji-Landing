@@ -1,8 +1,8 @@
-# Proji Landing — landing.proji.kz
+# Proji Landing — landing.proji.org
 
 Мульти-лендинг платформа: главная страница Proji на `/`, дополнительные лендинги из Lovable — по пути `/slug`.
 
-**Продакшен:** [https://landing.proji.kz/](https://landing.proji.kz/)
+**Продакшен:** [https://landing.proji.org/](https://landing.proji.org/)
 
 ## Локальный запуск
 
@@ -50,7 +50,7 @@ landings/
 },
 ```
 
-5. Лендинг будет доступен на `https://landing.proji.kz/primer` и локально на `http://localhost:3000/primer`
+5. Лендинг будет доступен на `https://landing.proji.org/primer` и локально на `http://localhost:3000/primer`
 
 ## Деплой
 

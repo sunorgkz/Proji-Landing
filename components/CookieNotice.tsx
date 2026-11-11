@@ -4,6 +4,7 @@ import { getLang } from '../lib/projiPrefs';
 import './cookie.css';
 
 /** Согласие на cookie: без «Принять» аналитика не включается. Показывается на всех React-лендингах, язык — из общих настроек. */
+const POLICY: Record<string, string> = { ru: 'Политика конфиденциальности', kk: 'Құпиялылық саясаты', en: 'Privacy policy', ar: 'سياسة الخصوصية' };
 const TEXT: Record<string, [string, string, string, string]> = {
   ru: ['Мы используем cookie, чтобы понимать, как работает сайт. Аналитика включится только с вашего согласия.', 'Принять', 'Только необходимые', 'Использование cookie'],
   kk: ['Сайттың қалай жұмыс істейтінін түсіну үшін cookie қолданамыз. Аналитика тек сіздің келісіміңізбен қосылады.', 'Қабылдау', 'Тек қажеттілері', 'Cookie қолдану'],
@@ -24,7 +25,7 @@ export const CookieNotice: React.FC = () => {
 
   return (
     <div className="ph-cookie" role="dialog" aria-label={label} lang={lang} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
-      <p>{text}</p>
+      <p>{text} <a href="/privacy">{POLICY[lang] ?? POLICY.ru}</a></p>
       <div className="ph-cookie-actions">
         <button type="button" className="is-primary" onClick={() => decide('all')}>{accept}</button>
         <button type="button" onClick={() => decide('necessary')}>{necessary}</button>

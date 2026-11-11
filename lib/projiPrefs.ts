@@ -1,5 +1,5 @@
 /**
- * Shared theme + language across all landings on landing.proji.kz.
+ * Shared theme + language across all landings on landing.proji.org.
  * Canonical keys match CRM / context-flow: `proji.theme`, `proji.lang`.
  * Aliases keep older Lovable / SPA keys in sync on the same origin.
  */

@@ -9,7 +9,7 @@ export interface LandingEntry {
 }
 
 /**
- * Registry of all landings on landing.proji.kz
+ * Registry of all landings on landing.proji.org
  *
  * Each landing is fully isolated — own styles, theme, fonts.
  * Do NOT add global styles to index.html that affect all pages.
@@ -215,6 +215,11 @@ export const landings: LandingEntry[] = [
     slug: 'tour',
     title: 'proji — тур: спросите Proji AI о своей команде',
     component: lazy(() => import('./kit/TourLanding')),
+  },
+  {
+    slug: 'privacy',
+    title: 'proji — политика конфиденциальности',
+    component: lazy(() => import('./privacy/PrivacyLanding')),
   },
   {
     slug: 'home',
