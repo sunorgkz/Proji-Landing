@@ -12,14 +12,17 @@ import freedomBroker from '../../assets/Freedom_broker.png';
 import kzTemir from '../../assets/KZ_temir.png';
 import googleDev from '../../assets/Google_dev.png';
 import easyLogo from '../../assets/Easy.png';
-import { SketchChat, SketchDefs, SketchHero, SketchSun, SketchTask } from '../board/Sketches';
-import { SketchBolt, SketchFile, SketchPin, SketchStack, SketchTarget } from '../ai/Sketches';
+import { SketchChat, SketchDefs, SketchHero } from '../board/Sketches';
+import { SketchBars, SketchBolt, SketchFile, SketchPaid, SketchPin, SketchStack, SketchTarget } from '../ai/Sketches';
 import '../board/board.css';
+/* движение рисунков ai/Sketches (молния, стрела, столбики) */
+import '../ai/ai.css';
 import './home.css';
 
 /* рисованные иллюстрации бренда (BRANDBOOK.md, раздел 5): по одной мысли на блок */
 const PRODUCT_PICS = [SketchBolt, SketchTarget, SketchStack, SketchFile, SketchPin];
-const FIELD_PICS = [SketchChat, SketchTask, SketchSun];
+/* по смыслу шага: сообщение пришло → ИИ оценил (столбики) → счёт оплачен; на странице рисунки не повторяются */
+const FIELD_PICS = [SketchChat, SketchBars, SketchPaid];
 
 /* ---------- reveal on scroll (hidden start state lives only in no-preference media) ---------- */
 function useReveal() {

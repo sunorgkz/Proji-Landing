@@ -33,7 +33,7 @@
 @media (min-width: 640px) { .ph, .ph-footer { --pad: 24px; } }
 @media (min-width: 1024px) { .ph, .ph-footer { --pad: 32px; } }
 
-.ph { background: transparent; }
+.ph { background: transparent; --ease-out: cubic-bezier(0.22, 1, 0.36, 1); }
 .ph h1, .ph h2, .ph h3 { font-weight: 650; letter-spacing: -0.02em; line-height: 1.12; margin: 0; }
 :where(.ph) p { margin: 0; }
 .ph-wrap { max-width: 1280px; margin: 0 auto; padding-left: var(--pad); padding-right: var(--pad); }

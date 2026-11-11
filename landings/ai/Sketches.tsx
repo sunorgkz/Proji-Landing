@@ -200,3 +200,24 @@ export const SketchStack: React.FC = () => {
     </Sketch>
   );
 };
+
+/* Оплачено: чек с галочкой, рядом покачивается монета */
+export const SketchPaid: React.FC = () => {
+  const bill = 'M46 16C76 14 106 14 132 16L132 120L122 112L112 120L102 112L92 120L82 112L72 120L62 112L52 120L46 116Z';
+  return (
+    <Sketch>
+      <g className="sk-bob">
+        <Fill d={bill} o={2} />
+        <Line d={bill} o={0} />
+        <Line d="M62 38C78 37 98 37 114 38" o={1.5} />
+        <Line d="M62 56C74 55 88 55 100 56" o={2} />
+        <Act d="M66 84C72 90 78 95 84 100C94 88 104 78 116 70" o={3.5} loop />
+      </g>
+      <g className="sk-bob is-late">
+        <Fill d={circ(158, 92, 22)} o={2.5} color={YELLOW} dx={0} dy={0} />
+        <Line d={circ(158, 92, 22)} o={3} />
+        <Line d="M158 80C158 88 158 96 158 104" o={3.4} />
+      </g>
+    </Sketch>
+  );
+};
