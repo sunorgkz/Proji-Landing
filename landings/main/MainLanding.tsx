@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Header } from '../../components/Header';
-import { Hero } from '../../components/Hero';
 import { Features } from '../../components/Features';
-import { Catalog } from '../../components/Catalog';
 import { HowItWorks } from '../../components/HowItWorks';
-import { Testimonials } from '../../components/Testimonials';
 import { CTA } from '../../components/CTA';
-import { Footer } from '../../components/Footer';
+import { MainFooter } from '../../components/MainFooter';
+import { CookieNotice } from '../../components/CookieNotice';
 import { About } from '../../components/About';
-import { FounderNote } from '../../components/FounderNote';
+import { ProjiHome } from './ProjiHome';
 import { resetDocumentShell } from '../../lib/resetDocumentShell';
 import {
   getTheme,
@@ -85,16 +83,7 @@ export default function MainLanding() {
         return <About />;
       case 'home':
       default:
-        return (
-          <>
-            <Hero />
-            <Catalog />
-            <Features />
-            <HowItWorks />
-            <FounderNote />
-            <Testimonials />
-          </>
-        );
+        return <ProjiHome />;
     }
   };
 
@@ -102,7 +91,7 @@ export default function MainLanding() {
     <div
       className={`main-landing-root ${theme === 'dark' ? 'dark' : ''} bg-slate-50 dark:bg-[#0f172a] min-h-screen text-slate-900 dark:text-white font-sans selection:bg-brand-500/30 transition-colors duration-500 flex flex-col`}
     >
-      <div className="bg-noise" aria-hidden />
+      <a className="ph-skip" href="#main-content">Перейти к содержимому</a>
       <Header
         toggleTheme={toggleTheme}
         isDark={theme === 'dark'}
@@ -111,9 +100,10 @@ export default function MainLanding() {
       />
       <main className="flex-grow">
         {renderContent()}
-        <CTA />
+        {currentPage !== 'home' && <CTA />}
       </main>
-      <Footer />
+      <MainFooter />
+      <CookieNotice />
     </div>
   );
 }

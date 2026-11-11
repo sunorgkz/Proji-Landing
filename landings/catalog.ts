@@ -58,7 +58,6 @@ export const CORE_SLUGS = [
   'crm',
   'os-engine',
   'knowledge-twin',
-  'pro-ai-council',
   'talent-manager',
 ] as const;
 
@@ -112,34 +111,6 @@ export const catalogGroups: CatalogGroup[] = [
         'WhatsApp, Telegram и почта превращаются в действия: напоминания, черновики ответов и живую базу знаний.',
         'MessagesSquare',
         'Подключить переписки',
-      ),
-    ],
-  },
-  {
-    id: 'progpt',
-    title: 'proGPT — командный AI',
-    items: [
-      item(
-        'pro-ai-council',
-        'Совет из лучших AI',
-        'Следующий шаг после ChatGPT.',
-        'ChatGPT, Claude, Gemini, KazLLM и другие модели работают вместе — как совет экспертов по вашей задаче.',
-        'Brain',
-        'Собрать совет',
-      ),
-      item(
-        'team-ai',
-        'Командный ИИ',
-        'AI, который помнит всю команду.',
-        'Общие AI-каналы, несколько моделей и постоянная память для командной работы.',
-        'Network',
-      ),
-      item(
-        'team-ai-collab',
-        'Совместное пространство с ИИ',
-        'Одна AI-сессия на всю команду — в реальном времени.',
-        'Совместные сессии с ChatGPT, Claude и Gemini прямо в общем рабочем пространстве.',
-        'Share2',
       ),
     ],
   },

@@ -24,7 +24,7 @@ export const CTA: React.FC = () => {
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 md:p-20 relative overflow-hidden shadow-2xl">
+        <div className="bg-white/5 border border-white/10 rounded-[2.5rem] p-8 md:p-20 relative overflow-hidden">
            {/* Decorative Glow */}
            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-500/20 rounded-full -translate-y-1/2 translate-x-1/3 blur-[120px]"></div>
            
@@ -53,15 +53,15 @@ export const CTA: React.FC = () => {
                     initial={{ scale: 0.9, opacity: 0, rotateY: 30 }}
                     whileInView={{ scale: 1, opacity: 1, rotateY: 0 }}
                     transition={{ duration: 0.8, type: "spring" }}
-                    className="bg-[#1e293b]/80 backdrop-blur-2xl p-8 rounded-3xl border border-white/20 w-full max-w-md shadow-2xl relative"
+                    className="bg-[#1e293b]/80 backdrop-blur-2xl p-8 rounded-3xl border border-white/20 w-full max-w-md relative"
                  >
-                    <div className="absolute -top-6 -right-6 bg-green-500 text-white p-4 rounded-2xl shadow-xl border-4 border-[#0f172a] animate-bounce">
+                    <div className="absolute -top-6 -right-6 bg-green-500 text-white p-4 rounded-2xl border-4 border-[#0f172a] animate-bounce">
                        <ArrowUpRight className="w-8 h-8" />
                     </div>
 
                     <div className="flex items-center justify-between mb-10">
                        <div>
-                          <p className="text-sm text-gray-400 font-medium uppercase tracking-wider mb-1">Общая выручка</p>
+                          <p className="text-sm text-gray-400 font-medium mb-1">Общая выручка</p>
                           <h3 className="text-4xl font-bold text-white">$124,592</h3>
                        </div>
                        <div className="bg-green-500/10 px-3 py-1.5 rounded-full border border-green-500/20 text-green-400 font-bold text-sm flex items-center gap-1">
@@ -82,13 +82,13 @@ export const CTA: React.FC = () => {
                              {/* Gloss on bar */}
                              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent translate-y-full group-hover:translate-y-[-100%] transition-transform duration-1000"></div>
                              
-                             <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white text-brand-900 text-xs font-bold px-2 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
+                             <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white text-brand-900 text-[13px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
                                 ${(h * 1240).toLocaleString()}
                              </div>
                           </motion.div>
                        ))}
                     </div>
-                    <div className="flex justify-between text-xs text-gray-500 mt-4 font-medium uppercase tracking-wide">
+                    <div className="flex justify-between text-sm text-gray-500 mt-4 font-medium">
                        <span>Mon</span>
                        <span>Tue</span>
                        <span>Wed</span>

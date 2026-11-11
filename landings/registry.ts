@@ -1,4 +1,5 @@
 import { lazy, type ComponentType, type LazyExoticComponent } from 'react';
+import { ROLE_IDS, ROLE_TITLES } from './manager/roles';
 
 export interface LandingEntry {
   /** URL path segment, e.g. "primer" → /primer */
@@ -125,6 +126,106 @@ export const landings: LandingEntry[] = [
     title: 'Бизнес в космосе — Антигравити',
     component: lazy(() => import('./antigravity/AntigravityLanding')),
   },
+  {
+    slug: 'alt',
+    title: 'Proji — руководитель видит всё, команда знает, что делать',
+    component: lazy(() => import('./linear_alt/LinearAltLanding')),
+  },
+  {
+    slug: 'board',
+    title: 'Proji — руководитель видит всё, команда знает, что делать',
+    component: lazy(() => import('./board/BoardLanding')),
+  },
+  {
+    slug: 'agents',
+    title: 'Proji — AI-агенты в одной команде с людьми',
+    component: lazy(() => import('./agents/AgentsLanding')),
+  },
+  {
+    slug: 'why',
+    title: 'proji — хватит спрашивать «ну что там?»',
+    component: lazy(() => import('./why/WhyLanding')),
+  },
+  {
+    slug: 'hire',
+    title: 'proji — возьмите меня на работу',
+    component: lazy(() => import('./hire/HireLanding')),
+  },
+  {
+    slug: 'ask',
+    title: 'proji ai — спросите свою компанию',
+    component: lazy(() => import('./ai/AskLanding')),
+  },
+  {
+    slug: 'morning',
+    title: 'proji ai — что горит и успеем ли',
+    component: lazy(() => import('./ai/MorningLanding')),
+  },
+  {
+    slug: 'phrase',
+    title: 'proji ai — поставьте задачу фразой',
+    component: lazy(() => import('./ai/PhraseLanding')),
+  },
+  {
+    slug: 'vs',
+    title: 'proji — таблица и чаты или Proji: честное сравнение',
+    component: lazy(() => import('./kit/VsLanding')),
+  },
+  {
+    slug: 'quiz',
+    title: 'proji — тест: теряются ли задачи в вашей команде',
+    component: lazy(() => import('./kit/QuizLanding')),
+  },
+  {
+    slug: 'calc',
+    title: 'proji — калькулятор: сколько часов уходит на «ну что там?»',
+    component: lazy(() => import('./kit/CalcLanding')),
+  },
+  {
+    slug: 'faq',
+    title: 'proji — вопросы и ответы о Proji и Proji AI',
+    component: lazy(() => import('./kit/FaqLanding')),
+  },
+  {
+    slug: 'guide',
+    title: 'Как перестать терять задачи в рабочих чатах: гайд для руководителя',
+    component: lazy(() => import('./kit/GuideLanding')),
+  },
+  {
+    slug: 'start',
+    title: 'proji — первые 5 минут с Proji AI',
+    component: lazy(() => import('./kit/StartLanding')),
+  },
+  {
+    slug: 'safe',
+    title: 'proji — что видит и чего не видит Proji AI',
+    component: lazy(() => import('./kit/SafeLanding')),
+  },
+  {
+    slug: 'go',
+    title: 'proji — задачи из чатов больше не теряются',
+    component: lazy(() => import('./kit/GoLanding')),
+  },
+  {
+    slug: 'glossary',
+    title: 'proji — словарь: ИИ и управление задачами простыми словами',
+    component: lazy(() => import('./kit/GlossaryLanding')),
+  },
+  {
+    slug: 'tour',
+    title: 'proji — тур: спросите Proji AI о своей команде',
+    component: lazy(() => import('./kit/TourLanding')),
+  },
+  {
+    slug: 'home',
+    title: 'proji — руководитель видит всё, команда знает, что делать',
+    component: lazy(() => import('./home/HomeLanding')),
+  },
+  ...ROLE_IDS.map(role => ({
+    slug: `manager-${role}`,
+    title: `proji — ${ROLE_TITLES[role]}`,
+    component: lazy(() => import('./manager/ManagerLanding').then(m => ({ default: m.roleLanding(role) }))),
+  })),
 ];
 
 const bySlug = new Map(landings.map(entry => [entry.slug, entry]));
