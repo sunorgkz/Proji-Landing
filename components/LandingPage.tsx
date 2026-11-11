@@ -4,7 +4,6 @@ import { getLanding } from '../landings/registry';
 import { applyLandingPageBg, LANDING_PAGE_BG } from '../lib/landingPageBg';
 import { getTheme, resolveTheme, syncPrefsFromStorage } from '../lib/projiPrefs';
 import { isStaticPublicLanding, staticPublicPath } from '../lib/staticPublicLandings';
-import { CookieNotice } from './CookieNotice';
 import { NotFound } from './NotFound';
 
 const PageLoader = ({ background }: { background: string }) => (
@@ -74,8 +73,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({ slug: slugProp }) => {
   return (
     <Suspense fallback={<PageLoader background={pageBg} />}>
       <Component />
-      {/* на главной баннер свой, внутри MainLanding */}
-      {slug !== '' && <CookieNotice />}
     </Suspense>
   );
 };

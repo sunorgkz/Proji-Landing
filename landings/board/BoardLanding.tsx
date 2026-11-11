@@ -17,6 +17,7 @@ import typingPoster from '../../assets/hunt-and-peck-typing-monkeytype-benchmark
 import { COPY, LANGS, detectLang, type Copy, type Frame, type Lang } from './copy';
 import { SketchDefs, SketchHero, SKETCH_STEPS } from './Sketches';
 import './board.css';
+import '../../components/shine.css';
 
 /**
  * Лендинг-доска Proji: тёмно-синий, мятный, жидкое стекло, четыре языка (ru, kk, en, ar с RTL).

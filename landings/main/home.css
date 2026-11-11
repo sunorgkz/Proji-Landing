@@ -311,21 +311,30 @@
 @keyframes ph-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 @keyframes ph-pulse { 50% { opacity: .4; } }
 
-/* фон главной: синий и мятный медленно переливаются под всеми блоками */
+/* фон главной: синий и мятный еле заметно переливаются под всеми блоками (BRANDBOOK.md, «Перелив») */
 .main-landing-root { position: relative; isolation: isolate; }
 .main-landing-root::before {
   content: ''; position: fixed; inset: -25%; z-index: -1; pointer-events: none;
   background:
-    radial-gradient(38% 34% at 18% 22%, rgb(42 91 215 / 0.30), transparent 70%),
-    radial-gradient(32% 30% at 82% 28%, rgb(94 236 196 / 0.16), transparent 70%),
-    radial-gradient(44% 40% at 62% 86%, rgb(42 91 215 / 0.20), transparent 70%);
-  animation: ph-flow 26s ease-in-out infinite alternate;
+    radial-gradient(38% 34% at 18% 22%, rgb(42 91 215 / 0.22), transparent 70%),
+    radial-gradient(32% 30% at 82% 28%, rgb(94 236 196 / 0.10), transparent 70%),
+    radial-gradient(44% 40% at 62% 86%, rgb(42 91 215 / 0.14), transparent 70%);
+  animation: ph-flow 45s ease-in-out infinite alternate;
 }
 .main-landing-root:not(.dark)::before { opacity: 0.5; }
-@keyframes ph-flow { to { transform: translate3d(7%, -5%, 0) rotate(10deg) scale(1.1); } }
+@keyframes ph-flow { to { transform: translate3d(3%, -2%, 0) rotate(4deg) scale(1.04); } }
 
 /* «Войти» в шапке */
 .ph-login { display: inline-flex; align-items: center; min-height: 40px; padding: 0 18px; border-radius: 999px; border: 1px solid currentColor; font-size: 0.875rem; font-weight: 600; transition: background-color .2s, color .2s; }
 .ph-login:hover { background: #5eecc4; border-color: #5eecc4; color: #071530; }
 
 @media (prefers-reduced-motion: reduce) { .main-landing-root::before { animation: none; } }
+
+/* рисованные иллюстрации на главной: цвета бренда, линия цвета текста */
+.ph, .ph-footer { --mint: #19b98c; --blue: #2a5bd7; --yellow: #ffd45e; --navy-800: #0b1f45; --navy-700: #12306a; }
+.main-landing-root.dark .ph, .main-landing-root.dark .ph-footer { --mint: #5eecc4; }
+.ph-field-3 { --ink: #f2f7ff; }
+.ph-sketch { width: 120px; }
+.ph-sketch .bd-sk { max-height: 84px; }
+.ph-sketch-wide { margin-top: 28px; max-width: 520px; }
+.ph-product-left .ph-sketch { margin-bottom: 14px; }

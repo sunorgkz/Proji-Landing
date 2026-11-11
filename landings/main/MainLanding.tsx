@@ -4,7 +4,6 @@ import { Features } from '../../components/Features';
 import { HowItWorks } from '../../components/HowItWorks';
 import { CTA } from '../../components/CTA';
 import { MainFooter } from '../../components/MainFooter';
-import { CookieNotice } from '../../components/CookieNotice';
 import { About } from '../../components/About';
 import { ProjiHome } from './ProjiHome';
 import { resetDocumentShell } from '../../lib/resetDocumentShell';
@@ -103,7 +102,6 @@ export default function MainLanding() {
         {currentPage !== 'home' && <CTA />}
       </main>
       <MainFooter />
-      <CookieNotice />
     </div>
   );
 }

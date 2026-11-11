@@ -100,7 +100,7 @@
 
 /* подвал */
 .wy-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 30px; padding-block: 36px 40px; font-size: var(--step-small); color: var(--muted); border-block-start: 1px solid rgb(255 255 255 / 0.08); }
-.wy-foot .bd-logo { color: var(--ink); font-size: 20px; }
+.wy-foot .bd-logo { font-size: 20px; }
 .wy-foot a { text-decoration: none; }
 .wy-foot a:hover { color: var(--mint); }
 .wy-foot small { flex-basis: 100%; font-size: 13px; }

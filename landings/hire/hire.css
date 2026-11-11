@@ -89,7 +89,7 @@
 
 /* подвал */
 .hr-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 30px; padding-block: 0 40px; font-size: var(--step-small); color: var(--muted); }
-.hr-foot .bd-logo { color: var(--ink); font-size: 20px; }
+.hr-foot .bd-logo { font-size: 20px; }
 .hr-foot a { text-decoration: none; }
 .hr-foot a:hover { color: var(--mint); }
 .hr-foot small { flex-basis: 100%; font-size: 13px; }

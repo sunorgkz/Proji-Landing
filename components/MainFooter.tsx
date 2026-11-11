@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { catalogGroups, CORE_SLUGS } from '../landings/catalog';
-import './logo.css';
+import './shine.css';
 
 const COMPANY = {
   legal: 'ИП «SUNNET», ИИН 911211301246, г. Актобе, район Алматы',

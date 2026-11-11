@@ -15,14 +15,12 @@ export const getConsent = (): 'all' | 'necessary' | null => {
   }
 };
 
-export const setConsent = (value: 'all' | 'necessary') => {
-  try {
-    localStorage.setItem(CONSENT_KEY, value);
-  } catch {
-    /* storage unavailable */
-  }
-  if (value === 'all') initAnalytics();
-};
+/* выбор делается в полоске public/cookie-banner.js, она общая для всех страниц сайта */
+if (typeof window !== 'undefined') {
+  window.addEventListener('proji:consent', e => {
+    if ((e as CustomEvent).detail === 'all') initAnalytics();
+  });
+}
 
 export const initAnalytics = () => {
   if (!API_KEY || initialized || getConsent() !== 'all') return;

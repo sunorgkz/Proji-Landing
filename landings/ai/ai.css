@@ -11,7 +11,7 @@
 .ai-actions .bd-btn { text-decoration: none; }
 .ai-root .ai-note { font-size: 13px; color: var(--muted); }
 .ai-foot { max-width: 1120px; margin: 80px auto 0; padding: 30px var(--m) 40px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 30px; font-size: var(--step-small); color: var(--muted); }
-.ai-foot .bd-logo { color: var(--ink); font-size: 20px; }
+.ai-foot .bd-logo { font-size: 20px; }
 .ai-foot a { text-decoration: none; }
 .ai-foot a:hover { color: var(--mint); }
 

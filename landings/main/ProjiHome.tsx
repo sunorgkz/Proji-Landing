@@ -12,7 +12,14 @@ import freedomBroker from '../../assets/Freedom_broker.png';
 import kzTemir from '../../assets/KZ_temir.png';
 import googleDev from '../../assets/Google_dev.png';
 import easyLogo from '../../assets/Easy.png';
+import { SketchChat, SketchDefs, SketchHero, SketchSun, SketchTask } from '../board/Sketches';
+import { SketchBolt, SketchFile, SketchPin, SketchStack, SketchTarget } from '../ai/Sketches';
+import '../board/board.css';
 import './home.css';
+
+/* рисованные иллюстрации бренда (BRANDBOOK.md, раздел 5): по одной мысли на блок */
+const PRODUCT_PICS = [SketchBolt, SketchTarget, SketchStack, SketchFile, SketchPin];
+const FIELD_PICS = [SketchChat, SketchTask, SketchSun];
 
 /* ---------- reveal on scroll (hidden start state lives only in no-preference media) ---------- */
 function useReveal() {
@@ -339,6 +346,7 @@ export const ProjiHome: React.FC = () => {
 
   return (
     <div className="ph">
+      <SketchDefs />
       {/* hero */}
       <section className="ph-hero ph-wrap" id="main-content" tabIndex={-1}>
         <div className="ph-hero-grid">
@@ -367,6 +375,7 @@ export const ProjiHome: React.FC = () => {
       {/* features: comparison set as text */}
       <section className="ph-section ph-wrap" id="features">
         <h2 className="ph-reveal">Что меняется, когда рутиной занимается ИИ</h2>
+        <div className="ph-sketch-wide ph-reveal"><SketchHero /></div>
         <div className="ph-compare ph-reveal" role="table" aria-label="Как обычно и с Proji">
           <div className="ph-compare-head" role="row">
             <span role="columnheader">Возможность</span>
@@ -388,9 +397,12 @@ export const ProjiHome: React.FC = () => {
         <h2 className="ph-reveal">Шесть продуктов. Одна система.</h2>
         <p className="ph-sub ph-reveal">Начните с того, что закрывает вашу главную боль. Остальные продукты есть в полном каталоге.</p>
         <ul className="ph-products">
-          {core.map(p => (
+          {core.map((p, i) => {
+            const Pic = PRODUCT_PICS[i % PRODUCT_PICS.length];
+            return (
             <li key={p.slug} className="ph-product ph-reveal">
               <div className="ph-product-left">
+                <div className="ph-sketch"><Pic /></div>
                 <h3>{p.name}</h3>
                 <Link to={`/${p.slug}`} className="ph-link">
                   {p.cta} <ArrowRight size={16} aria-hidden />
@@ -401,7 +413,8 @@ export const ProjiHome: React.FC = () => {
                 <p>{p.desc}</p>
               </div>
             </li>
-          ))}
+            );
+          })}
         </ul>
         <Link to="/services" className="ph-link ph-all">
           Смотреть все продукты <ArrowRight size={16} aria-hidden />
@@ -415,6 +428,7 @@ export const ProjiHome: React.FC = () => {
         {FIELDS.map((f, i) => (
           <div className={`ph-field ph-field-${i + 1}`} key={f.clause}>
             {i === 0 && <h2 id="how-title">Как Proji превращает хаос в систему</h2>}
+            <div className="ph-sketch">{React.createElement(FIELD_PICS[i])}</div>
             <p className="ph-field-clause">{f.clause}</p>
             <div className="ph-card" data-ui>
               <div className="ph-card-top">
@@ -428,6 +442,20 @@ export const ProjiHome: React.FC = () => {
             </div>
           </div>
         ))}
+      </section>
+
+      {/* founder */}
+      <section className="ph-section ph-wrap" id="about">
+        <div className="ph-founder">
+          <img className="ph-reveal" src={serikImage} alt="Серик, основатель Proji" loading="lazy" width={480} height={600} />
+          <div className="ph-reveal">
+            <Quote size={28} aria-hidden />
+            <blockquote>
+              Мы делали Proji не как очередной инструмент, а как систему, в которой мечтали бы работать сами. Без хаоса, без бюрократии.
+            </blockquote>
+            <p className="ph-founder-name">Серик, CEO Sunnet и Proji</p>
+          </div>
+        </div>
       </section>
 
       {/* proof: tiles */}
@@ -473,20 +501,6 @@ export const ProjiHome: React.FC = () => {
                 <p>{r.text}</p>
               </article>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* founder */}
-      <section className="ph-section ph-wrap" id="about">
-        <div className="ph-founder">
-          <img className="ph-reveal" src={serikImage} alt="Серик, основатель Proji" loading="lazy" width={480} height={600} />
-          <div className="ph-reveal">
-            <Quote size={28} aria-hidden />
-            <blockquote>
-              Мы делали Proji не как очередной инструмент, а как систему, в которой мечтали бы работать сами. Без хаоса, без бюрократии.
-            </blockquote>
-            <p className="ph-founder-name">Серик, CEO Sunnet и Proji</p>
           </div>
         </div>
       </section>

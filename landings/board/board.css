@@ -329,7 +329,7 @@
 .bd-foot-cols a:hover { color: var(--mint); }
 .bd-credits { color: var(--muted); font-size: 13px; max-width: 75ch; }
 .bd-foot-last { margin-top: 40px; display: flex; justify-content: space-between; align-items: center; font-size: var(--step-small); color: var(--muted); }
-.bd-foot-last .bd-logo { font-size: 18px; color: var(--ink); margin-inline-end: 6px; }
+.bd-foot-last .bd-logo { font-size: 18px; margin-inline-end: 6px; }
 
 /* ---------- движение ---------- */
 @media (prefers-reduced-motion: no-preference) {
