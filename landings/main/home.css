@@ -33,7 +33,7 @@
 @media (min-width: 640px) { .ph, .ph-footer { --pad: 24px; } }
 @media (min-width: 1024px) { .ph, .ph-footer { --pad: 32px; } }
 
-.ph { background: var(--bg); }
+.ph { background: transparent; }
 .ph h1, .ph h2, .ph h3 { font-weight: 650; letter-spacing: -0.02em; line-height: 1.12; margin: 0; }
 :where(.ph) p { margin: 0; }
 .ph-wrap { max-width: 1280px; margin: 0 auto; padding-left: var(--pad); padding-right: var(--pad); }
@@ -272,7 +272,7 @@
 @media (max-width: 819px) { .ph-cta-row .ph-btn { flex: 1 1 100%; justify-content: center; } }
 
 /* footer of tiles */
-.ph-footer { background: var(--bg); padding: 0 var(--pad) var(--pad); }
+.ph-footer { background: transparent; padding: 0 var(--pad) var(--pad); }
 .ph-footer-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 8px; max-width: calc(1280px - 2 * var(--pad)); margin: 0 auto; }
 .ph-ft { background: var(--surface); border-radius: var(--radius); padding: 24px; display: flex; flex-direction: column; justify-content: space-between; gap: 20px; min-height: 220px; font-size: 1rem; color: var(--ink); }
 .ph-ft a { color: inherit; text-decoration: none; }
@@ -310,3 +310,22 @@
 }
 @keyframes ph-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 @keyframes ph-pulse { 50% { opacity: .4; } }
+
+/* фон главной: синий и мятный медленно переливаются под всеми блоками */
+.main-landing-root { position: relative; isolation: isolate; }
+.main-landing-root::before {
+  content: ''; position: fixed; inset: -25%; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(38% 34% at 18% 22%, rgb(42 91 215 / 0.30), transparent 70%),
+    radial-gradient(32% 30% at 82% 28%, rgb(94 236 196 / 0.16), transparent 70%),
+    radial-gradient(44% 40% at 62% 86%, rgb(42 91 215 / 0.20), transparent 70%);
+  animation: ph-flow 26s ease-in-out infinite alternate;
+}
+.main-landing-root:not(.dark)::before { opacity: 0.5; }
+@keyframes ph-flow { to { transform: translate3d(7%, -5%, 0) rotate(10deg) scale(1.1); } }
+
+/* «Войти» в шапке */
+.ph-login { display: inline-flex; align-items: center; min-height: 40px; padding: 0 18px; border-radius: 999px; border: 1px solid currentColor; font-size: 0.875rem; font-weight: 600; transition: background-color .2s, color .2s; }
+.ph-login:hover { background: #5eecc4; border-color: #5eecc4; color: #071530; }
+
+@media (prefers-reduced-motion: reduce) { .main-landing-root::before { animation: none; } }

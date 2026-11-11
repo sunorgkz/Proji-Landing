@@ -1,0 +1,11 @@
+/* Логотип proji: Ubuntu жирный, строчными (BRANDBOOK.md, раздел 1); бренд-цвета мягко переливаются по буквам */
+.proji-logo {
+  font-family: 'Ubuntu', system-ui, sans-serif; font-weight: 700; text-transform: lowercase; letter-spacing: -0.01em; line-height: 1;
+  background: linear-gradient(100deg, #f2f7ff 0%, #5eecc4 30%, #2a5bd7 50%, #ffd45e 70%, #f2f7ff 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: proji-logo-shine 7s ease-in-out infinite alternate;
+}
+.main-landing-root:not(.dark) .proji-logo { background-image: linear-gradient(100deg, #071530 0%, #2a5bd7 35%, #19b98c 55%, #2a5bd7 75%, #071530 100%); }
+@keyframes proji-logo-shine { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+@media (prefers-reduced-motion: reduce) { .proji-logo { animation: none; } }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { catalogGroups, CORE_SLUGS } from '../landings/catalog';
+import './logo.css';
 
 const COMPANY = {
   legal: 'ИП «SUNNET», ИИН 911211301246, г. Актобе, район Алматы',
@@ -29,10 +30,7 @@ export const MainFooter: React.FC = () => {
         <div className="ph-ft ph-ft-statement">
           <p>ИИ-платформа нового поколения. Автоматизируйте рутину, фокусируйтесь на главном.</p>
           <p className="ph-ft-legal">
-            © Proji. Все права защищены. {COMPANY.legal}. Фото Актобе:{' '}
-            <a href="https://commons.wikimedia.org/wiki/File:Aktobe_Reservoir.jpg">Esetok, CC BY-SA 4.0</a>,{' '}
-            <a href="https://commons.wikimedia.org/wiki/File:Aktobe_(Kazakhstan),_satellite_image_2017-09-07.jpg">ESA, CC BY-SA 3.0</a>,{' '}
-            <a href="https://commons.wikimedia.org/wiki/File:Aktobe_19_century_(01).jpg">общественное достояние</a>, Wikimedia Commons.
+            © Proji. Все права защищены. {COMPANY.legal}. <a href="/privacy">Политика конфиденциальности</a>.
           </p>
         </div>
         <nav className="ph-ft ph-ft-nav" aria-label="Навигация">
@@ -65,7 +63,7 @@ export const MainFooter: React.FC = () => {
             <a href={COMPANY.phoneHref}>{COMPANY.phone}</a>
           </div>
         </div>
-        <div className="ph-ft ph-ft-wordmark" aria-hidden>Proji</div>
+        <div className="ph-ft ph-ft-wordmark" aria-hidden><span className="proji-logo">proji</span></div>
       </div>
     </footer>
   );

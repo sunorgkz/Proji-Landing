@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, Sun, Moon, LayoutGrid } from 'lucide-react';
 import { Button } from './ui/Button';
+import './logo.css';
+
+const LOGIN_URL = 'https://proji.org/login';
 
 interface HeaderProps {
   toggleTheme: () => void;
@@ -53,7 +56,7 @@ export const Header: React.FC<HeaderProps> = ({ toggleTheme, isDark, onNavigate,
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => handleNav('home')}>
-            <span className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Proji</span>
+            <span className="proji-logo text-3xl">proji</span>
           </div>
 
           {/* Desktop Nav */}
@@ -66,6 +69,8 @@ export const Header: React.FC<HeaderProps> = ({ toggleTheme, isDark, onNavigate,
             </button>
             <button onClick={() => handleNav('about')} className={navLinkClass('about')}>О нас</button>
             
+            <a href={LOGIN_URL} className="ph-login text-slate-700 dark:text-white">Войти</a>
+
             {/* Theme Toggle */}
             <button 
               onClick={toggleTheme}
@@ -77,7 +82,7 @@ export const Header: React.FC<HeaderProps> = ({ toggleTheme, isDark, onNavigate,
 
           {/* Mobile Menu Button */}
           <div className="flex items-center gap-4 md:hidden">
-            <Link to="/tariffs" className="text-sm font-medium text-slate-600 dark:text-gray-300">Тарифы</Link>
+            <a href={LOGIN_URL} className="ph-login text-slate-700 dark:text-white">Войти</a>
             <button 
               onClick={toggleTheme}
               className="p-2 rounded-full text-slate-600 dark:text-gray-300"
@@ -104,6 +109,7 @@ export const Header: React.FC<HeaderProps> = ({ toggleTheme, isDark, onNavigate,
              Продукты
            </button>
            <button onClick={() => handleNav('about')} className="text-left text-slate-600 dark:text-gray-300 hover:text-brand-600 dark:hover:text-white py-2">О нас</button>
+           <a href={LOGIN_URL} className="text-left font-semibold text-slate-900 dark:text-white py-2">Войти</a>
         </div>
       )}
     </header>
