@@ -336,7 +336,7 @@
 .ph-field-3 { --ink: #f2f7ff; }
 .ph-sketch { width: 120px; }
 .ph-sketch .bd-sk { max-height: 84px; }
-.ph-sketch-wide { margin-top: 28px; max-width: 520px; }
+.ph-sketch-wide { margin-bottom: 20px; max-width: 520px; }
 .ph-product-left .ph-sketch { margin-bottom: 14px; }
 
 /* ссылки на страницу компании /sunnet-business */

@@ -83,13 +83,10 @@ export const Header: React.FC<HeaderProps> = ({ toggleTheme, isDark, onNavigate,
           {/* Mobile Menu Button */}
           <div className="flex items-center gap-4 md:hidden">
             <a href={LOGIN_URL} className="ph-login text-slate-700 dark:text-white">Войти</a>
+            {/* на телефоне переключатель темы — внутри бургера */}
             <button 
-              onClick={toggleTheme}
-              className="p-2 rounded-full text-slate-600 dark:text-gray-300"
-            >
-              {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </button>
-            <button 
+              aria-label="Меню"
+              aria-expanded={isMobileMenuOpen}
               className="text-slate-900 dark:text-white"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
@@ -110,6 +107,10 @@ export const Header: React.FC<HeaderProps> = ({ toggleTheme, isDark, onNavigate,
            </button>
            <button onClick={() => handleNav('about')} className="text-left text-slate-600 dark:text-gray-300 hover:text-brand-600 dark:hover:text-white py-2">О нас</button>
            <a href={LOGIN_URL} className="text-left font-semibold text-slate-900 dark:text-white py-2">Войти</a>
+           <button onClick={toggleTheme} className="text-left text-slate-600 dark:text-gray-300 hover:text-brand-600 dark:hover:text-white py-2 inline-flex items-center gap-2">
+             {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+             {isDark ? 'Светлая тема' : 'Тёмная тема'}
+           </button>
         </div>
       )}
     </header>

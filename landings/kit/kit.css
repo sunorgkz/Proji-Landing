@@ -96,7 +96,9 @@
 @media (max-width: 760px) {
   .ai-root .kt-sec { padding-top: 80px; }
   .kt-list, .kt-terms, .kt-steps { grid-template-columns: 1fr; }
-  .kt-list li { grid-template-columns: 72px 1fr; gap: 12px; }
+  /* на телефоне рисунок над заголовком пункта (BRANDBOOK.md, раздел 5, «Место») */
+  .kt-list li { grid-template-columns: 1fr; gap: 10px; }
+  .kt-list li > .bd-sk, .kt-list li > img { justify-self: start; max-height: 64px; width: auto; }
   .kt-vs-row { grid-template-columns: 1fr 1fr; }
   .kt-vs-row h3 { grid-column: 1 / -1; padding-block: 12px 0; }
   .kt-vs-head h3 { display: none; }

@@ -377,8 +377,9 @@ export const ProjiHome: React.FC = () => {
 
       {/* features: comparison set as text */}
       <section className="ph-section ph-wrap" id="features">
-        <h2 className="ph-reveal">Что меняется, когда рутиной занимается ИИ</h2>
+        {/* рисунок перед заголовком (BRANDBOOK.md, раздел 5, «Место») */}
         <div className="ph-sketch-wide ph-reveal"><SketchHero /></div>
+        <h2 className="ph-reveal">Что меняется, когда рутиной занимается ИИ</h2>
         <div className="ph-compare ph-reveal" role="table" aria-label="Как обычно и с Proji">
           <div className="ph-compare-head" role="row">
             <span role="columnheader">Возможность</span>

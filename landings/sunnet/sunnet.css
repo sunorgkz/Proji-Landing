@@ -11,6 +11,7 @@
 
 /* логотипы GDG и Aqtobe Hub в списке «Мы вкладываемся в людей»: колонка шире, чем у рисунков */
 #people .kt-list li { grid-template-columns: 150px 1fr; }
+@media (max-width: 760px) { #people .kt-list li { grid-template-columns: 1fr; } }
 .kt-list svg.sn-sun { display: block; width: 150px; height: 72px; overflow: visible; }
 .kt-list img.sn-logo { display: block; width: 150px; height: auto; max-height: 72px; object-fit: contain; object-position: left center; }
 .sn-split { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(24px, 5vw, 72px); align-items: center; }
@@ -43,6 +44,7 @@
   .sn-trust { grid-template-columns: repeat(2, 1fr); }
   .sn-press { grid-template-columns: 1fr; }
   .sn-founder, .sn-split { grid-template-columns: 1fr; }
+  .sn-split > figure { order: -1; }
 }
 @media (max-width: 520px) {
   .sn-trust { grid-template-columns: 1fr; }

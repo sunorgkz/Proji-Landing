@@ -2,7 +2,8 @@ import React from 'react';
 import type { Lang } from '../board/copy';
 import { AiShell } from '../ai/Shell';
 import { SketchBolt, SketchStack, SketchTarget } from '../ai/Sketches';
-import { SketchChat, SketchHero } from '../board/Sketches';
+import { SketchChat } from '../board/Sketches';
+import { SketchGrowth } from './Sketches';
 import { PicList, Sec } from '../kit/Kit';
 import serikImage from '../../assets/serik.png';
 import europeanBank from '../../assets/european_bank.png';
@@ -95,7 +96,7 @@ const Page: React.FC<{ lang: Lang }> = ({ lang }) => (
             <a className="bd-btn is-glass" href="/">Что такое Proji</a>
           </div>
         </div>
-        <figure className="mg-card sn-hero-pic"><SketchHero /></figure>
+        <figure className="mg-card sn-hero-pic"><SketchGrowth /></figure>
       </section>
 
       <Sec id="work" h="Что мы делаем">

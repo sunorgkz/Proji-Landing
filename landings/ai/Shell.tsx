@@ -2,7 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { trackEvent } from '../../analytics';
 import { resetDocumentShell } from '../../lib/resetDocumentShell';
-import { setLang as persistLang } from '../../lib/projiPrefs';
+import { getTheme, resolveTheme, setLang as persistLang, setTheme as persistTheme } from '../../lib/projiPrefs';
 import { CHOSEN_KEY, LangMenu, Logo, initialLang } from '../board/BoardLanding';
 import { COPY as BOARD, type Lang } from '../board/copy';
 import { SketchDefs } from '../board/Sketches';
@@ -19,7 +19,6 @@ const FONTS_URL =
 export const REGISTER_URL = 'https://proji.org/register';
 export const LOGIN_URL = 'https://proji.org/login';
 export const KB_URL = 'https://proji.org/knowledge-base';
-const THEME_KEY = 'proji.home.theme';
 type Theme = 'dark' | 'light';
 const THEME_LABEL: Record<Lang, [string, string, string]> = {
   ru: ['Тема', 'Тёмная', 'Светлая'],
@@ -27,15 +26,16 @@ const THEME_LABEL: Record<Lang, [string, string, string]> = {
   en: ['Theme', 'Dark', 'Light'],
   ar: ['المظهر', 'داكن', 'فاتح'],
 };
-const initialTheme = (): Theme => {
-  try {
-    const saved = localStorage.getItem(THEME_KEY);
-    if (saved === 'dark' || saved === 'light') return saved;
-  } catch {
-    /* приватный режим */
-  }
-  return window.matchMedia?.('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-};
+/* тема общая для всего сайта (lib/projiPrefs): выбор на одной странице действует на всех */
+const initialTheme = (): Theme => resolveTheme(getTheme());
+/* «Тёмная / Светлая»: в бургере и в подвале */
+const ThemeSwitch: React.FC<{ lang: Lang; theme: Theme; onChoose: (t: Theme) => void }> = ({ lang, theme, onChoose }) => (
+  <div className="ai-theme" role="group" aria-label={THEME_LABEL[lang][0]}>
+    {(['dark', 'light'] as const).map((t, i) => (
+      <button key={t} type="button" aria-pressed={theme === t} onClick={() => onChoose(t)}>{THEME_LABEL[lang][i + 1]}</button>
+    ))}
+  </div>
+);
 const PRIVACY_LABEL: Record<Lang, string> = { ru: 'Политика конфиденциальности', kk: 'Құпиялылық саясаты', en: 'Privacy policy', ar: 'سياسة الخصوصية' };
 const KB_LABEL: Record<Lang, string> = { ru: 'База знаний', kk: 'Білім базасы', en: 'Knowledge base', ar: 'قاعدة المعرفة' };
 
@@ -60,24 +60,20 @@ export const AiShell: React.FC<{
   cta: (l: Lang) => string;
   links: (l: Lang) => [string, string][];
   children: (l: Lang) => React.ReactNode;
-  /** переключатель светлой и тёмной темы в подвале */
+  /** устарело: переключатель темы теперь есть на всех страницах (в бургере и в подвале) */
   themed?: boolean;
   /** описание для поиска и превью в мессенджерах */
   desc?: (l: Lang) => string;
   /** JSON-LD: вопросы-ответы, инструкция, словарь */
   ld?: (l: Lang) => object;
-}> = ({ slug, title, cta, links, children, themed, desc, ld }) => {
+}> = ({ slug, title, cta, links, children, desc, ld }) => {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const [lang, setLangState] = useState<Lang>(initialLang);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [theme, setTheme] = useState<Theme>(() => (themed ? initialTheme() : 'dark'));
+  const [theme, setTheme] = useState<Theme>(initialTheme);
   const chooseTheme = (next: Theme) => {
     setTheme(next);
-    try {
-      localStorage.setItem(THEME_KEY, next);
-    } catch {
-      /* приватный режим */
-    }
+    persistTheme(next);
     trackEvent(`${slug}_theme_switch`, { theme: next });
   };
   const b = BOARD[lang];
@@ -152,7 +148,7 @@ export const AiShell: React.FC<{
 
   const nav = links(lang);
   return (
-    <div className="bd-root ai-root" ref={rootRef} dir={lang === 'ar' ? 'rtl' : 'ltr'} lang={lang} data-theme={themed ? theme : undefined}>
+    <div className="bd-root ai-root" ref={rootRef} dir={lang === 'ar' ? 'rtl' : 'ltr'} lang={lang} data-theme={theme}>
       <SketchDefs />
       <header className="bd-nav glass">
         <a href="#top" className="bd-nav-home" aria-label="proji"><Logo /></a>
@@ -169,6 +165,7 @@ export const AiShell: React.FC<{
           <nav className="bd-sheet" aria-label={b.nav.menu}>
             {nav.map(([href, label]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}
             <a className="is-login" href={LOGIN_URL}>{b.nav.login}</a>
+            <ThemeSwitch lang={lang} theme={theme} onChoose={chooseTheme} />
           </nav>
         )}
       </header>
@@ -179,13 +176,7 @@ export const AiShell: React.FC<{
         <a href={KB_URL}>{KB_LABEL[lang]}</a>
         <a href={LOGIN_URL}>{b.foot.login}</a>
         <a href="/privacy">{PRIVACY_LABEL[lang]}</a>
-        {themed && (
-          <div className="ai-theme" role="group" aria-label={THEME_LABEL[lang][0]}>
-            {(['dark', 'light'] as const).map((t, i) => (
-              <button key={t} type="button" aria-pressed={theme === t} onClick={() => chooseTheme(t)}>{THEME_LABEL[lang][i + 1]}</button>
-            ))}
-          </div>
-        )}
+        <ThemeSwitch lang={lang} theme={theme} onChoose={chooseTheme} />
       </footer>
     </div>
   );
