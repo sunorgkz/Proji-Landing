@@ -1,0 +1,31 @@
+/*
+ * Перелив бренда (BRANDBOOK.md, раздел 1, «Перелив»): один и тот же везде.
+ * Логотип: базовый цвет белый на тёмном фоне и тёмно-синий #071530 на светлом; раз в 12 секунд по буквам
+ * медленно проходит узкая полоса голубой #8EC5FF → мятный #5EECC4.
+ * Кнопки: по главной кнопке с тем же ритмом проходит мягкий светлый блик.
+ * При «уменьшить движение» перелив выключен.
+ */
+.proji-logo { font-family: 'Ubuntu', system-ui, sans-serif; font-weight: 700; text-transform: lowercase; letter-spacing: -0.01em; line-height: 1; }
+.proji-logo, .bd-logo {
+  --logo-base: #ffffff;
+  background-image: linear-gradient(100deg, var(--logo-base) 0%, var(--logo-base) 42%, #8ec5ff 48%, #5eecc4 52%, var(--logo-base) 58%, var(--logo-base) 100%);
+  background-size: 300% 100%;
+  background-position: 100% 50%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.main-landing-root:not(.dark) .proji-logo,
+.ai-root[data-theme='light'] .bd-logo { --logo-base: #071530; }
+
+.ph-btn, .ph-login, .bd-btn:not(.is-glass) { position: relative; overflow: hidden; isolation: isolate; }
+.ph-btn::after, .ph-login::after, .bd-btn:not(.is-glass)::after {
+  content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(110deg, transparent 38%, rgb(255 255 255 / 0.32) 50%, transparent 62%);
+  background-size: 300% 100%; background-position: 100% 50%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .proji-logo, .bd-logo { animation: proji-shine 12s ease-in-out infinite; }
+  .ph-btn::after, .ph-login::after, .bd-btn:not(.is-glass)::after { animation: proji-shine 12s ease-in-out 1.5s infinite; }
+}
+/* полоса проходит за ~5 секунд, потом пауза */
+@keyframes proji-shine { 0% { background-position: 100% 50%; } 45%, 100% { background-position: 0% 50%; } }

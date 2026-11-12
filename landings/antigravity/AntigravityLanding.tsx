@@ -1,3 +1,4 @@
+import { ThemeIconButton } from "../../components/ThemeIconButton";
 import { useEffect, useLayoutEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
@@ -78,6 +79,7 @@ export default function AntigravityLanding() {
         <a href="https://proji.kz" className="ag-brand">
           proji
         </a>
+        <ThemeIconButton landing="antigravity" />
       </header>
 
       <motion.section className="ag-hero" {...hero}>

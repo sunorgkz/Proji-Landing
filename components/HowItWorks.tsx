@@ -33,10 +33,10 @@ export const HowItWorks: React.FC = () => {
               viewport={{ once: true }}
               className="relative group"
             >
-              <div className="glass-card p-8 rounded-3xl border border-slate-200 dark:border-white/5 hover:border-brand-500/30 transition-colors duration-500 bg-white/80 dark:bg-[#131c2e]/50 backdrop-blur-sm shadow-xl dark:shadow-none">
-                <div className="w-24 h-24 mx-auto bg-slate-50 dark:bg-[#0B1120] rounded-2xl border border-slate-200 dark:border-gray-700 flex items-center justify-center relative mb-8 shadow-inner group-hover:scale-110 transition-transform duration-300">
+              <div className="glass-card p-8 rounded-3xl border border-slate-200 dark:border-white/5 hover:border-brand-500/30 transition-colors duration-500 bg-white/80 dark:bg-[#131c2e]/50 dark:shadow-none">
+                <div className="w-24 h-24 mx-auto bg-slate-50 dark:bg-[#0B1120] rounded-2xl border border-slate-200 dark:border-gray-700 flex items-center justify-center relative mb-8 group-hover:scale-110 transition-transform duration-300">
                   <Database className="w-10 h-10 text-blue-500 dark:text-blue-400 group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors" />
-                  <div className="absolute -top-3 -right-3 bg-blue-600 text-xs font-bold px-3 py-1 rounded-full shadow-lg border border-blue-400 text-white">ВХОД</div>
+                  <div className="absolute -top-3 -right-3 bg-blue-600 text-[13px] font-bold px-3 py-1 rounded-full border border-blue-400 text-white">ВХОД</div>
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-center text-slate-900 dark:text-white">Сбор Данных</h3>
                 <p className="text-slate-600 dark:text-gray-400 text-center leading-relaxed">
@@ -53,10 +53,10 @@ export const HowItWorks: React.FC = () => {
               viewport={{ once: true }}
               className="relative group mt-0 md:-mt-8"
             >
-              <div className="glass-card p-8 rounded-3xl border border-brand-500/30 bg-gradient-to-b from-brand-50 to-white dark:from-brand-900/20 dark:to-[#131c2e]/50 backdrop-blur-sm shadow-xl shadow-brand-500/10 dark:shadow-[0_0_50px_rgba(14,165,233,0.1)]">
+              <div className="glass-card p-8 rounded-3xl border border-brand-500/30 bg-gradient-to-b from-brand-50 to-white dark:from-brand-900/20 dark:to-[#131c2e]/50 dark:shadow-[0_0_50px_rgba(14,165,233,0.1)]">
                 <div className="w-24 h-24 mx-auto bg-brand-600 rounded-2xl border-4 border-brand-400/20 flex items-center justify-center relative mb-8 shadow-[0_0_30px_rgba(14,165,233,0.4)] group-hover:rotate-12 transition-transform duration-300">
                   <Brain className="w-12 h-12 text-white" />
-                  <div className="absolute -bottom-4 bg-white dark:bg-[#0B1120] px-4 py-1.5 rounded-full text-xs font-bold border border-brand-200 dark:border-brand-700 text-brand-600 dark:text-brand-400">ProGPT</div>
+                  <div className="absolute -bottom-4 bg-white dark:bg-[#0B1120] px-4 py-1.5 rounded-full text-[13px] font-bold border border-brand-200 dark:border-brand-700 text-brand-600 dark:text-brand-400">Proji AI</div>
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-center text-slate-900 dark:text-white">Обработка ИИ</h3>
                 <p className="text-slate-600 dark:text-gray-300 text-center leading-relaxed">
@@ -73,10 +73,10 @@ export const HowItWorks: React.FC = () => {
               viewport={{ once: true }}
               className="relative group"
             >
-              <div className="glass-card p-8 rounded-3xl border border-slate-200 dark:border-white/5 hover:border-green-500/30 transition-colors duration-500 bg-white/80 dark:bg-[#131c2e]/50 backdrop-blur-sm shadow-xl dark:shadow-none">
-                <div className="w-24 h-24 mx-auto bg-slate-50 dark:bg-[#0B1120] rounded-2xl border border-slate-200 dark:border-gray-700 flex items-center justify-center relative mb-8 shadow-inner group-hover:translate-y-[-10px] transition-transform duration-300">
+              <div className="glass-card p-8 rounded-3xl border border-slate-200 dark:border-white/5 hover:border-green-500/30 transition-colors duration-500 bg-white/80 dark:bg-[#131c2e]/50 dark:shadow-none">
+                <div className="w-24 h-24 mx-auto bg-slate-50 dark:bg-[#0B1120] rounded-2xl border border-slate-200 dark:border-gray-700 flex items-center justify-center relative mb-8 group-hover:translate-y-[-10px] transition-transform duration-300">
                   <Rocket className="w-10 h-10 text-green-500 dark:text-green-400" />
-                  <div className="absolute -top-3 -left-3 bg-green-500 text-xs font-bold px-3 py-1 rounded-full shadow-lg text-white dark:text-black border border-green-400">ИТОГ</div>
+                  <div className="absolute -top-3 -left-3 bg-green-500 text-[13px] font-bold px-3 py-1 rounded-full text-white dark:text-black border border-green-400">ИТОГ</div>
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-center text-slate-900 dark:text-white">Результат</h3>
                 <p className="text-slate-600 dark:text-gray-400 text-center leading-relaxed">

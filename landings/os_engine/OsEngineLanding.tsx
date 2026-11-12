@@ -1,3 +1,4 @@
+import { ThemeIconButton } from "../../components/ThemeIconButton";
 import { useEffect, useLayoutEffect, type ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import {
@@ -244,6 +245,7 @@ export default function OsEngineLanding() {
           <a href="#final" className="oe-btn oe-btn--brand oe-btn--sm">
             Получить доступ
           </a>
+          <ThemeIconButton landing="os-engine" />
         </div>
       </header>
 

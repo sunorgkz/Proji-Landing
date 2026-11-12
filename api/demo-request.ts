@@ -7,7 +7,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { name, contact } = (req.body ?? {}) as { name?: string; contact?: string };
+  const { name, contact, subject } = (req.body ?? {}) as { name?: string; contact?: string; subject?: string };
   if (!name?.trim() || !contact?.trim()) {
     return res.status(400).json({ error: 'Missing fields' });
   }
@@ -19,7 +19,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       body: JSON.stringify({
         name: name.trim(),
         contact: contact.trim(),
-        _subject: 'Заявка на демо — proji studio Knowledge',
+        _subject: subject?.trim().slice(0, 120) || 'Заявка на демо — proji studio Knowledge',
         _template: 'table',
         _captcha: 'false',
       }),

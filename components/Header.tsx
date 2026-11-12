@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Menu, X, Sun, Moon, LayoutGrid } from 'lucide-react';
 import { Button } from './ui/Button';
+import './shine.css';
+
+const LOGIN_URL = 'https://proji.org/login';
 
 interface HeaderProps {
   toggleTheme: () => void;
@@ -52,18 +56,21 @@ export const Header: React.FC<HeaderProps> = ({ toggleTheme, isDark, onNavigate,
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => handleNav('home')}>
-            <span className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Proji</span>
+            <span className="proji-logo text-3xl">proji</span>
           </div>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             <button onClick={() => handleNav('features')} className={navLinkClass('features')}>Возможности</button>
+            <Link to="/tariffs" className={navLinkClass('tariffs')}>Тарифы</Link>
             <button onClick={handleCatalogNav} className={`${navLinkClass('catalog')} inline-flex items-center gap-1.5`}>
               <LayoutGrid className="w-4 h-4" />
               Продукты
             </button>
             <button onClick={() => handleNav('about')} className={navLinkClass('about')}>О нас</button>
             
+            <a href={LOGIN_URL} className="ph-login text-slate-700 dark:text-white">Войти</a>
+
             {/* Theme Toggle */}
             <button 
               onClick={toggleTheme}
@@ -75,13 +82,11 @@ export const Header: React.FC<HeaderProps> = ({ toggleTheme, isDark, onNavigate,
 
           {/* Mobile Menu Button */}
           <div className="flex items-center gap-4 md:hidden">
+            <a href={LOGIN_URL} className="ph-login text-slate-700 dark:text-white">Войти</a>
+            {/* на телефоне переключатель темы — внутри бургера */}
             <button 
-              onClick={toggleTheme}
-              className="p-2 rounded-full text-slate-600 dark:text-gray-300"
-            >
-              {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </button>
-            <button 
+              aria-label="Меню"
+              aria-expanded={isMobileMenuOpen}
               className="text-slate-900 dark:text-white"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
@@ -95,11 +100,17 @@ export const Header: React.FC<HeaderProps> = ({ toggleTheme, isDark, onNavigate,
       {isMobileMenuOpen && (
         <div className="absolute top-full left-0 w-full bg-white dark:bg-[#0f172a] border-b border-slate-200 dark:border-white/10 md:hidden p-4 flex flex-col gap-4 shadow-xl">
            <button onClick={() => handleNav('features')} className="text-left text-slate-600 dark:text-gray-300 hover:text-brand-600 dark:hover:text-white py-2">Возможности</button>
+           <Link to="/tariffs" onClick={() => setIsMobileMenuOpen(false)} className="text-left text-slate-600 dark:text-gray-300 hover:text-brand-600 dark:hover:text-white py-2">Тарифы</Link>
            <button onClick={handleCatalogNav} className="text-left text-slate-600 dark:text-gray-300 hover:text-brand-600 dark:hover:text-white py-2 inline-flex items-center gap-1.5">
              <LayoutGrid className="w-4 h-4" />
              Продукты
            </button>
            <button onClick={() => handleNav('about')} className="text-left text-slate-600 dark:text-gray-300 hover:text-brand-600 dark:hover:text-white py-2">О нас</button>
+           <a href={LOGIN_URL} className="text-left font-semibold text-slate-900 dark:text-white py-2">Войти</a>
+           <button onClick={toggleTheme} className="text-left text-slate-600 dark:text-gray-300 hover:text-brand-600 dark:hover:text-white py-2 inline-flex items-center gap-2">
+             {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+             {isDark ? 'Светлая тема' : 'Тёмная тема'}
+           </button>
         </div>
       )}
     </header>

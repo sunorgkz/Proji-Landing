@@ -154,3 +154,25 @@ document.addEventListener('DOMContentLoaded', () => {
         counterObserver.observe(card);
     });
 });
+
+/* ─── Переключатель темы (общие ключи сайта) ─── */
+(function () {
+    var KEYS = ['proji.theme', 'proji-theme', 'proji_theme', 'theme', 'main-landing-theme', 'chrome_extension_theme', 'secondbrain-theme'];
+    var root = document.documentElement;
+    function label() {
+        var dark = root.dataset.theme === 'dark';
+        document.querySelectorAll('[data-theme-toggle]').forEach(function (b) {
+            b.textContent = dark ? 'Светлая тема' : 'Тёмная тема';
+        });
+    }
+    document.querySelectorAll('[data-theme-toggle]').forEach(function (b) {
+        b.addEventListener('click', function () {
+            var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+            KEYS.forEach(function (k) { try { localStorage.setItem(k, next); } catch (e) {} });
+            root.dataset.theme = next;
+            root.classList.toggle('dark', next === 'dark');
+            label();
+        });
+    });
+    label();
+})();

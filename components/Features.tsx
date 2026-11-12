@@ -23,12 +23,6 @@ const features: Feature[] = [
     icon: <CheckSquare className="w-6 h-6" />,
   },
   {
-    id: 'progpt',
-    title: 'proGPT',
-    description: 'Наша собственная языковая модель, обученная на лучших бизнес-практиках.',
-    icon: <BrainCircuit className="w-6 h-6" />,
-  },
-  {
     id: 'crm',
     title: 'Умный учёт клиентов',
     description: 'Система, которая закрывает хаос в продажах, автоматически заполняя данные и ведя клиента.',
@@ -89,7 +83,7 @@ const SpotlightCard = ({ children, className = "" }: { children?: React.ReactNod
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`relative rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0f172a] overflow-hidden ${className} shadow-sm dark:shadow-none`}
+      className={`relative rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0f172a] overflow-hidden ${className} dark:shadow-none`}
     >
       <div
         className="pointer-events-none absolute -inset-px opacity-0 transition duration-300"
@@ -139,20 +133,20 @@ export const Features: React.FC = () => {
                   <div className="w-2 h-2 rounded-full bg-brand-400 shadow-[0_0_15px_rgba(56,189,248,0.8)]"></div>
                 </div>
                 
-                <div className="w-14 h-14 rounded-2xl bg-brand-50 dark:bg-brand-900/30 border border-brand-100 dark:border-brand-500/20 flex items-center justify-center mb-6 text-brand-600 dark:text-brand-400 group-hover:scale-110 group-hover:bg-brand-600 dark:group-hover:bg-brand-500 group-hover:text-white transition-all duration-300 shadow-lg shadow-brand-500/10 dark:shadow-brand-900/50">
+                <div className="w-14 h-14 rounded-2xl bg-brand-50 dark:bg-brand-900/30 border border-brand-100 dark:border-brand-500/20 flex items-center justify-center mb-6 text-brand-600 dark:text-brand-400 group-hover:scale-110 group-hover:bg-brand-600 dark:group-hover:bg-brand-500 group-hover:text-white transition-all duration-300">
                   {feature.icon}
                 </div>
 
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2 group-hover:text-brand-700 dark:group-hover:text-brand-200 transition-colors">
                   {feature.title}
                   {feature.highlight && (
-                    <span className="text-[10px] bg-gradient-to-r from-yellow-500/10 to-orange-500/10 dark:from-yellow-500/20 dark:to-orange-500/20 text-yellow-600 dark:text-yellow-300 px-2 py-0.5 rounded-full border border-yellow-500/30 shadow-[0_0_10px_rgba(234,179,8,0.2)]">
+                    <span className="text-[13px] bg-yellow-500/10 text-yellow-600 dark:text-yellow-300 px-2 py-0.5 rounded-full border border-yellow-500/30">
                       {feature.highlight}
                     </span>
                   )}
                 </h3>
                 
-                <p className="text-sm text-slate-600 dark:text-gray-400 leading-relaxed group-hover:text-slate-800 dark:group-hover:text-gray-300 transition-colors">
+                <p className="text-base text-slate-600 dark:text-gray-300 leading-relaxed group-hover:text-slate-800 dark:group-hover:text-gray-300 transition-colors">
                   {feature.description}
                 </p>
               </SpotlightCard>

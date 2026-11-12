@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Button } from './ui/Button';
 import { Play, Pause, Smartphone, Send, Mic, CheckCircle2, Zap, Calendar, MessageCircle, BarChart, AlertCircle, FileText, Upload } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import welcomeSerik from '../assets/welcome-serik.m4a';
 import { trackEvent } from '../analytics';
 import { submitDemoRequest } from '../lib/submitDemoRequest';
@@ -16,6 +16,7 @@ const transcriptData = [
 ];
 
 export const Hero: React.FC = () => {
+  const reduceMotion = useReducedMotion();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -128,13 +129,6 @@ export const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-slate-50/80 via-slate-50/90 to-slate-50 dark:from-[#0f172a]/80 dark:via-[#0f172a]/90 dark:to-[#0f172a]"></div>
       </div>
 
-      {/* Animated Gradient Orbs */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
-        <div className="absolute top-[10%] left-[20%] w-[500px] h-[500px] bg-brand-300/30 dark:bg-brand-600/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[100px] animate-blob"></div>
-        <div className="absolute top-[20%] right-[10%] w-[400px] h-[400px] bg-purple-300/30 dark:bg-purple-600/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[100px] animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-8 left-1/3 w-[600px] h-[600px] bg-blue-200/30 dark:bg-blue-900/20 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[120px] animate-blob animation-delay-4000"></div>
-      </div>
-
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Changed from lg:grid-cols-2 to xl:grid-cols-2 to prevent overlap on smaller desktops */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-12 xl:gap-20 items-center">
@@ -147,17 +141,13 @@ export const Hero: React.FC = () => {
             className="space-y-8 max-w-2xl mx-auto xl:mx-0 text-center xl:text-left"
           >
             <h1 className="text-5xl lg:text-7xl font-bold tracking-tight leading-[1.1] text-slate-900 dark:text-white">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-brand-500 to-purple-600 dark:from-white dark:via-blue-100 dark:to-gray-400">
-                8 из 10 задач
-              </span> <br/>
+              8 из 10 задач <br/>
               решаются <br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-purple-600 dark:from-brand-400 dark:to-purple-400">
-                автоматически
-              </span>
+              <span className="text-brand-600 dark:text-brand-400">автоматически</span>
             </h1>
 
             <p className="text-xl text-slate-600 dark:text-gray-300 max-w-lg leading-relaxed border-l-0 xl:border-l-2 border-brand-500/50 xl:pl-6 mx-auto xl:mx-0">
-              Искусственный интеллект берет на себя <span className="font-semibold text-brand-700 dark:text-white dark:shadow-brand-500/50">80% рутины</span>.
+              Искусственный интеллект берет на себя <span className="font-semibold text-brand-700 dark:text-white">80% рутины</span>.
               Освободите время для стратегии и кратного роста.
             </p>
 
@@ -196,7 +186,7 @@ export const Hero: React.FC = () => {
                       setPhoneSending(false);
                     }
                   }}
-                  className="flex max-w-xs group shadow-lg rounded-xl w-full"
+                  className="flex max-w-xs group rounded-xl w-full"
                   data-cta-dest="formsubmit:sund.serik@gmail.com"
                 >
                    <input
@@ -207,7 +197,7 @@ export const Hero: React.FC = () => {
                     required
                     disabled={phoneSending}
                    />
-                   <button type="submit" disabled={phoneSending} className="bg-gradient-to-r from-brand-600 to-brand-500 hover:to-brand-400 px-5 rounded-r-xl transition-all shadow-lg shadow-brand-500/20 group-hover:shadow-brand-500/40 disabled:opacity-60">
+                   <button type="submit" disabled={phoneSending} className="bg-brand-600 hover:bg-brand-500 px-5 rounded-r-xl transition-all disabled:opacity-60">
                      <Send className="w-4 h-4 text-white" />
                    </button>
                  </form>
@@ -235,7 +225,7 @@ export const Hero: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="mt-8 w-full max-w-md mx-auto xl:hidden"
             >
-              <div className="glass-card p-2 rounded-[2rem] shadow-2xl bg-white/70 dark:bg-white/5 border border-slate-200/60 dark:border-white/10 backdrop-blur-md">
+              <div className="glass-card p-2 rounded-[2rem] bg-white/70 dark:bg-white/5 border border-slate-200/60 dark:border-white/10">
                 <div className="bg-white/70 dark:bg-[#1e293b]/70 p-5 rounded-[1.5rem] w-full">
                   {/* Top Section with Player */}
                   <div className="flex items-center gap-4">
@@ -261,7 +251,7 @@ export const Hero: React.FC = () => {
                       <button 
                         onClick={togglePlay}
                         disabled={isLoading && !audioError}
-                        className="absolute inset-1.5 rounded-full bg-brand-600 dark:bg-white text-white dark:text-brand-900 flex items-center justify-center hover:scale-105 transition-transform shadow-lg disabled:opacity-70 disabled:scale-100"
+                        className="absolute inset-1.5 rounded-full bg-brand-600 dark:bg-white text-white dark:text-brand-900 flex items-center justify-center hover:scale-105 transition-transform disabled:opacity-70 disabled:scale-100"
                       >
                         {isLoading ? (
                           <div className="w-5 h-5 border-2 border-white/30 border-t-white dark:border-brand-900/30 dark:border-t-brand-900 rounded-full animate-spin"></div>
@@ -277,7 +267,7 @@ export const Hero: React.FC = () => {
                       <div className="flex justify-between items-start">
                         <div className="truncate">
                           <p className="text-base font-bold text-slate-900 dark:text-white leading-tight truncate">Приветствие</p>
-                          <p className="text-[10px] text-slate-500 dark:text-brand-300 truncate">Серик, Основатель Proji</p>
+                          <p className="text-[13px] text-slate-500 dark:text-brand-300 truncate">Серик, Основатель Proji</p>
                         </div>
                         <div className="flex items-center gap-1.5 shrink-0">
                           <button 
@@ -333,7 +323,7 @@ export const Hero: React.FC = () => {
                                 initial={{ opacity: 0, x: -10 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: i * 0.05 }}
-                                className={`text-xs leading-relaxed transition-colors duration-300 p-2 rounded-lg ${isActive ? 'bg-brand-50 dark:bg-brand-900/20 text-slate-900 dark:text-white font-medium' : 'text-slate-500 dark:text-gray-400'}`}
+                                className={`text-[13px] leading-relaxed transition-colors duration-300 p-2 rounded-lg ${isActive ? 'bg-brand-50 dark:bg-brand-900/20 text-slate-900 dark:text-white font-medium' : 'text-slate-500 dark:text-gray-400'}`}
                               >
                                 {line.text}
                               </motion.div>
@@ -353,13 +343,13 @@ export const Hero: React.FC = () => {
                         className="overflow-hidden mt-3"
                       >
                         <div className="bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 rounded-lg p-3">
-                          <p className="text-[10px] text-red-500 font-medium mb-2">
+                          <p className="text-[13px] text-red-500 font-medium mb-2">
                             Ошибка воспроизведения. Загрузите файл вручную:
                           </p>
                           <label className="flex items-center justify-center gap-2 w-full py-2 bg-white dark:bg-white/10 border border-slate-200 dark:border-white/20 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-white/20 transition-colors">
                             <input type="file" className="hidden" accept="audio/*" onChange={handleFileUpload} />
                             <Upload className="w-3 h-3 text-slate-700 dark:text-white" />
-                            <span className="text-xs font-medium text-slate-700 dark:text-white">Выбрать файл</span>
+                            <span className="text-[13px] font-medium text-slate-700 dark:text-white">Выбрать файл</span>
                           </label>
                         </div>
                       </motion.div>
@@ -383,15 +373,15 @@ export const Hero: React.FC = () => {
             <motion.div 
               animate={{ y: [-15, 10, -15], x: [0, 5, 0] }} 
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-10 lg:top-24 left-0 xl:-left-12 z-30 bg-white/90 dark:bg-[#1e293b]/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 p-4 rounded-2xl shadow-2xl max-w-[160px] lg:max-w-[200px]"
+              className="absolute top-10 lg:top-24 left-0 xl:-left-12 z-30 bg-white/90 dark:bg-[#1e293b]/90 border border-slate-200 dark:border-white/10 p-4 rounded-2xl max-w-[160px] lg:max-w-[200px]"
             >
               <div className="flex items-center gap-3 mb-2">
                 <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
                   <Zap className="w-4 h-4 text-green-600 dark:text-green-400" />
                 </div>
-                <div className="text-xs font-semibold text-slate-900 dark:text-white">Задача решена</div>
+                <div className="text-[13px] font-semibold text-slate-900 dark:text-white">Задача решена</div>
               </div>
-              <p className="text-[10px] text-slate-500 dark:text-gray-400">Отчет сгенерирован автоматически за 0.4 сек</p>
+              <p className="text-[13px] text-slate-500 dark:text-gray-400">Отчет сгенерирован автоматически за 0.4 сек</p>
             </motion.div>
 
             {/* Audio Message Floating Card (desktop only) */}
@@ -402,9 +392,9 @@ export const Hero: React.FC = () => {
               className="hidden xl:block absolute top-[12%] lg:top-[18%] left-1/2 -translate-x-1/2 xl:left-auto xl:translate-x-0 xl:right-[340px] z-40 w-full max-w-[340px] sm:max-w-[400px]"
             >
                {/* Decorative arrow/triangle pointing to phone - Visible only on desktop side-by-side */}
-               <div className="absolute top-1/2 -right-5 transform -translate-y-1/2 w-0 h-0 border-t-[16px] border-t-transparent border-l-[20px] border-l-white/60 dark:border-l-white/5 border-b-[16px] border-b-transparent hidden xl:block backdrop-blur-md"></div>
+               <div className="absolute top-1/2 -right-5 transform -translate-y-1/2 w-0 h-0 border-t-[16px] border-t-transparent border-l-[20px] border-l-white/60 dark:border-l-white/5 border-b-[16px] border-b-transparent hidden xl:block"></div>
 
-               <div className="glass-card p-2 rounded-[2rem] shadow-2xl bg-white/60 dark:bg-white/5 border border-slate-200/50 dark:border-white/10 backdrop-blur-md transition-all duration-300">
+               <div className="glass-card p-2 rounded-[2rem] bg-white/60 dark:bg-white/5 border border-slate-200/50 dark:border-white/10 transition-all duration-300">
                 <div className="bg-white/50 dark:bg-[#1e293b]/50 p-5 rounded-[1.5rem] w-full">
                   
                   {/* Top Section with Player */}
@@ -431,7 +421,7 @@ export const Hero: React.FC = () => {
                       <button 
                         onClick={togglePlay}
                         disabled={isLoading && !audioError}
-                        className="absolute inset-1.5 rounded-full bg-brand-600 dark:bg-white text-white dark:text-brand-900 flex items-center justify-center hover:scale-105 transition-transform shadow-lg disabled:opacity-70 disabled:scale-100"
+                        className="absolute inset-1.5 rounded-full bg-brand-600 dark:bg-white text-white dark:text-brand-900 flex items-center justify-center hover:scale-105 transition-transform disabled:opacity-70 disabled:scale-100"
                       >
                         {isLoading ? (
                           <div className="w-5 h-5 border-2 border-white/30 border-t-white dark:border-brand-900/30 dark:border-t-brand-900 rounded-full animate-spin"></div>
@@ -447,7 +437,7 @@ export const Hero: React.FC = () => {
                       <div className="flex justify-between items-start">
                          <div className="truncate">
                            <p className="text-base lg:text-lg font-bold text-slate-900 dark:text-white leading-tight truncate">Приветствие</p>
-                           <p className="text-[10px] lg:text-xs text-slate-500 dark:text-brand-300 truncate">Серик, Основатель Proji</p>
+                           <p className="text-[13px] lg:text-xs text-slate-500 dark:text-brand-300 truncate">Серик, Основатель Proji</p>
                          </div>
                          <div className="flex items-center gap-1.5 shrink-0">
                            <button 
@@ -503,7 +493,7 @@ export const Hero: React.FC = () => {
                                   initial={{ opacity: 0, x: -10 }}
                                   animate={{ opacity: 1, x: 0 }}
                                   transition={{ delay: i * 0.05 }}
-                                  className={`text-xs leading-relaxed transition-colors duration-300 p-2 rounded-lg ${isActive ? 'bg-brand-50 dark:bg-brand-900/20 text-slate-900 dark:text-white font-medium' : 'text-slate-500 dark:text-gray-400'}`}
+                                  className={`text-[13px] leading-relaxed transition-colors duration-300 p-2 rounded-lg ${isActive ? 'bg-brand-50 dark:bg-brand-900/20 text-slate-900 dark:text-white font-medium' : 'text-slate-500 dark:text-gray-400'}`}
                                 >
                                  {line.text}
                                </motion.div>
@@ -523,13 +513,13 @@ export const Hero: React.FC = () => {
                         className="overflow-hidden mt-3"
                       >
                         <div className="bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30 rounded-lg p-3">
-                          <p className="text-[10px] text-red-500 font-medium mb-2">
+                          <p className="text-[13px] text-red-500 font-medium mb-2">
                             Ошибка воспроизведения. Загрузите файл вручную:
                           </p>
                           <label className="flex items-center justify-center gap-2 w-full py-2 bg-white dark:bg-white/10 border border-slate-200 dark:border-white/20 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-white/20 transition-colors">
                              <input type="file" className="hidden" accept="audio/*" onChange={handleFileUpload} />
                              <Upload className="w-3 h-3 text-slate-700 dark:text-white" />
-                             <span className="text-xs font-medium text-slate-700 dark:text-white">Выбрать файл</span>
+                             <span className="text-[13px] font-medium text-slate-700 dark:text-white">Выбрать файл</span>
                           </label>
                         </div>
                       </motion.div>
@@ -543,15 +533,15 @@ export const Hero: React.FC = () => {
             <motion.div 
               animate={{ y: [10, -10, 10], x: [0, -5, 0] }} 
               transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute top-1/2 right-0 lg:right-10 xl:-right-12 z-30 bg-white/90 dark:bg-[#1e293b]/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 p-4 rounded-2xl shadow-2xl max-w-[200px] lg:max-w-[220px]"
+              className="absolute top-1/2 right-0 lg:right-10 xl:-right-24 z-30 bg-white/90 dark:bg-[#1e293b]/90 border border-slate-200 dark:border-white/10 p-4 rounded-2xl max-w-[200px] lg:max-w-[220px]"
             >
               <div className="flex items-center gap-3 mb-2">
                  <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center">
                     <BarChart className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                  </div>
                  <div>
-                    <div className="text-xs font-semibold text-slate-900 dark:text-white">+14 Лидов</div>
-                    <div className="text-[10px] text-green-500 font-medium">+24% за сегодня</div>
+                    <div className="text-[13px] font-semibold text-slate-900 dark:text-white">+14 Лидов</div>
+                    <div className="text-[13px] text-green-500 font-medium">+24% за сегодня</div>
                  </div>
               </div>
               <div className="w-full bg-slate-200 dark:bg-gray-700 h-1.5 rounded-full overflow-hidden mt-1">
@@ -563,14 +553,14 @@ export const Hero: React.FC = () => {
             <motion.div 
               animate={{ y: [-20, 0, -20] }} 
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-              className="absolute bottom-32 left-0 lg:left-4 xl:-left-16 z-40 bg-white/90 dark:bg-[#1e293b]/90 backdrop-blur-xl border border-slate-200 dark:border-white/10 p-3 rounded-2xl shadow-2xl flex items-center gap-3"
+              className="absolute bottom-32 left-0 lg:left-4 xl:-left-16 z-40 bg-white/90 dark:bg-[#1e293b]/90 border border-slate-200 dark:border-white/10 p-3 rounded-2xl flex items-center gap-3"
             >
                <div className="w-10 h-10 rounded-full bg-brand-100 dark:bg-brand-900/50 flex items-center justify-center">
                   <Calendar className="w-5 h-5 text-brand-600 dark:text-brand-400" />
                </div>
                <div>
-                  <div className="text-xs font-bold text-slate-900 dark:text-white">Встреча назначена</div>
-                  <div className="text-[10px] text-slate-500 dark:text-gray-400">Завтра, 14:00 • Zoom</div>
+                  <div className="text-[13px] font-bold text-slate-900 dark:text-white">Встреча назначена</div>
+                  <div className="text-[13px] text-slate-500 dark:text-gray-400">Завтра, 14:00 • Zoom</div>
                </div>
             </motion.div>
 
@@ -578,7 +568,7 @@ export const Hero: React.FC = () => {
             <motion.div 
                animate={{ y: [0, -15, 0] }}
                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-               className="absolute top-10 right-0 lg:-right-4 z-20 bg-white/80 dark:bg-[#1e293b]/80 backdrop-blur-md border border-slate-200 dark:border-white/10 py-2 px-4 rounded-full shadow-xl flex items-center gap-2"
+               className="absolute top-10 right-0 lg:-right-4 z-20 bg-white/80 dark:bg-[#1e293b]/80 border border-slate-200 dark:border-white/10 py-2 px-4 rounded-full flex items-center gap-2"
             >
                <div className="flex -space-x-2">
                   {[1,2,3].map(i => (
@@ -587,7 +577,7 @@ export const Hero: React.FC = () => {
                      </div>
                   ))}
                </div>
-               <span className="text-xs font-semibold text-slate-700 dark:text-gray-300">4 Агента онлайн</span>
+               <span className="text-[13px] font-semibold text-slate-700 dark:text-gray-300">4 Агента онлайн</span>
                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
             </motion.div>
 
@@ -595,13 +585,13 @@ export const Hero: React.FC = () => {
             <motion.div 
                animate={{ scale: [1, 1.05, 1], rotate: [0, 2, 0] }}
                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-               className="absolute bottom-60 right-0 lg:-right-8 z-30 bg-brand-600 text-white p-3 rounded-t-2xl rounded-bl-2xl shadow-2xl max-w-[180px]"
+               className="absolute bottom-60 right-0 xl:-right-16 lg:-right-8 z-30 bg-brand-600 text-white p-3 rounded-t-2xl rounded-bl-2xl max-w-[180px]"
             >
                <div className="flex items-center gap-2 mb-1">
                   <MessageCircle className="w-3 h-3" />
-                  <span className="text-[10px] font-medium opacity-90">Клиент</span>
+                  <span className="text-[13px] font-medium opacity-90">Клиент</span>
                </div>
-               <p className="text-xs font-medium leading-tight">"Счет оплатил, жду доступы!"</p>
+               <p className="text-[13px] font-medium leading-tight">"Счет оплатил, жду доступы!"</p>
             </motion.div>
 
 
@@ -630,23 +620,23 @@ export const Hero: React.FC = () => {
                  {/* Dashboard Mockup */}
                  <div className="px-5 space-y-5 overflow-y-auto scrollbar-hide pb-20">
                     {/* Main Stats Card */}
-                    <div className="bg-gradient-to-br from-brand-600 via-brand-700 to-brand-900 p-5 rounded-[2rem] text-white shadow-xl relative overflow-hidden group">
+                    <div className="bg-gradient-to-br from-brand-600 via-brand-700 to-brand-900 p-5 rounded-[2rem] text-white relative overflow-hidden group">
                        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
                        <div className="absolute -right-10 -top-10 w-32 h-32 bg-white/20 blur-3xl rounded-full"></div>
                        
                        <div className="relative z-10">
                           <div className="flex justify-between items-start mb-6">
                             <div>
-                               <div className="text-xs text-brand-100 mb-1 font-medium">Эффективность ИИ</div>
+                               <div className="text-[13px] text-brand-100 mb-1 font-medium">Эффективность ИИ</div>
                                <div className="text-4xl font-bold tracking-tight">89%</div>
                             </div>
-                            <div className="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
+                            <div className="bg-white/20 p-2 rounded-xl">
                                <Zap className="w-5 h-5 text-yellow-300 fill-yellow-300" />
                             </div>
                           </div>
                           
                           <div className="space-y-2">
-                             <div className="flex justify-between text-xs text-brand-100">
+                             <div className="flex justify-between text-[13px] text-brand-100">
                                 <span>Загрузка</span>
                                 <span>Оптимально</span>
                              </div>
@@ -666,7 +656,7 @@ export const Hero: React.FC = () => {
                     <div className="space-y-3">
                        <div className="flex justify-between items-end px-1">
                           <div className="text-sm text-gray-400 font-medium">Активные задачи</div>
-                          <div className="text-xs text-brand-500 font-semibold">Все (12)</div>
+                          <div className="text-[13px] text-brand-500 font-semibold">Все (12)</div>
                        </div>
                        
                        {[
@@ -677,10 +667,10 @@ export const Hero: React.FC = () => {
                        ].map((task, i) => (
                          <motion.div 
                             key={i}
-                            initial={{ x: 20, opacity: 0 }}
+                            initial={reduceMotion ? false : { x: 20, opacity: 0 }}
                             animate={{ x: 0, opacity: 1 }}
                             transition={{ delay: 1 + i * 0.2 }}
-                            className="bg-[#1e293b]/50 backdrop-blur-md p-4 rounded-2xl border border-white/5 flex items-center gap-4 hover:bg-[#1e293b] transition-colors"
+                            className="bg-[#1e293b]/50 p-4 rounded-2xl border border-white/5 flex items-center gap-4 hover:bg-[#1e293b] transition-colors"
                          >
                            <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${
                              task.status === 'done' ? 'bg-green-500/20 text-green-400' :
@@ -692,7 +682,7 @@ export const Hero: React.FC = () => {
                            </div>
                            <div className="flex-1 min-w-0">
                              <div className="text-sm font-medium text-white truncate">{task.title}</div>
-                             <div className="text-xs text-gray-500 mt-0.5">AI Agent • {task.time}</div>
+                             <div className="text-[13px] text-gray-500 mt-0.5">AI Agent • {task.time}</div>
                            </div>
                          </motion.div>
                        ))}

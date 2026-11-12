@@ -18,6 +18,16 @@ declare module '*.webp' {
   export default src;
 }
 
+declare module '*.svg' {
+  const src: string;
+  export default src;
+}
+
+declare module '*.webm' {
+  const src: string;
+  export default src;
+}
+
 declare module '*.m4a' {
   const src: string;
   export default src;

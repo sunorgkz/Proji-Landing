@@ -1,0 +1,153 @@
+/*
+ * Светлая тема для всех страниц на .bd-root: /board, /hire, /why, /agents и лендинги на AiShell (ai/Shell.tsx).
+ * Включается атрибутом data-theme="light" у .bd-root (хук useSiteTheme в board/theme.tsx).
+ * Белый фон, тёмно-синие линии и текст, мятный и жёлтый остаются.
+ */
+/* переключатель темы: в подвале и в бургере */
+.ai-theme { display: inline-flex; gap: 4px; margin-inline-start: auto; padding: 4px; border: 1px solid var(--glass-line); border-radius: 999px; }
+.ai-theme button { min-height: 36px; padding: 0 14px; border: 0; border-radius: 999px; background: none; color: var(--muted); font: 600 13px/1 var(--font); cursor: pointer; }
+.ai-theme button[aria-pressed='true'] { background: var(--grad-mint); color: var(--on-mint); }
+
+/* светлая тема: белый фон, тёмно-синие линии и текст, мята и жёлтый остаются */
+.bd-root[data-theme='light'] {
+  --ink: #0b1f45;
+  --muted: #4a5b7d;
+  --mint: #19b98c;
+  --glass-bg: linear-gradient(140deg, rgb(255 255 255 / 0.9), rgb(255 255 255 / 0.65));
+  --glass-line: rgb(11 31 69 / 0.12);
+  --glass-shine: inset 0 1px 0 #fff;
+  --glass-drop: 0 20px 50px -24px rgb(11 31 69 / 0.3);
+  background:
+    radial-gradient(1100px 650px at 85% -10%, rgb(42 91 215 / 0.14), transparent 60%),
+    radial-gradient(900px 600px at -10% 30%, rgb(94 236 196 / 0.18), transparent 60%),
+    linear-gradient(180deg, #f6f9ff, #eef3fc);
+}
+.bd-root[data-theme='light'] .ai-lead { color: #2c3d60; }
+.bd-root[data-theme='light'] .ai-aurora { opacity: 0.35; }
+.bd-root[data-theme='light'] .bd-grad { background-image: linear-gradient(135deg, var(--blue), #13a57c); }
+.bd-root[data-theme='light'] .glass::before { background: none; }
+.bd-root[data-theme='light'] .bd-lang-btn { background: rgb(255 255 255 / 0.7); }
+.bd-root[data-theme='light'] .bd-lang-list,
+.bd-root[data-theme='light'] .bd-sheet { background: #fff; }
+.bd-root[data-theme='light'] .bd-burger,
+.bd-root[data-theme='light'] .bd-nav-links a:hover,
+.bd-root[data-theme='light'] .bd-nav-login:hover,
+.bd-root[data-theme='light'] .bd-lang-list button:hover,
+.bd-root[data-theme='light'] .bd-sheet a:hover { background: rgb(11 31 69 / 0.06); }
+.bd-root[data-theme='light'] .bd-lang-list button.is-on,
+.bd-root[data-theme='light'] .bd-sheet .is-login { color: var(--on-mint); }
+.bd-root[data-theme='light'] .bd-btn { box-shadow: 0 10px 26px -12px rgb(19 165 124 / 0.6), inset 0 1px 0 rgb(255 255 255 / 0.5); }
+
+
+.bd-sheet .ai-theme { margin: 8px 0 0; align-self: stretch; }
+.bd-sheet .ai-theme button { flex: 1; }
+@media (max-width: 960px) { .ai-foot .ai-theme { margin-inline-start: 0; } }
+
+/* светлая тема: тексты и подложки, у которых цвет задан под тёмный фон */
+.bd-root[data-theme='light'] .ai-lead,
+.bd-root[data-theme='light'] .ai-minute-x,
+.bd-root[data-theme='light'] .ai-safe p,
+.bd-root[data-theme='light'] .ai-done p,
+.bd-root[data-theme='light'] .ai-trust p,
+.bd-root[data-theme='light'] .mg-story p,
+.bd-root[data-theme='light'] .kt-article p,
+.bd-root[data-theme='light'] .kt-privacy ul,
+.bd-root[data-theme='light'] .sn-text { color: #2c3d60; }
+.bd-root[data-theme='light'] .kt-vs-old,
+.bd-root[data-theme='light'] .kt-steps li,
+.bd-root[data-theme='light'] .kt-lead input,
+.bd-root[data-theme='light'] .ai-ctx,
+.bd-root[data-theme='light'] .ai-vs-a,
+.bd-root[data-theme='light'] .ai-view p,
+.bd-root[data-theme='light'] .ai-floats li,
+.bd-root[data-theme='light'] .mg-node,
+.bd-root[data-theme='light'] .mg-groups > div,
+.bd-root[data-theme='light'] .sn-trust li,
+.bd-root[data-theme='light'] .sn-press a { background: rgb(255 255 255 / 0.75); }
+.bd-root[data-theme='light'] .kt-meter { background: rgb(11 31 69 / 0.08); }
+/* белые логотипы партнёров на светлом фоне — тёмно-синие */
+.bd-root[data-theme='light'] .sn-trust img,
+.bd-root[data-theme='light'] .kt-list img.sn-logo { filter: brightness(0) saturate(100%) invert(10%) sepia(40%) saturate(2000%) hue-rotate(205deg); opacity: 0.9; }
+
+/* автоматически: тексты и подложки, у которых цвет задан под тёмный фон (собрано по CSS лендингов этого семейства) */
+.bd-root[data-theme='light'] .bd-panel > p,
+.bd-root[data-theme='light'] .bd-row-detail,
+.bd-root[data-theme='light'] .bd-faq details p,
+.bd-root[data-theme='light'] .bd-cta-main p,
+.bd-root[data-theme='light'] .bd-flow p,
+.bd-root[data-theme='light'] .ai-lead,
+.bd-root[data-theme='light'] .ai-safe p,
+.bd-root[data-theme='light'] .ai-minute-x,
+.bd-root[data-theme='light'] .ai-done p,
+.bd-root[data-theme='light'] .ai-trust p,
+.bd-root[data-theme='light'] .kt-article p,
+.bd-root[data-theme='light'] .kt-privacy ul,
+.bd-root[data-theme='light'] .mg-story p,
+.bd-root[data-theme='light'].hr-root .hr-lead,
+.bd-root[data-theme='light'] .hr-skills p,
+.bd-root[data-theme='light'].wy-root .wy-lead,
+.bd-root[data-theme='light'] .wy-gain p,
+.bd-root[data-theme='light'] .wy-team p,
+.bd-root[data-theme='light'] .ag-points span,
+.bd-root[data-theme='light'].ag-root .ag-run-fail,
+.bd-root[data-theme='light'] .sn-text { color: #2c3d60; }
+.bd-root[data-theme='light'] .bd-frag.is-chat p,
+.bd-root[data-theme='light'] .bd-rows li:not(.is-open):hover,
+.bd-root[data-theme='light'] .bd-tile,
+.bd-root[data-theme='light'] .bd-table tbody tr:nth-child(odd) th,
+.bd-root[data-theme='light'] .bd-table tbody tr:nth-child(odd) td:not(.is-rec),
+.bd-root[data-theme='light'] .bd-plus,
+.bd-root[data-theme='light'] .bd-faq details:not([open]):hover,
+.bd-root[data-theme='light'] .bd-nav-login:hover,
+.bd-root[data-theme='light'] .ai-a,
+.bd-root[data-theme='light'] .ai-ctx,
+.bd-root[data-theme='light'] .ai-vs-a,
+.bd-root[data-theme='light'] .ai-view p,
+.bd-root[data-theme='light'] .ai-floats li,
+.bd-root[data-theme='light'] .kt-vs-old,
+.bd-root[data-theme='light'] .kt-box,
+.bd-root[data-theme='light'] .kt-meter,
+.bd-root[data-theme='light'] .kt-steps li,
+.bd-root[data-theme='light'] .kt-lead input,
+.bd-root[data-theme='light'] .mg-signal-list button,
+.bd-root[data-theme='light'] .mg-signal-list button:hover,
+.bd-root[data-theme='light'] .mg-node,
+.bd-root[data-theme='light'] .mg-groups > div,
+.bd-root[data-theme='light'] .sn-trust li,
+.bd-root[data-theme='light'] .sn-press a { background-color: rgb(255 255 255 / 0.7); }
+.bd-root[data-theme='light'] .bd-strip,
+.bd-root[data-theme='light'] .bd-zoom-st,
+.bd-root[data-theme='light'] .bd-zoom.is-toggle,
+.bd-root[data-theme='light'] .bd-zoom.is-discs span,
+.bd-root[data-theme='light'] .bd-live-input,
+.bd-root[data-theme='light'] .bd-lang-btn,
+.bd-root[data-theme='light'] .bd-lang-list,
+.bd-root[data-theme='light'] .bd-sheet,
+.bd-root[data-theme='light'] .ai-chip,
+.bd-root[data-theme='light'] .ai-try-in textarea,
+.bd-root[data-theme='light'] .ai-tag,
+.bd-root[data-theme='light'] .ai-vs-a li,
+.bd-root[data-theme='light'] .ai-views .wy-switch,
+.bd-root[data-theme='light'] .ai-v-kanban > div,
+.bd-root[data-theme='light'] .ai-v-matrix > div,
+.bd-root[data-theme='light'] .ai-v-gantt div,
+.bd-root[data-theme='light'] .ai-clock,
+.bd-root[data-theme='light'] .hr-chips button,
+.bd-root[data-theme='light'] .wy-switch,
+.bd-root[data-theme='light'] .wy-team,
+.bd-root[data-theme='light'] .ag-chip,
+.bd-root[data-theme='light'] .ag-feed li,
+.bd-root[data-theme='light'] .ag-log li,
+.bd-root[data-theme='light'].ag-root .ag-say,
+.bd-root[data-theme='light'] .ag-journal li { background-color: #fff; }
+/* фото с затемнением остаются тёмными, текст на них — светлым */
+.bd-root[data-theme='light'] { --mint-soft: #13a57c; }
+/* нижний край первого экрана растворяется в светлом фоне, а не в тёмно-синем */
+.bd-root[data-theme='light'] .bd-hero::after { background: linear-gradient(transparent, #eef3fc); }
+/* открытые карточки на синем градиенте: текст остаётся светлым */
+.bd-root[data-theme='light'] .bd-faq details[open],
+.bd-root[data-theme='light'] .bd-rows li.is-open { --ink: #f2f7ff; --muted: #c9d6ee; color: #f2f7ff; }
+/* белые логотипы клиентов — тёмно-синие */
+.bd-root[data-theme='light'] .hr-logo img,
+.bd-root[data-theme='light'] .wy-logo img,
+.bd-root[data-theme='light'] .bd-case-logo img { filter: brightness(0) saturate(100%) invert(10%) sepia(40%) saturate(2000%) hue-rotate(205deg); }

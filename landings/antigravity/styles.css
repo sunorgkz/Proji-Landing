@@ -55,12 +55,16 @@
   -webkit-backdrop-filter: blur(16px) saturate(1.2);
   background: oklch(0.07 0.018 268 / 0.72);
   border-bottom: 1px solid oklch(0.96 0.006 268 / 0.06);
+  /* логотип слева, кнопка темы справа, в общей ширине страницы */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: max(1.5rem, calc((100% - 1080px) / 2));
+  color: var(--ag-ink);
 }
 
 .ag-header .ag-brand {
   display: block;
-  width: min(1080px, calc(100% - 3rem));
-  margin-inline: auto;
   font-family: var(--ag-font-display);
   font-weight: 600;
   font-size: 1rem;

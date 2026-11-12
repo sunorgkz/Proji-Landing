@@ -14,7 +14,7 @@ import {
 import '../main/main.css';
 
 /**
- * Product catalog hub — https://landing.proji.kz/services
+ * Product catalog hub — https://landing.proji.org/services
  */
 export default function ServicesLanding() {
   const [theme, setTheme] = useState<ProjiResolvedTheme>(() => resolveTheme(getTheme()));

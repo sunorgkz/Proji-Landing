@@ -76,10 +76,6 @@ export const Catalog: React.FC<CatalogProps> = ({ mode = 'core' }) => {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="text-center mb-16">
-          <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-brand-600 dark:text-brand-400 mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-brand-500 animate-pulse" />
-            {isCore ? 'Ядро Proji' : 'Все продукты Proji'}
-          </span>
           <h2 className="text-3xl sm:text-5xl font-bold mb-6 tracking-tight text-slate-900 dark:text-white">
             {isCore ? (
               <>
@@ -114,7 +110,7 @@ export const Catalog: React.FC<CatalogProps> = ({ mode = 'core' }) => {
                   <motion.div key={product.slug} variants={cardVariants} className="h-full">
                     <Link
                       to={`/${product.slug}`}
-                      className="group relative flex h-full flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0f172a] p-7 overflow-visible transition-all duration-300 hover:-translate-y-1 hover:border-brand-400/60 dark:hover:border-brand-500/50 hover:shadow-xl hover:shadow-brand-500/10"
+                      className="group relative flex h-full flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0f172a] p-7 overflow-visible transition-all duration-300 hover:-translate-y-1 hover:border-brand-400/60 dark:hover:border-brand-500/50"
                     >
                       {/* Decorative oversized icon — bleeds outside the card edge */}
                       <Icon
@@ -122,7 +118,7 @@ export const Catalog: React.FC<CatalogProps> = ({ mode = 'core' }) => {
                         className="pointer-events-none absolute -top-5 -right-5 w-24 h-24 text-brand-500/[0.07] dark:text-brand-400/[0.08] group-hover:text-brand-500/[0.14] dark:group-hover:text-brand-400/[0.16] transition-colors duration-300 rotate-[8deg]"
                       />
                       <div className="relative flex items-center justify-between mb-3">
-                        <div className="text-xs font-mono uppercase tracking-widest text-slate-400 dark:text-gray-500">
+                        <div className="text-sm text-slate-600 dark:text-gray-400">
                           /{product.slug}
                         </div>
                         <motion.span
@@ -133,7 +129,7 @@ export const Catalog: React.FC<CatalogProps> = ({ mode = 'core' }) => {
                             ease: 'easeInOut',
                             delay: Math.random() * 1.2,
                           }}
-                          className="flex items-center justify-center w-9 h-9 rounded-xl bg-brand-50 dark:bg-brand-500/10 text-brand-600 dark:text-brand-400 group-hover:bg-brand-100 dark:group-hover:bg-brand-500/20 transition-colors"
+                          className="flex items-center justify-center w-9 h-9 rounded-xl bg-brand-50 dark:bg-brand-500/10 text-brand-700 dark:text-brand-400 group-hover:bg-brand-100 dark:group-hover:bg-brand-500/20 transition-colors"
                         >
                           <Icon className="w-4.5 h-4.5" />
                         </motion.span>
@@ -144,10 +140,10 @@ export const Catalog: React.FC<CatalogProps> = ({ mode = 'core' }) => {
                       <p className="relative text-base font-medium text-slate-700 dark:text-gray-300 mb-3 leading-snug">
                         {product.hook}
                       </p>
-                      <p className="relative text-sm text-slate-500 dark:text-gray-400 leading-relaxed flex-1">
+                      <p className="relative text-base text-slate-600 dark:text-gray-300 leading-relaxed flex-1">
                         {product.desc}
                       </p>
-                      <span className="relative mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-600 dark:text-brand-400">
+                      <span className="relative mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 dark:text-brand-400">
                         {product.cta}
                         <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                       </span>
@@ -160,7 +156,7 @@ export const Catalog: React.FC<CatalogProps> = ({ mode = 'core' }) => {
             <div className="mt-14 text-center">
               <Link
                 to="/services"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-brand-600 dark:text-brand-400 hover:gap-3 transition-all"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700 dark:text-brand-400 hover:gap-3 transition-all"
               >
                 Смотреть все продукты
                 <ArrowRight className="w-4 h-4" />
@@ -172,7 +168,7 @@ export const Catalog: React.FC<CatalogProps> = ({ mode = 'core' }) => {
             {catalogGroups.map(group => (
               <div key={group.id}>
                 <div className="flex items-center gap-4 mb-8">
-                  <h3 className="text-sm font-semibold uppercase tracking-widest text-slate-500 dark:text-gray-500 whitespace-nowrap">
+                  <h3 className="text-base font-semibold text-slate-600 dark:text-gray-400 whitespace-nowrap">
                     {group.title}
                   </h3>
                   <div className="h-px flex-1 bg-slate-200 dark:bg-white/10" />
@@ -191,17 +187,17 @@ export const Catalog: React.FC<CatalogProps> = ({ mode = 'core' }) => {
                       <motion.div key={product.slug} variants={cardVariants} className="h-full">
                         <Link
                           to={`/${product.slug}`}
-                          className="group relative flex h-full flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0f172a] p-7 overflow-visible transition-all duration-300 hover:-translate-y-1 hover:border-brand-400/60 dark:hover:border-brand-500/50 hover:shadow-xl hover:shadow-brand-500/10"
+                          className="group relative flex h-full flex-col rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0f172a] p-7 overflow-visible transition-all duration-300 hover:-translate-y-1 hover:border-brand-400/60 dark:hover:border-brand-500/50"
                         >
                           <Icon
                             aria-hidden
                             className="pointer-events-none absolute -top-5 -right-5 w-24 h-24 text-brand-500/[0.07] dark:text-brand-400/[0.08] group-hover:text-brand-500/[0.14] dark:group-hover:text-brand-400/[0.16] transition-colors duration-300 rotate-[8deg]"
                           />
                           <div className="relative flex items-center justify-between mb-3">
-                            <div className="text-xs font-mono uppercase tracking-widest text-slate-400 dark:text-gray-500">
+                            <div className="text-sm text-slate-600 dark:text-gray-400">
                               /{product.slug}
                             </div>
-                            <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-brand-50 dark:bg-brand-500/10 text-brand-600 dark:text-brand-400 group-hover:bg-brand-100 dark:group-hover:bg-brand-500/20 transition-colors">
+                            <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-brand-50 dark:bg-brand-500/10 text-brand-700 dark:text-brand-400 group-hover:bg-brand-100 dark:group-hover:bg-brand-500/20 transition-colors">
                               <Icon className="w-4.5 h-4.5" />
                             </span>
                           </div>
@@ -211,10 +207,10 @@ export const Catalog: React.FC<CatalogProps> = ({ mode = 'core' }) => {
                           <p className="relative text-base font-medium text-slate-700 dark:text-gray-300 mb-3 leading-snug">
                             {product.hook}
                           </p>
-                          <p className="relative text-sm text-slate-500 dark:text-gray-400 leading-relaxed flex-1">
+                          <p className="relative text-base text-slate-600 dark:text-gray-300 leading-relaxed flex-1">
                             {product.desc}
                           </p>
-                          <span className="relative mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-600 dark:text-brand-400">
+                          <span className="relative mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 dark:text-brand-400">
                             {product.cta}
                             <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                           </span>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star } from 'lucide-react';
+import { Star, Quote } from 'lucide-react';
 import europeanBank from '../assets/european_bank.png';
 import freedomBroker from '../assets/Freedom_broker.png';
 import kzTemir from '../assets/KZ_temir.png';
@@ -44,12 +44,6 @@ const reviews = [
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop"
   },
   {
-    text: "ProGPT помогает команде принимать решения в разы быстрее. Это как совет директоров на каждый рабочий день.",
-    author: "Елена К.",
-    role: "Маркетинг директор",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop"
-  },
-  {
     text: "CRM больше не требует ручного ввода. Менеджеры наконец-то продают, а не заполняют таблицы.",
     author: "Дмитрий С.",
     role: "Head of Sales",
@@ -67,7 +61,7 @@ export const Testimonials: React.FC = () => {
 
       <div className="container mx-auto px-4 mb-24 relative z-10">
         <div className="text-center mb-12">
-           <h2 className="text-sm font-bold text-slate-400 dark:text-gray-500 uppercase tracking-[0.2em] mb-3">Нам доверяют лидеры рынка</h2>
+           <h2 className="text-base font-semibold text-slate-600 dark:text-gray-400 mb-3">Нам доверяют лидеры рынка</h2>
            <div className="w-12 h-1 bg-brand-500 mx-auto rounded-full"></div>
         </div>
         
@@ -76,7 +70,7 @@ export const Testimonials: React.FC = () => {
           <ul className="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_li]:md:mx-16 animate-scroll">
             {clients.map((client, index) => (
               <li key={index} className="flex-shrink-0 transition-all duration-500">
-                <div className="flex items-center justify-center px-8 py-5 md:px-10 md:py-6 rounded-2xl bg-slate-900/95 dark:bg-slate-900/95 border border-slate-900/60 shadow-lg backdrop-blur-md">
+                <div className="flex items-center justify-center px-8 py-5 md:px-10 md:py-6 rounded-2xl bg-slate-900/95 dark:bg-slate-900/95 border border-slate-900/60">
                   <img 
                     src={client.logo} 
                     alt={client.name} 
@@ -88,7 +82,7 @@ export const Testimonials: React.FC = () => {
              {/* Duplicate for seamless loop */}
              {clients.map((client, index) => (
               <li key={`dup-${index}`} className="flex-shrink-0 transition-all duration-500">
-                <div className="flex items-center justify-center px-8 py-5 md:px-10 md:py-6 rounded-2xl bg-slate-900/95 dark:bg-slate-900/95 border border-slate-900/60 shadow-lg backdrop-blur-md">
+                <div className="flex items-center justify-center px-8 py-5 md:px-10 md:py-6 rounded-2xl bg-slate-900/95 dark:bg-slate-900/95 border border-slate-900/60">
                   <img 
                     src={client.logo} 
                     alt={client.name} 
@@ -108,8 +102,8 @@ export const Testimonials: React.FC = () => {
          </div>
          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {reviews.map((review, i) => (
-              <div key={i} className="glass-card p-8 rounded-3xl border border-slate-200 dark:border-white/10 relative hover:-translate-y-2 transition-transform duration-300 bg-white dark:bg-white/5 shadow-xl dark:shadow-none">
-                 <div className="absolute -top-4 -right-4 w-12 h-12 bg-brand-600 rounded-full flex items-center justify-center text-2xl shadow-lg text-white">❝</div>
+              <div key={i} className="glass-card p-8 rounded-3xl border border-slate-200 dark:border-white/10 relative hover:-translate-y-2 transition-transform duration-300 bg-white dark:bg-white/5 dark:shadow-none">
+                 <div className="absolute -top-4 -right-4 w-12 h-12 bg-brand-600 rounded-full flex items-center justify-center text-white"><Quote className="w-5 h-5" /></div>
                  
                  <div className="flex gap-1 text-yellow-500 dark:text-yellow-400 mb-6">
                     {[1,2,3,4,5].map(star => <Star key={star} className="w-4 h-4 fill-current" />)}
@@ -121,7 +115,7 @@ export const Testimonials: React.FC = () => {
                     <img src={review.image} alt={review.author} className="w-12 h-12 rounded-full object-cover border-2 border-brand-500/50" />
                     <div>
                        <div className="font-bold text-slate-900 dark:text-white">{review.author}</div>
-                       <div className="text-xs text-brand-600 dark:text-brand-400 font-medium uppercase tracking-wider">{review.role}</div>
+                       <div className="text-sm text-brand-600 dark:text-brand-400 font-medium">{review.role}</div>
                     </div>
                  </div>
               </div>
