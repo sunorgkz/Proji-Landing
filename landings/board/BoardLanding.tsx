@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { ChevronDown, Globe, Menu, X } from 'lucide-react';
 import { trackEvent } from '../../analytics';
+import { ThemeSwitch, useSiteTheme } from './theme';
 import { resetDocumentShell } from '../../lib/resetDocumentShell';
 import { setLang as persistLang } from '../../lib/projiPrefs';
 import aktobeSatellite from '../../assets/aktobe-kazakhstan-satellite-image-2017-09-07.jpg';
@@ -204,6 +205,7 @@ export default function BoardLanding() {
   const [lang, setLangState] = useState<Lang>(initialLang);
   const [open, setOpen] = useState(3);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [theme, chooseTheme] = useSiteTheme('board');
   const c = COPY[lang];
   const dir = lang === 'ar' ? 'rtl' : 'ltr';
 
@@ -290,7 +292,7 @@ export default function BoardLanding() {
   ];
 
   return (
-    <div className="bd-root" ref={rootRef} dir={dir} lang={lang}>
+    <div className="bd-root" ref={rootRef} dir={dir} lang={lang} data-theme={theme}>
       <SketchDefs />
       <header className="bd-nav glass">
         <a href="#top" className="bd-nav-home" aria-label="proji"><Logo /></a>
@@ -307,6 +309,7 @@ export default function BoardLanding() {
           <nav className="bd-sheet" aria-label={c.nav.menu}>
             {navLinks.map(([href, label]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}
             <a className="is-login" href={LOGIN_URL} onClick={() => trial('sheet-login')}>{c.nav.login}</a>
+            <ThemeSwitch lang={lang} theme={theme} onChoose={chooseTheme} />
           </nav>
         )}
       </header>
@@ -533,6 +536,7 @@ export default function BoardLanding() {
           <span><Logo /> © 2026</span>
           <button type="button" className="bd-btn is-small" onClick={() => audit('footer')}>{c.nav.cta}</button>
         </div>
+        <ThemeSwitch lang={lang} theme={theme} onChoose={chooseTheme} />
       </footer>
     </div>
   );

@@ -1,3 +1,4 @@
+import { ThemeIconButton } from "../../components/ThemeIconButton";
 import { useEffect, useLayoutEffect, type ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import {
@@ -186,6 +187,7 @@ export default function TalentManagerLanding() {
           <a href="#join" className="tm-btn tm-btn--gold">
             Join free <ArrowRight size={15} />
           </a>
+          <ThemeIconButton landing="talent-manager" />
         </div>
       </header>
 

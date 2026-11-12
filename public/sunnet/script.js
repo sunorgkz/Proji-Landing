@@ -58,3 +58,24 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(element);
     });
 });
+
+/* Переключатель темы: выбор общий для всего landing.proji.org (те же ключи, что в lib/projiPrefs.ts) */
+(function () {
+    var KEYS = ['proji.theme', 'proji-theme', 'proji_theme', 'theme', 'main-landing-theme', 'chrome_extension_theme', 'secondbrain-theme'];
+    var btn = document.getElementById('theme-btn');
+    if (!btn) return;
+    function current() { return document.documentElement.dataset.theme === 'light' ? 'light' : 'dark'; }
+    function paint() {
+        var light = current() === 'light';
+        btn.textContent = light ? '☾' : '☀';
+        btn.setAttribute('aria-label', light ? 'Тёмная тема' : 'Светлая тема');
+    }
+    btn.addEventListener('click', function () {
+        var next = current() === 'light' ? 'dark' : 'light';
+        KEYS.forEach(function (k) { try { localStorage.setItem(k, next); } catch (e) {} });
+        document.documentElement.dataset.theme = next;
+        document.documentElement.classList.toggle('dark', next === 'dark');
+        paint();
+    });
+    paint();
+})();

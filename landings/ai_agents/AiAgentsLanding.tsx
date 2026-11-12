@@ -1,3 +1,4 @@
+import { ThemeIconButton } from "../../components/ThemeIconButton";
 import { useEffect, useLayoutEffect, type ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import {
@@ -235,6 +236,7 @@ export default function AiAgentsLanding() {
           >
             Создать агента
           </a>
+          <ThemeIconButton landing="ai-agents" />
         </div>
       </header>
 

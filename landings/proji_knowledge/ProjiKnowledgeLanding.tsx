@@ -1,7 +1,7 @@
-import { useEffect, useLayoutEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type FormEvent, type ReactNode } from "react";
 import { resetDocumentShell } from "../../lib/resetDocumentShell";
 import { applyLandingPageBg } from "../../lib/landingPageBg";
-import { getTheme, resolveTheme, type ProjiResolvedTheme } from "../../lib/projiPrefs";
+import { getTheme, resolveTheme, setTheme as persistTheme, type ProjiResolvedTheme } from "../../lib/projiPrefs";
 import { submitDemoRequest } from "../../lib/submitDemoRequest";
 import { trackEvent } from "../../analytics";
 
@@ -172,6 +172,7 @@ function MobileNav() {
             <a href="#cta" className="pj-btn pj-btn-primary pj-mobile-cta" onClick={close}>
               Записаться на демо
             </a>
+            <ThemeLink className="pj-mobile-link" />
           </div>
         </div>
       )}
@@ -246,6 +247,26 @@ function Wordmark({ size = 18, glow = false }: { size?: number; glow?: boolean }
     >
       proji studio
     </span>
+  );
+}
+
+
+/* переключатель темы: тема общая для всего сайта; цвета этой страницы считаются при загрузке, поэтому перезагружаем её */
+function ThemeLink({ className, style }: { className?: string; style?: CSSProperties }) {
+  const light = resolveTheme(getTheme()) === "light";
+  return (
+    <button
+      type="button"
+      className={className}
+      style={{ cursor: "pointer", font: "inherit", textAlign: "start", ...style }}
+      onClick={() => {
+        persistTheme(light ? "dark" : "light");
+        trackEvent("knowledge_theme_switch", { theme: light ? "dark" : "light" });
+        window.location.reload();
+      }}
+    >
+      {light ? "Тёмная тема" : "Светлая тема"}
+    </button>
   );
 }
 
@@ -457,6 +478,7 @@ export default function ProjiKnowledgeLanding() {
                 {label}
               </a>
             ))}
+            <ThemeLink style={{ background: "none", border: 0, padding: 0, color: C.inkSoft, fontSize: 14, fontWeight: 500 }} />
             <a href="#cta" className="pj-btn pj-btn-primary" style={{ padding: "11px 22px", fontSize: 14 }}>
               Записаться на демо
             </a>

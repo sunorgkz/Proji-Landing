@@ -794,3 +794,48 @@ h2 {
 @keyframes br-pop { from { opacity: 0; transform: scale(0.2); } to { opacity: 1; transform: scale(1); } }
 @keyframes br-blink { 0%, 70%, 100% { transform: scale(1); } 80% { transform: scale(1.7); } }
 @keyframes br-run { 0% { stroke-dashoffset: 1; opacity: 0; } 10% { opacity: 1; } 50% { stroke-dashoffset: 0.12; opacity: 1; } 60%, 100% { stroke-dashoffset: 0.12; opacity: 0; } }
+
+/* =========================================
+   Светлая тема (выбор общий для всего сайта: ключ proji.theme, html[data-theme])
+========================================= */
+.theme-btn {
+    margin-inline-start: auto; margin-inline-end: 20px;
+    width: 38px; height: 38px; border-radius: 999px; flex: none;
+    border: 1px solid var(--glass-border-strong, rgba(255,255,255,0.2)); background: transparent;
+    color: var(--text-main); font-size: 16px; line-height: 1; cursor: pointer;
+}
+.theme-btn:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+html[data-theme="light"] {
+    --bg-dark: #F4F7FC;
+    --bg-card: rgba(255, 255, 255, 0.85);
+    --bg-card-hover: #fff;
+    --text-main: #0B1F45;
+    --text-muted: #4A5B7D;
+    --accent-cyan: #0A8FB8;
+    --accent-green: #0E9F74;
+    --glass-border: rgba(11, 31, 69, 0.10);
+    --glass-shadow: 0 8px 32px 0 rgba(11, 31, 69, 0.08);
+    --glass-border-strong: rgba(11, 31, 69, 0.2);
+}
+html[data-theme="light"] h1 { background: linear-gradient(180deg, #0B1F45 0%, #2A5BD7 100%); -webkit-background-clip: text; background-clip: text; }
+html[data-theme="light"] .logo-proji { background-image: linear-gradient(100deg, #071530 0%, #071530 42%, #8ec5ff 48%, #5eecc4 52%, #071530 58%, #071530 100%); }
+html[data-theme="light"] .header.scrolled { background: rgba(244, 247, 252, 0.92); }
+html[data-theme="light"] .btn-outline,
+html[data-theme="light"] .badge-outline { border-color: rgba(11, 31, 69, 0.2); }
+html[data-theme="light"] .hero-quote,
+html[data-theme="light"] .core-item,
+html[data-theme="light"] .chat-message { background: rgba(255, 255, 255, 0.8); }
+html[data-theme="light"] .flow-input,
+html[data-theme="light"] .contact-card { background: #fff; }
+html[data-theme="light"] .chat-text { color: #0B1F45; }
+html[data-theme="light"] .card-footer,
+html[data-theme="light"] .task-item,
+html[data-theme="light"] .case-result,
+html[data-theme="light"] .contact-grid,
+html[data-theme="light"] .footer { border-color: rgba(11, 31, 69, 0.1); }
+html[data-theme="light"] .br-line path { stroke: #2A5BD7; }
+html[data-theme="light"] .br-chip path,
+html[data-theme="light"] .br-dots circle { stroke: #0E9F74; fill: #0E9F74; }
+html[data-theme="light"] .br-chip path { fill: none; }
+html[data-theme="light"] .br-spark { stroke: #2A5BD7; }
+@media (max-width: 768px) { .theme-btn { margin-inline-end: 0; } }

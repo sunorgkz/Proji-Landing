@@ -2,7 +2,8 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { trackEvent } from '../../analytics';
 import { resetDocumentShell } from '../../lib/resetDocumentShell';
-import { getTheme, resolveTheme, setLang as persistLang, setTheme as persistTheme } from '../../lib/projiPrefs';
+import { setLang as persistLang } from '../../lib/projiPrefs';
+import { ThemeSwitch, useSiteTheme } from '../board/theme';
 import { CHOSEN_KEY, LangMenu, Logo, initialLang } from '../board/BoardLanding';
 import { COPY as BOARD, type Lang } from '../board/copy';
 import { SketchDefs } from '../board/Sketches';
@@ -19,23 +20,6 @@ const FONTS_URL =
 export const REGISTER_URL = 'https://proji.org/register';
 export const LOGIN_URL = 'https://proji.org/login';
 export const KB_URL = 'https://proji.org/knowledge-base';
-type Theme = 'dark' | 'light';
-const THEME_LABEL: Record<Lang, [string, string, string]> = {
-  ru: ['Тема', 'Тёмная', 'Светлая'],
-  kk: ['Тақырып', 'Қараңғы', 'Жарық'],
-  en: ['Theme', 'Dark', 'Light'],
-  ar: ['المظهر', 'داكن', 'فاتح'],
-};
-/* тема общая для всего сайта (lib/projiPrefs): выбор на одной странице действует на всех */
-const initialTheme = (): Theme => resolveTheme(getTheme());
-/* «Тёмная / Светлая»: в бургере и в подвале */
-const ThemeSwitch: React.FC<{ lang: Lang; theme: Theme; onChoose: (t: Theme) => void }> = ({ lang, theme, onChoose }) => (
-  <div className="ai-theme" role="group" aria-label={THEME_LABEL[lang][0]}>
-    {(['dark', 'light'] as const).map((t, i) => (
-      <button key={t} type="button" aria-pressed={theme === t} onClick={() => onChoose(t)}>{THEME_LABEL[lang][i + 1]}</button>
-    ))}
-  </div>
-);
 const PRIVACY_LABEL: Record<Lang, string> = { ru: 'Политика конфиденциальности', kk: 'Құпиялылық саясаты', en: 'Privacy policy', ar: 'سياسة الخصوصية' };
 const KB_LABEL: Record<Lang, string> = { ru: 'База знаний', kk: 'Білім базасы', en: 'Knowledge base', ar: 'قاعدة المعرفة' };
 
@@ -70,12 +54,7 @@ export const AiShell: React.FC<{
   const rootRef = useRef<HTMLDivElement | null>(null);
   const [lang, setLangState] = useState<Lang>(initialLang);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [theme, setTheme] = useState<Theme>(initialTheme);
-  const chooseTheme = (next: Theme) => {
-    setTheme(next);
-    persistTheme(next);
-    trackEvent(`${slug}_theme_switch`, { theme: next });
-  };
+  const [theme, chooseTheme] = useSiteTheme(slug);
   const b = BOARD[lang];
 
   const chooseLang = (next: Lang) => {

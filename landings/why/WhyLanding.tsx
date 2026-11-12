@@ -1,6 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { trackEvent } from '../../analytics';
+import { ThemeSwitch, useSiteTheme } from '../board/theme';
 import { resetDocumentShell } from '../../lib/resetDocumentShell';
 import { setLang as persistLang } from '../../lib/projiPrefs';
 import phoneChat from '../../assets/pexels-6415626.jpg';
@@ -33,6 +34,7 @@ export default function WhyLanding() {
   const touched = useRef(false);
   const [lang, setLangState] = useState<Lang>(initialLang);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [theme, chooseTheme] = useSiteTheme('why');
   const [withProji, setWithProji] = useState(false);
   const c = WHY[lang];
   const b = BOARD[lang];
@@ -141,7 +143,7 @@ export default function WhyLanding() {
   );
 
   return (
-    <div className="bd-root wy-root" ref={rootRef} dir={lang === 'ar' ? 'rtl' : 'ltr'} lang={lang}>
+    <div className="bd-root wy-root" ref={rootRef} dir={lang === 'ar' ? 'rtl' : 'ltr'} lang={lang} data-theme={theme}>
       <SketchDefs />
       <header className="bd-nav glass">
         <a href="#top" className="bd-nav-home" aria-label="proji"><Logo /></a>
@@ -158,6 +160,7 @@ export default function WhyLanding() {
           <nav className="bd-sheet" aria-label={b.nav.menu}>
             {links.map(([href, label]) => <a key={href} href={href} onClick={() => setMenuOpen(false)}>{label}</a>)}
             <a className="is-login" href={LOGIN_URL} onClick={() => trial('sheet-login')}>{b.nav.login}</a>
+            <ThemeSwitch lang={lang} theme={theme} onChoose={chooseTheme} />
           </nav>
         )}
       </header>
@@ -277,6 +280,7 @@ export default function WhyLanding() {
         <a href="mailto:sund.serik@gmail.com">sund.serik@gmail.com</a>
         <a href={LOGIN_URL}>{b.foot.login}</a>
         <small>{b.foot.credits} Pexels. {b.foot.logos}</small>
+        <ThemeSwitch lang={lang} theme={theme} onChoose={chooseTheme} />
       </footer>
     </div>
   );
