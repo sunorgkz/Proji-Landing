@@ -24,7 +24,7 @@ const Page: React.FC<{ lang: Lang }> = ({ lang }) => (
   <article className="kt-article kt-privacy" lang="ru" dir="ltr">
     {ONLY_RU[lang] && <p className="kt-ex" lang={lang} dir={lang === 'ar' ? 'rtl' : 'ltr'}>{ONLY_RU[lang]}</p>}
     <h1>Политика конфиденциальности</h1>
-    <p className="kt-muted">Сайты landing.proji.org. Редакция от {UPDATED}.</p>
+    <p className="kt-muted">Сайты Proji: landing.proji.org, proji.org, proji.kz и другие. Редакция от {UPDATED}.</p>
 
     <h2>1. Коротко</h2>
     <ul>
@@ -36,7 +36,7 @@ const Page: React.FC<{ lang: Lang }> = ({ lang }) => (
 
     <h2>2. Кто отвечает за данные</h2>
     <p>Оператор персональных данных: ИП «SUNNET», ИИН 911211301246, г. Актобе, район Алматы. Почта: <a href="mailto:sund.serik@gmail.com">sund.serik@gmail.com</a>, телефон: <a href="tel:+77766006636">+7 776 600 66 36</a>.</p>
-    <p>Политика действует для сайтов на адресе landing.proji.org. Работа с данными внутри сервиса Proji (proji.org) описана в отдельных документах: <F>[ссылка на документы сервиса]</F>.</p>
+    <p>Политика действует для сайтов Proji: landing.proji.org, proji.org, proji.kz и других. Работа с данными внутри сервиса Proji описана в отдельных документах.</p>
     <p>Мы руководствуемся Законом Республики Казахстан «О персональных данных и их защите» от 21 мая 2013 года № 94-V.</p>
 
     <h2>3. Какие данные мы получаем</h2>
@@ -122,7 +122,7 @@ const TRY: Record<Lang, string> = { ru: 'Попробовать', kk: 'Байқ�
 const title = (l: Lang) => TITLE[l];
 const cta = (l: Lang) => TRY[l];
 const links = (): [string, string][] => [];
-const desc = () => 'Какие данные собирают сайты landing.proji.org, зачем, кому передают и как их удалить.';
+const desc = () => 'Какие данные собирают сайты Proji (landing.proji.org, proji.org, proji.kz и другие), зачем, кому передают и как их удалить.';
 
 export default function PrivacyLanding() {
   return (
