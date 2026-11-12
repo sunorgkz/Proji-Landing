@@ -7,6 +7,7 @@ import freedomBroker from '../../assets/Freedom_broker.png';
 import kzTemir from '../../assets/KZ_temir.png';
 import googleDev from '../../assets/Google_dev.png';
 import easyLogo from '../../assets/Easy.png';
+import { useSiteTheme } from '../board/theme';
 import './linear-alt.css';
 
 /**
@@ -106,6 +107,7 @@ const Ctas: React.FC<{ place: string }> = ({ place }) => (
 const Tag = () => <span className="mx-tag">ИЛЛЮСТРАЦИЯ · примерные данные</span>;
 
 export default function LinearAltLanding() {
+  const [theme, chooseTheme] = useSiteTheme('alt');
   useLayoutEffect(() => {
     resetDocumentShell();
     document.title = 'Proji — руководитель видит всё, команда знает, что делать';
@@ -126,7 +128,7 @@ export default function LinearAltLanding() {
   }, []);
 
   return (
-    <div className="mx-root">
+    <div className="mx-root" data-theme={theme}>
       <header className="mx-nav">
         <a href="#top" className="mx-brand">Proji</a>
         <nav className="mx-links" aria-label="Разделы">
@@ -135,6 +137,7 @@ export default function LinearAltLanding() {
           <a href="#pricing">Тарифы</a>
           <a href="#faq">Вопросы</a>
         </nav>
+        <button type="button" className="mx-theme" onClick={() => chooseTheme(theme === 'dark' ? 'light' : 'dark')} aria-label={theme === 'dark' ? 'Светлая тема' : 'Тёмная тема'} title={theme === 'dark' ? 'Светлая тема' : 'Тёмная тема'}>{theme === 'dark' ? '☀' : '☾'}</button>
         <button type="button" className="mx-btn mx-btn-1 mx-btn-sm" onClick={() => audit('nav')}>AI-аудит бесплатно</button>
       </header>
 
