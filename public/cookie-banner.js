@@ -8,21 +8,21 @@
 (function () {
   var KEY = 'proji.cookie-consent';
   var TEXT = {
-    ru: ['Мы используем cookie, чтобы понимать, как работает сайт. Аналитика включится только с вашего согласия.', 'Принять', 'Только необходимые', 'Политика конфиденциальности'],
-    kk: ['Сайттың қалай жұмыс істейтінін түсіну үшін cookie қолданамыз. Аналитика тек сіздің келісіміңізбен қосылады.', 'Қабылдау', 'Тек қажеттілері', 'Құпиялылық саясаты'],
-    en: ['We use cookies to understand how the site works. Analytics turns on only with your consent.', 'Accept', 'Necessary only', 'Privacy policy'],
-    ar: ['نستخدم ملفات تعريف الارتباط لفهم كيفية عمل الموقع. لا تُفعَّل التحليلات إلا بموافقتك.', 'قبول', 'الضرورية فقط', 'سياسة الخصوصية'],
+    ru: ['Cookie для статистики — только с согласия.', 'Принять', 'Только необходимые', 'Подробнее'],
+    kk: ['Статистика үшін cookie — тек келісіммен.', 'Қабылдау', 'Тек қажеттілері', 'Толығырақ'],
+    en: ['Cookies for analytics — only with consent.', 'Accept', 'Necessary only', 'Details'],
+    ar: ['ملفات تعريف الارتباط للتحليلات — بموافقتك فقط.', 'قبول', 'الضرورية فقط', 'التفاصيل'],
   };
   var CSS =
-    '.pj-cookie{position:fixed;left:0;right:0;bottom:0;z-index:2147483000;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px 24px;' +
-    'padding:14px max(16px,calc((100vw - 1200px)/2));background:rgb(4 12 31/.94);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);' +
-    'border-top:1px solid rgb(255 255 255/.12);color:#f2f7ff;font:400 15px/1.45 Inter,system-ui,sans-serif;box-shadow:0 -12px 40px -20px rgb(0 0 0/.6)}' +
-    '.pj-cookie p{margin:0;flex:1 1 420px;max-width:760px}.pj-cookie a{color:#5eecc4;text-decoration:underline;text-underline-offset:3px}' +
-    '.pj-cookie div{display:flex;flex-wrap:wrap;gap:8px}' +
-    '.pj-cookie button{min-height:40px;padding:0 18px;border-radius:999px;border:1px solid rgb(255 255 255/.35);background:transparent;color:#f2f7ff;font:600 14px/1 Inter,system-ui,sans-serif;cursor:pointer}' +
+    '.pj-cookie{position:fixed;left:0;right:0;bottom:0;z-index:2147483000;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 20px;' +
+    'padding:8px max(12px,calc((100vw - 1200px)/2));background:rgb(4 12 31/.94);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);' +
+    'border-top:1px solid rgb(255 255 255/.12);color:#f2f7ff;font:400 13px/1.35 Inter,system-ui,sans-serif;box-shadow:0 -12px 40px -20px rgb(0 0 0/.6)}' +
+    '.pj-cookie p{margin:0;flex:1 1 320px;max-width:760px}.pj-cookie a{color:#5eecc4;text-decoration:underline;text-underline-offset:3px}' +
+    '.pj-cookie div{display:flex;flex-wrap:wrap;gap:6px}' +
+    '.pj-cookie button{min-height:34px;padding:0 14px;border-radius:999px;border:1px solid rgb(255 255 255/.35);background:transparent;color:#f2f7ff;font:600 13px/1 Inter,system-ui,sans-serif;cursor:pointer}' +
     '.pj-cookie button.is-yes{border-color:transparent;background:linear-gradient(135deg,#8ff5d8,#5eecc4 40%,#2fd3a6);color:#052a24}' +
     '.pj-cookie button:focus-visible{outline:2px solid #5eecc4;outline-offset:2px}' +
-    '@media (max-width:600px){.pj-cookie{padding:12px 16px}.pj-cookie div{width:100%}.pj-cookie button{flex:1}}';
+    '@media (max-width:600px){.pj-cookie{padding:6px 12px;gap:4px;font-size:12px}.pj-cookie div{width:100%}.pj-cookie button{flex:1;min-height:30px;padding:0 10px;font-size:12px}}';
 
   function read() {
     try { return localStorage.getItem(KEY); } catch (e) { return null; }

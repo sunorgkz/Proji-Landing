@@ -1,0 +1,47 @@
+/* /tariffs: карточки тарифов, таблица сравнения (.bd-table из /board) и Личный AI. Токены — из /board, правила — BRANDBOOK.md. */
+.ai-root .tf-hero.ai-hero.is-split { min-height: 0; padding-block: 130px 20px; }
+.tf-toggles { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
+.tf-toggles .ai-theme { margin: 0; }
+
+.ai-root .kt-sec .tf-cards { margin-top: 0; }
+.tf-cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+.tf-card { display: flex; flex-direction: column; gap: 10px; padding: 24px 20px; border-radius: var(--r-xl); }
+.tf-card.is-rec { border: 1px solid rgb(94 236 196 / 0.45); background: linear-gradient(180deg, rgb(94 236 196 / 0.16), rgb(94 236 196 / 0.06)); }
+.ai-root .tf-card h3 { font-size: var(--step-lead); }
+.tf-card p { color: var(--muted); font-size: 15px; line-height: 1.45; }
+.tf-price { margin-top: 6px; font-size: clamp(1.35rem, 1rem + 0.8vw, 1.75rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
+.tf-price small { white-space: nowrap; font-size: 14px; font-weight: 500; letter-spacing: 0; color: var(--muted); }
+.tf-save { min-height: 1.3em; font-size: 14px; color: var(--mint); }
+.tf-card .bd-btn { margin-top: auto; width: 100%; justify-content: center; text-align: center; }
+
+.tf-hint { display: block; margin-top: 2px; font-size: 13px; font-weight: 400; line-height: 1.35; color: var(--muted); }
+.bd-table tbody th .tf-hint { color: var(--muted); }
+
+.tf-ai-price { margin-top: 18px; }
+.tf-ai-price b { font-size: clamp(1.5rem, 1.1rem + 1vw, 2rem); letter-spacing: -0.03em; }
+.tf-ai { margin-top: 22px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.tf-ai li { padding: 18px 20px; border-radius: var(--r-lg); border: 1px solid var(--glass-line); background: rgb(255 255 255 / 0.03); }
+.ai-root .tf-ai h3 { font-size: 17px; }
+.tf-ai p { margin-top: 6px; color: var(--muted); }
+
+/* выделенная колонка: в светлой теме белый текст из /board на светлой подложке не читался */
+.bd-table.tf-table td.is-rec { color: var(--ink); }
+
+/* таблица на 6 колонок: плотнее, чем таблица на 4 колонки в /board, чтобы последняя колонка не обрезалась */
+@media (min-width: 721px) {
+  .bd-table.tf-table { font-size: 15px; }
+  .bd-table.tf-table thead th { padding: 20px 12px 22px; font-size: 17px; }
+  .bd-table.tf-table th, .bd-table.tf-table td { padding: 14px 12px; }
+  .bd-table.tf-table thead th:first-child { width: 22%; }
+}
+
+@media (min-width: 1101px) {
+  .tf-card p { min-height: 5.8em; }
+}
+@media (max-width: 1100px) {
+  .tf-cards { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .tf-cards, .tf-ai { grid-template-columns: 1fr; }
+  .ai-root .tf-hero.ai-hero.is-split { padding-block: 110px 10px; }
+}
