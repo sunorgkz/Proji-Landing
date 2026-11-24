@@ -50,6 +50,9 @@ const DESC: Record<PlanId, string> = {
   enterprise: 'Лимиты и функции под задачи крупного бизнеса',
 };
 const CTA: Record<PlanId, string> = { free: 'Начать', start: 'Выбрать', business: 'Попробовать 14 дней', company: 'Подключить', enterprise: 'Связаться' };
+/* кнопка покупки скрыта, пока не проверено, что на боевом сервисе тариф «Старт» списывает свою цену: чтобы вернуть, оставьте список пустым */
+const HIDE_BUY: PlanId[] = ['start'];
+
 const hrefFor = (id: PlanId, yearly: boolean): string => {
   if (id === 'free') return REGISTER_URL;
   if (id === 'enterprise') return '#enterprise';
@@ -111,7 +114,7 @@ const Page: React.FC<{ lang: Lang }> = ({ lang }) => {
   };
 
   const click = (id: PlanId) => trackEvent('tariff_cta', { landing: 'tariffs', plan: id, billing: yearly ? 'yearly' : 'monthly', currency: usd ? 'usd' : 'kzt' });
-  const Act: React.FC<{ id: PlanId }> = ({ id }) => (
+  const Act: React.FC<{ id: PlanId }> = ({ id }) => HIDE_BUY.includes(id) ? null : (
     <a className={`bd-btn${id === REC ? '' : ' is-glass'}`} href={hrefFor(id, yearly)} data-cta-dest={hrefFor(id, yearly)} onClick={() => click(id)}>{CTA[id]}</a>
   );
 
