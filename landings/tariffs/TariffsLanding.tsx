@@ -23,10 +23,15 @@ const ONLY_RU: Record<Lang, string> = {
   ar: 'النسخة العربية من هذه الصفحة قيد الإعداد.',
 };
 
-/** страница тарифов в самом сервисе: после входа там выбирают тариф и платят */
-const APP_TARIFFS_URL = 'https://proji.org/tariffs';
+/**
+ * Покупка: страница оплаты самого сервиса, как после кнопки на proji.org/tariffs. Тариф и срок передаём в адресе;
+ * если человек не вошёл, сервис сначала предложит войти и потом вернёт его на оплату.
+ * Идентификаторы тарифов — как в сервисе (не менять при переименовании): basic — Старт, pro — Стандарт, enterprise — Премиум.
+ */
+const PAY_URL = 'https://proji.org/payment';
+const API_PLAN: Partial<Record<PlanId, string>> = { start: 'basic', business: 'pro', company: 'enterprise' };
 
-const NAME = { free: 'Бесплатный', start: 'Старт', business: 'Стандарт', company: 'Компания', enterprise: 'Enterprise' };
+const NAME = { free: 'Бесплатный', start: 'Старт', business: 'Стандарт', company: 'Премиум', enterprise: 'Enterprise' };
 type PlanId = keyof typeof NAME;
 const IDS: PlanId[] = ['free', 'start', 'business', 'company', 'enterprise'];
 const REC: PlanId = 'business';
@@ -45,9 +50,13 @@ const DESC: Record<PlanId, string> = {
   enterprise: 'Лимиты и функции под задачи крупного бизнеса',
 };
 const CTA: Record<PlanId, string> = { free: 'Начать', start: 'Выбрать', business: 'Попробовать 14 дней', company: 'Подключить', enterprise: 'Связаться' };
-const HREF: Record<PlanId, string> = { free: REGISTER_URL, start: APP_TARIFFS_URL, business: APP_TARIFFS_URL, company: APP_TARIFFS_URL, enterprise: '#enterprise' };
+const hrefFor = (id: PlanId, yearly: boolean): string => {
+  if (id === 'free') return REGISTER_URL;
+  if (id === 'enterprise') return '#enterprise';
+  return `${PAY_URL}?plan=${API_PLAN[id]}&billing=${yearly ? 'yearly' : 'monthly'}`;
+};
 
-/* лимиты по тарифам: Бесплатный, Старт, Стандарт, Компания; Enterprise — по договорённости */
+/* лимиты по тарифам: Бесплатный, Старт, Стандарт, Премиум; Enterprise — по договорённости */
 const ROWS: [string, string, string, string, string, string][] = [
   ['Пользователи', 'сотрудники, подрядчики, клиенты', '5', '15', '70', '150'],
   ['Рабочие пространства', 'направления бизнеса: маркетинг, продажи, производство и другие', '3', '5', '15', '30'],
@@ -103,7 +112,7 @@ const Page: React.FC<{ lang: Lang }> = ({ lang }) => {
 
   const click = (id: PlanId) => trackEvent('tariff_cta', { landing: 'tariffs', plan: id, billing: yearly ? 'yearly' : 'monthly', currency: usd ? 'usd' : 'kzt' });
   const Act: React.FC<{ id: PlanId }> = ({ id }) => (
-    <a className={`bd-btn${id === REC ? '' : ' is-glass'}`} href={HREF[id]} data-cta-dest={HREF[id]} onClick={() => click(id)}>{CTA[id]}</a>
+    <a className={`bd-btn${id === REC ? '' : ' is-glass'}`} href={hrefFor(id, yearly)} data-cta-dest={hrefFor(id, yearly)} onClick={() => click(id)}>{CTA[id]}</a>
   );
 
   return (
@@ -119,6 +128,7 @@ const Page: React.FC<{ lang: Lang }> = ({ lang }) => {
               <Toggle label="Оплата" value={yearly ? 1 : 0} options={['Помесячно', 'За год — 2 месяца в подарок']} onChoose={i => setYearly(i === 1)} />
               <Toggle label="Валюта" value={usd ? 1 : 0} options={['₸ KZT', '$ USD']} onChoose={i => setUsd(i === 1)} />
             </div>
+            {usd && <p className="tf-note">Оплата принимается в тенге. В долларах цены показаны для сравнения.</p>}
           </div>
           <figure className="mg-card"><SketchPaid /></figure>
         </section>
@@ -182,7 +192,7 @@ const Page: React.FC<{ lang: Lang }> = ({ lang }) => {
         </section>
 
         <Sec id="personal" h="Личный AI" lead="Подписка на человека. Кто работает только с задачами и документами, пользуется Proji в рамках тарифа организации без доплат. Руководителю, менеджеру проекта или продажнику, которому нужны персональные AI-возможности, подключаете Личный AI — оплата за каждого такого сотрудника.">
-          <p className="tf-ai-price"><b>{nb(m.ai)}</b> за человека в месяц. На «Стандарте» 3 места уже включены, на «Компании» — 10.</p>
+          <p className="tf-ai-price"><b>{nb(m.ai)}</b> за человека в месяц. На «Стандарте» 3 места уже включены, на «Премиуме» — 10.</p>
           <ul className="tf-ai">
             {PERSONAL.map(([t, x]) => <li key={t}><h3>{t}</h3><p>{x}</p></li>)}
           </ul>
@@ -202,7 +212,7 @@ const Page: React.FC<{ lang: Lang }> = ({ lang }) => {
 
 const title = () => 'Тарифы Proji — цены и сравнение';
 /* описание в виде поля объекта: так vite.config.ts берёт его в meta статичной страницы */
-const META = { desc: 'Тарифы Proji: бесплатный, Старт, Стандарт, Компания и Enterprise. Цены в тенге и долларах, сравнение лимитов, Личный AI.' };
+const META = { desc: 'Тарифы Proji: бесплатный, Старт, Стандарт, Премиум и Enterprise. Цены в тенге и долларах, сравнение лимитов, Личный AI.' };
 const desc = () => META.desc;
 const cta = () => 'Начать бесплатно';
 const links = (): [string, string][] => [

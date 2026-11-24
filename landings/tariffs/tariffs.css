@@ -2,6 +2,7 @@
 .ai-root .tf-hero.ai-hero.is-split { min-height: 0; padding-block: 130px 20px; }
 .tf-toggles { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
 .tf-toggles .ai-theme { margin: 0; }
+.tf-note { margin-top: 14px; font-size: 14px; color: var(--muted); }
 
 .ai-root .kt-sec .tf-cards { margin-top: 0; }
 .tf-cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
