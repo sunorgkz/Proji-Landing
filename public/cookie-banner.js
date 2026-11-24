@@ -8,21 +8,22 @@
 (function () {
   var KEY = 'proji.cookie-consent';
   var TEXT = {
-    ru: ['Cookie для статистики — только с согласия.', 'Принять', 'Только необходимые', 'Подробнее'],
-    kk: ['Статистика үшін cookie — тек келісіммен.', 'Қабылдау', 'Тек қажеттілері', 'Толығырақ'],
-    en: ['Cookies for analytics — only with consent.', 'Accept', 'Necessary only', 'Details'],
-    ar: ['ملفات تعريف الارتباط للتحليلات — بموافقتك فقط.', 'قبول', 'الضرورية فقط', 'التفاصيل'],
+    ru: ['Cookie для статистики.', 'Принять', 'Только необходимые', 'Подробнее'],
+    kk: ['Статистика үшін cookie.', 'Қабылдау', 'Тек қажеттілері', 'Толығырақ'],
+    en: ['Cookies for analytics.', 'Accept', 'Necessary only', 'Details'],
+    ar: ['ملفات تعريف الارتباط للتحليلات.', 'قبول', 'الضرورية فقط', 'التفاصيل'],
   };
   var CSS =
-    '.pj-cookie{position:fixed;left:0;right:0;bottom:0;z-index:2147483000;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 20px;' +
-    'padding:8px max(12px,calc((100vw - 1200px)/2));background:rgb(4 12 31/.94);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);' +
-    'border-top:1px solid rgb(255 255 255/.12);color:#f2f7ff;font:400 13px/1.35 Inter,system-ui,sans-serif;box-shadow:0 -12px 40px -20px rgb(0 0 0/.6)}' +
-    '.pj-cookie p{margin:0;flex:1 1 320px;max-width:760px}.pj-cookie a{color:#5eecc4;text-decoration:underline;text-underline-offset:3px}' +
-    '.pj-cookie div{display:flex;flex-wrap:wrap;gap:6px}' +
-    '.pj-cookie button{min-height:34px;padding:0 14px;border-radius:999px;border:1px solid rgb(255 255 255/.35);background:transparent;color:#f2f7ff;font:600 13px/1 Inter,system-ui,sans-serif;cursor:pointer}' +
-    '.pj-cookie button.is-yes{border-color:transparent;background:linear-gradient(135deg,#8ff5d8,#5eecc4 40%,#2fd3a6);color:#052a24}' +
-    '.pj-cookie button:focus-visible{outline:2px solid #5eecc4;outline-offset:2px}' +
-    '@media (max-width:600px){.pj-cookie{padding:6px 12px;gap:4px;font-size:12px}.pj-cookie div{width:100%}.pj-cookie button{flex:1;min-height:30px;padding:0 10px;font-size:12px}}';
+    '.pj-cookie{position:fixed;left:0;right:0;bottom:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;gap:4px 16px;' +
+    'padding:5px max(12px,calc((100vw - 1200px)/2));background:rgb(4 12 31/.94);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);' +
+    'border-top:1px solid rgb(255 255 255/.12);color:#f2f7ff;font:400 12px/1.3 Inter,system-ui,sans-serif}' +
+    '.pj-cookie p{margin:0;flex:0 1 auto;max-width:760px}.pj-cookie a{color:#5eecc4;text-decoration:underline;text-underline-offset:3px}' +
+    '.pj-cookie div{display:flex;gap:6px;flex:none}' +
+    '.pj-cookie button{min-height:26px;padding:0 12px;border-radius:999px;border:1px solid rgb(255 255 255/.28);background:transparent;color:#f2f7ff;font:600 12px/1 Inter,system-ui,sans-serif;cursor:pointer}' +
+    '.pj-cookie button.is-yes{border-color:transparent;background:rgb(255 255 255/.16)}' +
+    '.pj-cookie button:hover{background:rgb(255 255 255/.24)}' +
+    '.pj-cookie button:focus-visible,.pj-cookie a:focus-visible{outline:2px solid #5eecc4;outline-offset:2px}' +
+    '@media (max-width:600px){.pj-cookie{padding:4px 10px;gap:6px;justify-content:space-between;font-size:11px}.pj-cookie p{flex:1 1 auto}.pj-cookie div{gap:4px}.pj-cookie button{min-height:28px;padding:0 8px;font-size:11px}}';
 
   function read() {
     try { return localStorage.getItem(KEY); } catch (e) { return null; }
