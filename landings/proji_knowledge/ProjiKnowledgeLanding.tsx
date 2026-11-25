@@ -561,7 +561,7 @@ export default function ProjiKnowledgeLanding() {
                   Или напрямую:{" "}
                   <a href="mailto:sund.serik@gmail.com" style={{ color: C.blueBright }}>sund.serik@gmail.com</a>
                   {" · "}
-                  <a href="https://proji.kz" style={{ color: C.blueBright }}>proji.kz</a>
+                  <a href="https://proji.org/register" style={{ color: C.blueBright }}>proji.org</a>
                 </div>
               </form>
             )}

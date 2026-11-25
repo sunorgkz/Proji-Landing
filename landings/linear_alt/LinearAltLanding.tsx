@@ -18,7 +18,7 @@ import './linear-alt.css';
  */
 
 const FONTS_URL = 'https://fonts.googleapis.com/css2?family=Inter:wght@300..600&display=swap';
-const START_URL = 'https://proji.kz';
+const START_URL = 'https://proji.org/register';
 const AUDIT_URL = `https://wa.me/77766006636?text=${encodeURIComponent('Здравствуйте! Хочу бесплатный AI-аудит компании.')}`;
 const photo = (id: number, w: number, h: number) => `https://picsum.photos/id/${id}/${w}/${h}`;
 

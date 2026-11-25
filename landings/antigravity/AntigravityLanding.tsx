@@ -76,7 +76,7 @@ export default function AntigravityLanding() {
       <div className="ag-vignette" aria-hidden />
 
       <header className="ag-header">
-        <a href="https://proji.kz" className="ag-brand">
+        <a href="https://proji.org/register" className="ag-brand">
           proji
         </a>
         <ThemeIconButton landing="antigravity" />

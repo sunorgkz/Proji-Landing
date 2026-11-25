@@ -315,7 +315,7 @@ export const ProjiHome: React.FC = () => {
 
   const startFree = () => {
     trackEvent('cta_start_free_click');
-    window.location.href = 'https://proji.kz';
+    window.location.href = 'https://proji.org/register';
   };
 
   const whatsapp = () => {
@@ -360,7 +360,7 @@ export const ProjiHome: React.FC = () => {
             </h1>
             <p className="ph-lead">Искусственный интеллект берёт на себя 80% рутины. Освободите время для стратегии и роста.</p>
             <div className="ph-actions">
-              <button type="button" className="ph-btn" onClick={startFree} data-cta-dest="https://proji.kz">
+              <button type="button" className="ph-btn" onClick={startFree} data-cta-dest="https://proji.org/register">
                 Начать бесплатно <ArrowRight size={18} aria-hidden />
               </button>
               <button type="button" className="ph-link" onClick={whatsapp} data-cta-dest="whatsapp:+77766006636">
@@ -528,7 +528,7 @@ export const ProjiHome: React.FC = () => {
           <h2>Попробуйте Proji бесплатно</h2>
           <p className="ph-cta-note">Начать можно без обязательств. Условия и цены собраны на странице «Тарифы».</p>
           <div className="ph-actions">
-            <button type="button" className="ph-btn" onClick={startFree} data-cta-dest="https://proji.kz">
+            <button type="button" className="ph-btn" onClick={startFree} data-cta-dest="https://proji.org/register">
               Начать бесплатно <ArrowRight size={18} aria-hidden />
             </button>
             <Link to="/tariffs" className="ph-link">
