@@ -4,6 +4,7 @@ import { ArrowRight, Check, Pause, Play, Quote } from 'lucide-react';
 import { HeroPhone } from '../../components/HeroPhone';
 import { catalogGroups, CORE_SLUGS } from '../catalog';
 import { trackEvent } from '../../analytics';
+import { useVariant } from '../../lib/ab';
 import { submitDemoRequest } from '../../lib/submitDemoRequest';
 import welcomeSerik from '../../assets/welcome-serik.m4a';
 import serikImage from '../../assets/serik.png';
@@ -313,15 +314,19 @@ export const ProjiHome: React.FC = () => {
     .filter(p => (CORE_SLUGS as readonly string[]).includes(p.slug))
     .sort((a, b) => (CORE_SLUGS as readonly string[]).indexOf(a.slug) - (CORE_SLUGS as readonly string[]).indexOf(b.slug));
 
+  /* A/B-тест главного экрана: вторая кнопка — консультация (A) или квиз подбора тарифа (B); ?ab=0|1 включает вариант вручную */
+  const ab = useVariant('home_cta', ['consult', 'quiz'] as const);
+  const abProps = { test: 'home_cta', variant: ab.id };
+
   const startFree = () => {
-    trackEvent('cta_start_free_click');
+    trackEvent('cta_start_free_click', abProps);
     window.location.href = 'https://proji.org/register';
   };
 
   const whatsapp = () => {
     const phoneNo = '77766006636';
     const message = 'Здравствуйте, хочу получить консультацию';
-    trackEvent('cta_whatsapp_consult_click', { phone: phoneNo, message });
+    trackEvent('cta_whatsapp_consult_click', { phone: phoneNo, message, ...abProps });
     window.open(`https://wa.me/${phoneNo}?text=${encodeURIComponent(message)}`, '_blank');
   };
 
@@ -339,7 +344,7 @@ export const ProjiHome: React.FC = () => {
     try {
       await submitDemoRequest('Презентация на телефон (главная)', value);
       setSent(true);
-      trackEvent('phone_presentation_request_submitted', { phone: value });
+      trackEvent('phone_presentation_request_submitted', abProps);
     } catch {
       setFailed(true);
     } finally {
@@ -363,9 +368,15 @@ export const ProjiHome: React.FC = () => {
               <button type="button" className="ph-btn" onClick={startFree} data-cta-dest="https://proji.org/register">
                 Начать бесплатно <ArrowRight size={18} aria-hidden />
               </button>
-              <button type="button" className="ph-link" onClick={whatsapp} data-cta-dest="whatsapp:+77766006636">
-                Получить консультацию <ArrowRight size={16} aria-hidden />
-              </button>
+              {ab.value === 'quiz' ? (
+                <Link to="/match?from=home" className="ph-link" data-cta-dest="/match" onClick={() => trackEvent('cta_quiz_click', abProps)}>
+                  Подобрать тариф за 1 минуту <ArrowRight size={16} aria-hidden />
+                </Link>
+              ) : (
+                <button type="button" className="ph-link" onClick={whatsapp} data-cta-dest="whatsapp:+77766006636">
+                  Получить консультацию <ArrowRight size={16} aria-hidden />
+                </button>
+              )}
             </div>
             <p className="ph-trust">15+ лет опыта и 300+ проектов в <Link to="/sunnet-business" className="ph-sn-link">Sunnet BT</Link>. Начать можно бесплатно.</p>
             <Greeting />

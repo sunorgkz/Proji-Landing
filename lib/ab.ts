@@ -24,7 +24,14 @@ export function useVariant<T>(test: string, variants: readonly T[]): { index: nu
   });
   const id = String.fromCharCode(65 + index);
   useEffect(() => {
-    trackEvent('ab_exposure', { test, variant: id });
+    const send = () => trackEvent('ab_exposure', { test, variant: id });
+    send();
+    /* согласие на cookie дают уже после показа: тогда отметку о варианте отправляем ещё раз, иначе она теряется */
+    const onConsent = (e: Event) => {
+      if ((e as CustomEvent).detail === 'all') send();
+    };
+    window.addEventListener('proji:consent', onConsent);
+    return () => window.removeEventListener('proji:consent', onConsent);
   }, [test, id]);
   return { index, id, value: variants[index] };
 }

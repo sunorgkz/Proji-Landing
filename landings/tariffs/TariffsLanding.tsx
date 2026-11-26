@@ -31,13 +31,13 @@ const ONLY_RU: Record<Lang, string> = {
 const PAY_URL = 'https://proji.org/payment';
 const API_PLAN: Partial<Record<PlanId, string>> = { start: 'basic', business: 'pro', company: 'enterprise' };
 
-const NAME = { free: 'Бесплатный', start: 'Старт', business: 'Стандарт', company: 'Премиум', enterprise: 'Enterprise' };
+export const NAME = { free: 'Бесплатный', start: 'Старт', business: 'Стандарт', company: 'Премиум', enterprise: 'Enterprise' };
 type PlanId = keyof typeof NAME;
 const IDS: PlanId[] = ['free', 'start', 'business', 'company', 'enterprise'];
 const REC: PlanId = 'business';
 
 const nb = (s: string) => s.replace(/ /g, ' ');
-const MONEY = {
+export const MONEY = {
   kzt: { free: '0 ₸', m: ['9 900 ₸', '49 900 ₸', '99 900 ₸'], y: ['99 000 ₸', '499 000 ₸', '999 000 ₸'], save: ['19 800 ₸', '99 800 ₸', '199 800 ₸'], ent: '200 000 ₸', ai: '9 900 ₸' },
   usd: { free: '$0', m: ['$24', '$119', '$239'], y: ['$240', '$1 190', '$2 390'], save: ['$48', '$238', '$478'], ent: '$479', ai: '$24' },
 };

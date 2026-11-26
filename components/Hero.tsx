@@ -179,7 +179,7 @@ export const Hero: React.FC = () => {
                     try {
                       await submitDemoRequest('Презентация на телефон (главная)', phone);
                       setPhoneSubmitted(true);
-                      trackEvent('phone_presentation_request_submitted', { phone });
+                      trackEvent('phone_presentation_request_submitted');
                     } catch {
                       setPhoneError(true);
                     } finally {

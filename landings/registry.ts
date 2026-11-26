@@ -222,6 +222,11 @@ export const landings: LandingEntry[] = [
     component: lazy(() => import('./sunnet/SunnetCompanyLanding')),
   },
   {
+    slug: 'match',
+    title: 'Proji — подбор тарифа за минуту',
+    component: lazy(() => import('./match/MatchLanding')),
+  },
+  {
     slug: 'tariffs',
     title: 'Тарифы Proji — цены и сравнение',
     component: lazy(() => import('./tariffs/TariffsLanding')),
