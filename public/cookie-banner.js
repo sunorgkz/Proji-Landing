@@ -35,7 +35,7 @@
     var t = TEXT[lang] || TEXT.ru;
     var style = document.createElement('style');
     style.textContent = CSS;
-    document.head.appendChild(style);
+    var closed = false;
     var bar = document.createElement('div');
     bar.className = 'pj-cookie';
     bar.setAttribute('role', 'region');
@@ -56,14 +56,21 @@
       if (b[2]) btn.className = b[2];
       btn.onclick = function () {
         try { localStorage.setItem(KEY, b[0]); } catch (e) {}
+        closed = true;
         bar.remove();
         window.dispatchEvent(new CustomEvent('proji:consent', { detail: b[0] }));
       };
       box.appendChild(btn);
     });
+    bar.appendChild(style);
     bar.appendChild(p);
     bar.appendChild(box);
     document.body.appendChild(bar);
+    /* приложение статичной страницы при запуске перерисовывает body и выбрасывает полоску: ставим её обратно */
+    new MutationObserver(function (_, watcher) {
+      if (closed || read() === 'all' || read() === 'necessary') watcher.disconnect();
+      else if (!bar.isConnected) document.body.appendChild(bar);
+    }).observe(document.documentElement, { childList: true, subtree: true });
   }
   /* выбор, сделанный в другой вкладке, сразу убирает полоску и здесь */
   window.addEventListener('storage', function (e) {
